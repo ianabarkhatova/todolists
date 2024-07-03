@@ -2,10 +2,13 @@ import React from "react";
 
 type ButtonPropsType = {
     title: string
+    onClickHandler?: () => void
+    disabled?: boolean
 };
 
-export const Button = ({title}: ButtonPropsType) => {
+export const Button = ({title, onClickHandler, disabled}: ButtonPropsType) => {
     return (
-        <button>{title}</button>
+        <button onClick={onClickHandler}
+                disabled={disabled}>{title}</button>
     );
 };

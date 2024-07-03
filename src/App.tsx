@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import {TaskType, TodoList} from "./todoList/TodoList";
+import {v1} from "uuid";
 
 
 export type FilterValuesType = "all" | "completed" | "active"
@@ -8,13 +9,25 @@ export type FilterValuesType = "all" | "completed" | "active"
 function App() {
 
     // tasks - 1-й элемент массива, setTasks - 2-й элемент массива, initTasks - первоначальный массив
-    let [tasks, setTasks] = useState<Array<TaskType>>([
-        {id: 1, title: 'HTML&CSS', isDone: true},
-        {id: 2, title: 'JS', isDone: true},
-        {id: 3, title: 'ReactJS', isDone: false},
-        {id: 4, title: 'Redux', isDone: false},
+    let [tasks, setTasks] = useState<TaskType[]>([
+        {id: v1(), title: 'HTML&CSS', isDone: true},
+        {id: v1(), title: 'JS', isDone: true},
+        {id: v1(), title: 'ReactJS', isDone: false},
+        {id: v1(), title: 'Redux', isDone: false},
     ])
 
+    // const result = useState(tasks)
+    // console.log(result)
+    // console.log(result[0])
+    // //result возвратит массив с двумя элементами: 1 - массив с первоначальными элементами (state), 2 - функция
+    // const setState = result[1]
+    // console.log(setState)
+
+    const [state, setState] = useState(tasks)
+    //деструктуризирущее присваивание
+    // console.log(useState(tasks)[1])
+
+//новый локальный стейт, который управляет режимом отображения
     let [filter, setFilter] = useState<FilterValuesType>("all");
 
     function changeFilter(value: FilterValuesType) {
@@ -22,17 +35,34 @@ function App() {
     }
 
     let tasksForTodoList = tasks
+
     if (filter === "completed") {
-        tasksForTodoList = tasks.filter(t => t.isDone === true);
+        tasksForTodoList = tasks.filter(t => t.isDone);
     }
     if (filter === "active") {
-        tasksForTodoList = tasks.filter(t => t.isDone === false);
+        tasksForTodoList = tasks.filter(t => !t.isDone);
     }
 
-    function removeTask(taskId: number) {
-        // пропусти те таски, id которых не равняется taskId и создай на их основе новый массив (старый массив не меняется)
+    function removeTask(taskId: string) {
+        // пропусти те таски, id которых не равняется taskId и создай на их основе новый массив
+        //(старый массив не меняется - иммутабельная работа с данными)
         let filteredTasks = tasks.filter(t => t.id !== taskId)
         setTasks(filteredTasks);
+    }
+
+    const addTask = (title: string) => {
+        const newTask: TaskType = {
+            id: v1(),
+            title: title,
+            //если передаем title c таким же именем, можно писать так:
+            // title,
+            isDone: false
+        }
+
+        // const copyState = [...tasks]
+        // copyState.push(newTask)
+        // setTasks(copyState)
+        setTasks([...tasks, newTask])
     }
 
     return (
@@ -42,6 +72,7 @@ function App() {
                 tasks={tasksForTodoList}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
+                addTask={addTask}
             />
         </div>
     );
