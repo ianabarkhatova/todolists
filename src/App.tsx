@@ -12,8 +12,10 @@ function App() {
     let [tasks, setTasks] = useState<TaskType[]>([
         {id: v1(), title: 'HTML&CSS', isDone: true},
         {id: v1(), title: 'JS', isDone: true},
-        {id: v1(), title: 'ReactJS', isDone: false},
+        {id: v1(), title: 'React JS', isDone: false},
         {id: v1(), title: 'Redux', isDone: false},
+        {id: v1(), title: 'REST API', isDone: false},
+        {id: v1(), title: 'Typescript', isDone: false},
     ])
 
     // const result = useState(tasks)
@@ -65,6 +67,13 @@ function App() {
         setTasks([...tasks, newTask])
     }
 
+    const changeStatus = (taskId: string, newIsDone: boolean) => {
+        const newState = tasks.map(t => taskId === t.id? {...t, isDone: newIsDone} : t)
+        console.log(newState)
+        setTasks(newState)
+    }
+
+
     return (
         <div className="App">
             <TodoList
@@ -73,6 +82,8 @@ function App() {
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
+                changeTaskStatus={changeStatus}
+                filter={filter}
             />
         </div>
     );
