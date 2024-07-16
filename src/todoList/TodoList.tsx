@@ -12,29 +12,29 @@ export type TaskType = {
 export type TodoListPropsType = {
     title: string
     tasks: TaskType[]
-    removeTask: (taskId: string) => void
-    changeFilter: (value: FilterValuesType) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
+    removeTask: (taskId: string, todoListId: string) => void
+    changeFilter: (value: FilterValuesType, todoListId: string) => void
+    addTask: (title: string, todoListId: string) => void
+    changeTaskStatus: (taskId: string, isDone: boolean, todoListId: string) => void
     filter: FilterValuesType
+    id: string
+    removeTodoList: (todoListId: string) => void
 };
 
-export const TodoList = ({title, tasks, removeTask, changeFilter, addTask, changeTaskStatus, filter}: TodoListPropsType) => {
+export const TodoList = ({title, tasks, removeTask, changeFilter, addTask, changeTaskStatus, filter, id, removeTodoList}: TodoListPropsType) => {
 
     const tasksElements: Array<JSX.Element> | JSX.Element = tasks.length === 0 ? (
         <p>No tasks</p>
     ) : (
         tasks.map((t) => {
             //эти функции пишем внутри мапа, т к ф-я будет своя отдельная для каждой таски:
-
             const removeTaskHandler = () => {
-                removeTask(t.id)
+                removeTask(t.id, id)
             }
 
             const checkBoxOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                changeTaskStatus(t.id, e.currentTarget.checked)
+                changeTaskStatus(t.id, e.currentTarget.checked, id)
             }
-
 
             return (
                 // каждая таска попадает в переменную "t":
@@ -48,14 +48,13 @@ export const TodoList = ({title, tasks, removeTask, changeFilter, addTask, chang
     )
 
     const [taskTitle, setTaskTitle] = useState('')
-
     //обработка ошибок
     const [error, setError] = useState<string | null>(null)
 
 
     const addTaskHandler = () => {
         if (taskTitle.trim() !== '') {
-            addTask(taskTitle.trim())
+            addTask(taskTitle.trim(), id)
             setTaskTitle('')
         } else {
             setError("Title is required")
@@ -70,20 +69,22 @@ export const TodoList = ({title, tasks, removeTask, changeFilter, addTask, chang
 
     const keyDownAddTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && addTaskHandler()
 
+    const setAllTasksHandler = () => changeFilter("all", id)
 
+    const setActiveTasksHandler = () => changeFilter("active", id)
 
-    const setAllTasksHandler = () => changeFilter("all")
+    const setCompletedTasksHandler = () => changeFilter("completed", id)
 
-    const setActiveTasksHandler = () => changeFilter("active")
-
-    const setCompletedTasksHandler = () => changeFilter("completed")
+    const removeTodoListHandler = () => {
+        removeTodoList(id)
+    }
 
     const userTaskTitleLengthWarning = taskTitle.length > 15 &&
         <div>Your task title should be not less than 15 characters</div>
 
     return (
         <div>
-            <h3>{title}</h3>
+            <h3>{title}</h3> <button onClick={removeTodoListHandler}>x</button>
 
             <div>
                 <input
