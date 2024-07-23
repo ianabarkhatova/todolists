@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {TaskType, TodoList} from "./todoList/TodoList";
 import {v1} from "uuid";
+import {AddItemForm} from "./todoList/AddItemForm";
 
 
 export type FilterValuesType = "all" | "completed" | "active"
@@ -10,6 +11,10 @@ type TodoListType = {
     id: string
     title: string
     filter: FilterValuesType
+}
+
+type tasksObjType = {
+    [key: string]: TaskType[],
 }
 
 function App() {
@@ -30,11 +35,11 @@ function App() {
     let todoListId2 = v1()
 
     let [todoLists, setTodoLists] = useState<Array<TodoListType>>([
-        {id: todoListId1, title: 'What to learn', filter: 'active'},
-        {id: todoListId2, title: 'What to buy', filter: 'completed'}
+        {id: todoListId1, title: 'What to learn', filter: 'all'},
+        {id: todoListId2, title: 'What to buy', filter: 'all'}
     ])
 
-    let [tasksObj, setTasks] = useState({
+    let [tasksObj, setTasks] = useState<tasksObjType>({
         [todoListId1]: [
             {id: v1(), title: 'HTML&CSS', isDone: true},
             {id: v1(), title: 'JS', isDone: true},
@@ -46,13 +51,11 @@ function App() {
         [todoListId2]: [
             {id: v1(), title: 'Book', isDone: false},
             {id: v1(), title: 'Milk', isDone: true},
+            {id: v1(), title: 'Bread', isDone: true},
         ]
     })
 
     function removeTask(taskId: string, todoListId: string) {
-        debugger
-        // пропусти те таски, id которых не равняется taskId и создай на их основе новый массив
-        //(старый массив не меняется - иммутабельная работа с данными)
         let tasks = tasksObj[todoListId]
         let filteredTasks = tasks.filter(t => t.id !== taskId)
         tasksObj[todoListId] = filteredTasks
@@ -83,11 +86,22 @@ function App() {
         setTasks({...tasksObj})
     }
 
+    const addTodoList = (title: string) => {
+        let todoList: TodoListType = {
+            id: todoListId1,
+            title: title,
+            filter: 'all'
+        }
+        setTodoLists([todoList, ...todoLists])
+        setTasks({...tasksObj, [todoList.id]: []})
+    }
 
     return (
         <div className="App">
 
-            <input/> <button>x</button>
+            <AddItemForm
+                addItem={addTodoList}/>
+
             {todoLists.map((tl) => {
 
                 //фильтрация происходит каждый раз на основе одного объекта(tl)

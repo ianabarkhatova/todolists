@@ -1,6 +1,7 @@
-import React, {ChangeEvent, useState, KeyboardEvent} from "react";
+import React, {ChangeEvent} from "react";
 import {Button} from "../button/Button";
 import {FilterValuesType} from "../App";
+import {AddItemForm} from "./AddItemForm";
 
 
 export type TaskType = {
@@ -67,12 +68,16 @@ export const TodoList = ({
     // const userTaskTitleLengthWarning = taskTitle.length > 15 &&
     //     <div>Your task title should be not less than 15 characters</div>
 
+    const addTaskHandler = (title: string) => {
+        addTask(title, id);
+    }
+
     return (
         <div>
             <h3>{title}</h3>
             <button onClick={removeTodoListHandler}>x</button>
 
-            <AddItemForm addTask={addTask} id={id}/>
+            <AddItemForm addItem={addTaskHandler}/>
 
             <ul>
                 {tasksElements}
@@ -97,40 +102,3 @@ export const TodoList = ({
     );
 }
 
-type AddItemFormPropsType = {
-    addTask: (title: string, todoListId: string) => void
-    id: string
-}
-
-const AddItemForm = ({addTask, id}: AddItemFormPropsType) => {
-    const [taskTitle, setTaskTitle] = useState('')
-    const [error, setError] = useState<string | null>(null)
-
-
-    const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(null)
-        setTaskTitle(e.currentTarget.value)
-    }
-
-    const keyDownAddTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && addTaskHandler()
-
-    const addTaskHandler = () => {
-        if (taskTitle.trim() !== '') {
-            addTask(taskTitle.trim(), id)
-            setTaskTitle('')
-        } else {
-            setError("Title is required")
-        }
-    }
-
-    return <div>
-        <input
-            value={taskTitle}
-            onChange={changeTaskTitleHandler}
-            onKeyDown={keyDownAddTaskHandler}
-            className={error ? "error" : ''}
-        />
-        <Button title={"+"} onClickHandler={addTaskHandler}/>
-        {error && <div className={"error-message"}>{error}</div>}
-    </div>
-}
