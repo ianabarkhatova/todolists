@@ -34,7 +34,7 @@ function App() {
         {id: todoListId2, title: 'What to buy', filter: 'completed'}
     ])
 
-    let[tasksObj, setTasks] = useState({
+    let [tasksObj, setTasks] = useState({
         [todoListId1]: [
             {id: v1(), title: 'HTML&CSS', isDone: true},
             {id: v1(), title: 'JS', isDone: true},
@@ -86,9 +86,11 @@ function App() {
 
     return (
         <div className="App">
+
+            <input/> <button>x</button>
             {todoLists.map((tl) => {
 
-                //фильтрация происходит каждый раз на основе одного объкта(tl)
+                //фильтрация происходит каждый раз на основе одного объекта(tl)
                 let tasksForTodoList = tasksObj[tl.id]
 
                 if (tl.filter === "completed") {

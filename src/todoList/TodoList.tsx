@@ -21,7 +21,17 @@ export type TodoListPropsType = {
     removeTodoList: (todoListId: string) => void
 };
 
-export const TodoList = ({title, tasks, removeTask, changeFilter, addTask, changeTaskStatus, filter, id, removeTodoList}: TodoListPropsType) => {
+export const TodoList = ({
+                             title,
+                             tasks,
+                             removeTask,
+                             changeFilter,
+                             addTask,
+                             changeTaskStatus,
+                             filter,
+                             id,
+                             removeTodoList
+                         }: TodoListPropsType) => {
 
     const tasksElements: Array<JSX.Element> | JSX.Element = tasks.length === 0 ? (
         <p>No tasks</p>
@@ -37,8 +47,7 @@ export const TodoList = ({title, tasks, removeTask, changeFilter, addTask, chang
             }
 
             return (
-                // каждая таска попадает в переменную "t":
-                <li key={t.id} className={t.isDone? "is-done" : ''}>
+                <li key={t.id} className={t.isDone ? "is-done" : ''}>
                     <input type="checkbox" checked={t.isDone} onChange={checkBoxOnChangeHandler}/>
                     <span>{t.title}</span>
                     <Button onClickHandler={removeTaskHandler} title={"x"}/>
@@ -47,57 +56,23 @@ export const TodoList = ({title, tasks, removeTask, changeFilter, addTask, chang
         })
     )
 
-    const [taskTitle, setTaskTitle] = useState('')
-    //обработка ошибок
-    const [error, setError] = useState<string | null>(null)
-
-
-    const addTaskHandler = () => {
-        if (taskTitle.trim() !== '') {
-            addTask(taskTitle.trim(), id)
-            setTaskTitle('')
-        } else {
-            setError("Title is required")
-        }
-    }
-
-    const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(null)
-        setTaskTitle(e.currentTarget.value)
-    }
-
-
-    const keyDownAddTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && addTaskHandler()
 
     const setAllTasksHandler = () => changeFilter("all", id)
-
     const setActiveTasksHandler = () => changeFilter("active", id)
-
     const setCompletedTasksHandler = () => changeFilter("completed", id)
-
     const removeTodoListHandler = () => {
         removeTodoList(id)
     }
 
-    const userTaskTitleLengthWarning = taskTitle.length > 15 &&
-        <div>Your task title should be not less than 15 characters</div>
+    // const userTaskTitleLengthWarning = taskTitle.length > 15 &&
+    //     <div>Your task title should be not less than 15 characters</div>
 
     return (
         <div>
-            <h3>{title}</h3> <button onClick={removeTodoListHandler}>x</button>
+            <h3>{title}</h3>
+            <button onClick={removeTodoListHandler}>x</button>
 
-            <div>
-                <input
-                    value={taskTitle}
-                    onChange={changeTaskTitleHandler}
-                    onKeyDown={keyDownAddTaskHandler}
-                    className={error ? "error" : ''}
-                />
-                <Button title={"+"} onClickHandler={addTaskHandler}/>
-                {/*//если ошибка существует, показывай эту дивку:*/}
-                {error && <div className={"error-message"}>{error}</div>}
-
-            </div>
+            <AddItemForm addTask={addTask} id={id}/>
 
             <ul>
                 {tasksElements}
@@ -120,5 +95,42 @@ export const TodoList = ({title, tasks, removeTask, changeFilter, addTask, chang
             </div>
         </div>
     );
+}
 
+type AddItemFormPropsType = {
+    addTask: (title: string, todoListId: string) => void
+    id: string
+}
+
+const AddItemForm = ({addTask, id}: AddItemFormPropsType) => {
+    const [taskTitle, setTaskTitle] = useState('')
+    const [error, setError] = useState<string | null>(null)
+
+
+    const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setError(null)
+        setTaskTitle(e.currentTarget.value)
+    }
+
+    const keyDownAddTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && addTaskHandler()
+
+    const addTaskHandler = () => {
+        if (taskTitle.trim() !== '') {
+            addTask(taskTitle.trim(), id)
+            setTaskTitle('')
+        } else {
+            setError("Title is required")
+        }
+    }
+
+    return <div>
+        <input
+            value={taskTitle}
+            onChange={changeTaskTitleHandler}
+            onKeyDown={keyDownAddTaskHandler}
+            className={error ? "error" : ''}
+        />
+        <Button title={"+"} onClickHandler={addTaskHandler}/>
+        {error && <div className={"error-message"}>{error}</div>}
+    </div>
 }
