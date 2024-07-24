@@ -96,6 +96,21 @@ function App() {
         setTasks({...tasksObj, [todoList.id]: []})
     }
 
+    const changeTaskTitle = (taskId: string, newTitle: string, todoListId: string) => {
+        //достаем нужный массив по todoListId:
+        let tasks = tasksObj[todoListId]
+        //находим и изменяем нужную таску:
+        const newState = tasks.map(t => taskId === t.id ? {...t, title: newTitle} : t)
+        tasksObj[todoListId] = newState
+        //сетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
+        setTasks({...tasksObj})
+    }
+
+    const changeTodoListTitle = (id: string, newTitle: string) => {
+        setTodoLists(todoLists.map(tl => tl.id === id ? {...tl, title: newTitle} : tl))
+    }
+
+
     return (
         <div className="App">
 
@@ -125,6 +140,8 @@ function App() {
                     changeTaskStatus={changeStatus}
                     filter={tl.filter}
                     removeTodoList={removeTodoList}
+                    changeTaskTitle={changeTaskTitle}
+                    changeTodoListTitle={changeTodoListTitle}
                 />
             })}
         </div>
