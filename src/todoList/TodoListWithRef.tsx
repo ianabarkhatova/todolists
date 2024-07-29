@@ -1,5 +1,5 @@
 import React, {useRef} from "react";
-import {Button} from "../button/Button";
+import {Button} from "@mui/material";
 import {FilterValuesType} from "../App";
 
 
@@ -34,7 +34,7 @@ export const TodoList = ({title, tasks, removeTask, changeFilter, addTask}: Todo
 
             <div>
                 <input ref={taskInputRef}/>
-                <Button title={"+"} onClickHandler={addTaskHandler}/>
+                <Button onClick={addTaskHandler}/>
             </div>
 
             {tasks.length === 0 ? (
