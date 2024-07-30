@@ -28,7 +28,7 @@ type tasksObjType = {
 type ThemeMode = 'dark' | 'light'
 
 function App() {
-    const[themeMode, setThemeMode] = useState<ThemeMode>('light')
+    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
     const theme = createTheme({
         palette: {
@@ -177,10 +177,9 @@ function App() {
                                 tasksForTodoList = tasksForTodoList.filter(t => !t.isDone);
                             }
 
-
                             return (
                                 <Grid>
-                                    <Paper sx={{p: '0 20px 20px 20px'}}>
+                                    <Paper elevation={4} sx={{p: '0 20px 20px 20px'}}>
                                         <TodoList
                                             key={tl.id}
                                             id={tl.id}
@@ -203,7 +202,7 @@ function App() {
                 </Container>
             </ThemeProvider>
         </div>
-);
+    );
 }
 
 export default App;

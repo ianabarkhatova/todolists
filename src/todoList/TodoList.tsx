@@ -3,9 +3,9 @@ import {FilterValuesType} from "../App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import IconButton from '@mui/material/IconButton'
-import DeleteIcon from '@mui/icons-material/Delete'
 import {Box, Button, Checkbox, List, ListItem} from "@mui/material";
 import {filterButtonsContainerSx, getListItemSx} from "./TodoList.styles";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 export type TaskType = {
     id: string
@@ -43,7 +43,7 @@ export const TodoList = ({
 
 
     const tasksElements: Array<JSX.Element> | JSX.Element = tasks.length === 0 ? (
-        <p>No tasks</p>
+        <p style={{padding: '8px 0'}}>No tasks</p>
     ) : (
         <List>
             {tasks.map((t) => {
@@ -69,7 +69,7 @@ export const TodoList = ({
                             <EditableSpan title={t.title} onChange={onChangeTaskTitleHandler}/>
                         </div>
                         <IconButton aria-label="delete" onClick={removeTaskHandler}>
-                            <DeleteIcon/>
+                            <DeleteOutlineIcon/>
                         </IconButton>
                     </ListItem>
                 );
@@ -104,7 +104,7 @@ export const TodoList = ({
                 onChange={onChangeTodoListTitleHandler}
             />
             <IconButton aria-label="delete" onClick={removeTodoListHandler}>
-                <DeleteIcon/>
+                <DeleteOutlineIcon/>
             </IconButton>
         </h3>
 
@@ -116,6 +116,7 @@ export const TodoList = ({
 
         <Box sx={filterButtonsContainerSx}>
             <Button
+                size={'small'}
                 onClick={setAllTasksHandler}
                 variant={filter === "all" ? "outlined" : "text"}
                 color='inherit'
@@ -123,6 +124,7 @@ export const TodoList = ({
                 All
             </Button>
             <Button
+                size={'small'}
                 onClick={setActiveTasksHandler}
                 variant={filter === "active" ? "outlined" : "text"}
                 color='primary'
@@ -130,6 +132,7 @@ export const TodoList = ({
                 Active
             </Button>
             <Button
+                size={'small'}
                 onClick={setCompletedTasksHandler}
                 variant={filter === "completed" ? "outlined" : "text"}
                 color='secondary'
