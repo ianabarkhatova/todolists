@@ -5,6 +5,7 @@ import {EditableSpan} from "./EditableSpan";
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import {Box, Button, Checkbox, List, ListItem} from "@mui/material";
+import {filterButtonsContainerSx, getListItemSx} from "./TodoList.styles";
 
 export type TaskType = {
     id: string
@@ -62,11 +63,7 @@ export const TodoList = ({
                 return (
                     <ListItem
                         key={t.id}
-                        sx={{
-                            p: 0,
-                            justifyContent: 'space-between',
-                            opacity: t.isDone ? 0.5 : 1,
-                        }}>
+                        sx={getListItemSx(t.isDone)}>
                         <div>
                             <Checkbox checked={t.isDone} onChange={checkBoxOnChangeHandler}/>
                             <EditableSpan title={t.title} onChange={onChangeTaskTitleHandler}/>
@@ -117,7 +114,7 @@ export const TodoList = ({
             {tasksElements}
         </ul>
 
-        <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+        <Box sx={filterButtonsContainerSx}>
             <Button
                 onClick={setAllTasksHandler}
                 variant={filter === "all" ? "outlined" : "text"}

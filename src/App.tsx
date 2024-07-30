@@ -5,12 +5,13 @@ import {v1} from "uuid";
 import {AddItemForm} from "./todoList/AddItemForm";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
+import {MenuButton} from "./components/MenuButton";
+import {createTheme, CssBaseline, Switch, ThemeProvider} from "@mui/material";
 
 export type FilterValuesType = "all" | "completed" | "active"
 
@@ -24,11 +25,32 @@ type tasksObjType = {
     [key: string]: TaskType[],
 }
 
+type ThemeMode = 'dark' | 'light'
+
 function App() {
+    const[themeMode, setThemeMode] = useState<ThemeMode>('light')
 
-    //деструктурирующее присваивание
+    const theme = createTheme({
+        palette: {
+            mode: themeMode === 'light' ? 'light' : 'dark',
+            primary: {
+                light: '#93e3a9',
+                main: '#1bcf68',
+                dark: '#00a234',
+                contrastText: '#ffffff',
+            },
+            secondary: {
+                light: '#f1d05b',
+                main: '#ecae2c',
+                dark: '#e6721f',
+                contrastText: '#2e3d34',
+            },
+        },
+    })
 
-//новый локальный стейт, который управляет режимом отображения
+    const changeModeHandler = () => {
+        setThemeMode(themeMode == 'light' ? 'dark' : 'light')
+    }
 
     function changeFilter(value: FilterValuesType, todoListId: string) {
         let todoList = todoLists.find(tl => tl.id === todoListId)
@@ -95,7 +117,7 @@ function App() {
 
     const addTodoList = (title: string) => {
         let todoList: TodoListType = {
-            id: todoListId1,
+            id: v1(),
             title: title,
             filter: 'all'
         }
@@ -120,59 +142,68 @@ function App() {
 
     return (
         <div>
-            <AppBar position='static' sx={{mb: '30px'}}>
-                <Toolbar>
-                    <IconButton color='inherit'>
-                        <MenuIcon/>
-                    </IconButton>
-                    <Button color='inherit'>Login</Button>
-                </Toolbar>
-            </AppBar>
+            <ThemeProvider theme={theme}>
+                <CssBaseline/>
+                <AppBar position='static' sx={{mb: '30px'}}>
+                    <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
+                        <IconButton color='inherit'>
+                            <MenuIcon/>
+                        </IconButton>
+                        <div>
+                            <MenuButton>Login</MenuButton>
+                            <MenuButton>Logout</MenuButton>
+                            <MenuButton background={theme.palette.primary.dark}>FAQ</MenuButton>
+                            <Switch color={'default'} onChange={changeModeHandler}/>
+                        </div>
 
-            <Container fixed>
-                <Grid container sx={{mb: '30px'}}>
-                    <AddItemForm
-                        addItem={addTodoList}/>
-                </Grid>
-                <Grid container spacing={4}>
-                    {todoLists.map((tl) => {
+                    </Toolbar>
+                </AppBar>
 
-                        //фильтрация происходит каждый раз на основе одного объекта(tl)
-                        let tasksForTodoList = tasksObj[tl.id]
+                <Container fixed>
+                    <Grid container sx={{mb: '30px'}}>
+                        <AddItemForm
+                            addItem={addTodoList}/>
+                    </Grid>
+                    <Grid container spacing={4}>
+                        {todoLists.map((tl) => {
 
-                        if (tl.filter === "completed") {
-                            tasksForTodoList = tasksForTodoList.filter(t => t.isDone);
-                        }
-                        if (tl.filter === "active") {
-                            tasksForTodoList = tasksForTodoList.filter(t => !t.isDone);
-                        }
+                            //фильтрация происходит каждый раз на основе одного объекта(tl)
+                            let tasksForTodoList = tasksObj[tl.id]
+
+                            if (tl.filter === "completed") {
+                                tasksForTodoList = tasksForTodoList.filter(t => t.isDone);
+                            }
+                            if (tl.filter === "active") {
+                                tasksForTodoList = tasksForTodoList.filter(t => !t.isDone);
+                            }
 
 
-                        return (
-                            <Grid>
-                                <Paper sx={{ p: '0 20px 20px 20px' }}>
-                                    <TodoList
-                                        key={tl.id}
-                                        id={tl.id}
-                                        title={tl.title}
-                                        tasks={tasksForTodoList}
-                                        removeTask={removeTask}
-                                        changeFilter={changeFilter}
-                                        addTask={addTask}
-                                        changeTaskStatus={changeStatus}
-                                        filter={tl.filter}
-                                        removeTodoList={removeTodoList}
-                                        changeTaskTitle={changeTaskTitle}
-                                        changeTodoListTitle={changeTodoListTitle}
-                                    />
-                                </Paper>
-                            </Grid>
-                        )
-                    })}
-                </Grid>
-            </Container>
+                            return (
+                                <Grid>
+                                    <Paper sx={{p: '0 20px 20px 20px'}}>
+                                        <TodoList
+                                            key={tl.id}
+                                            id={tl.id}
+                                            title={tl.title}
+                                            tasks={tasksForTodoList}
+                                            removeTask={removeTask}
+                                            changeFilter={changeFilter}
+                                            addTask={addTask}
+                                            changeTaskStatus={changeStatus}
+                                            filter={tl.filter}
+                                            removeTodoList={removeTodoList}
+                                            changeTaskTitle={changeTaskTitle}
+                                            changeTodoListTitle={changeTodoListTitle}
+                                        />
+                                    </Paper>
+                                </Grid>
+                            )
+                        })}
+                    </Grid>
+                </Container>
+            </ThemeProvider>
         </div>
-    );
+);
 }
 
 export default App;
