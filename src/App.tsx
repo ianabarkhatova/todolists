@@ -21,44 +21,15 @@ export type TodoListType = {
     filter: FilterValuesType
 }
 
-type tasksObjType = {
+export type tasksObjType = {
     [key: string]: TaskType[],
 }
 
 type ThemeMode = 'dark' | 'light'
 
 function App() {
-    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
-    const theme = createTheme({
-        palette: {
-            mode: themeMode === 'light' ? 'light' : 'dark',
-            primary: {
-                light: '#93e3a9',
-                main: '#1bcf68',
-                dark: '#00a234',
-                contrastText: '#ffffff',
-            },
-            secondary: {
-                light: '#f1d05b',
-                main: '#ecae2c',
-                dark: '#e6721f',
-                contrastText: '#2e3d34',
-            },
-        },
-    })
-
-    const changeModeHandler = () => {
-        setThemeMode(themeMode == 'light' ? 'dark' : 'light')
-    }
-
-    function changeFilter(value: FilterValuesType, todoListId: string) {
-        let todoList = todoLists.find(tl => tl.id === todoListId)
-        if (todoList) {
-            todoList.filter = value
-            setTodoLists([...todoLists])
-        }
-    }
+    // Business logic layer
 
     let todoListId1 = v1()
     let todoListId2 = v1()
@@ -84,12 +55,8 @@ function App() {
         ]
     })
 
-    function removeTask(taskId: string, todoListId: string) {
-        let tasks = tasksObj[todoListId]
-        let filteredTasks = tasks.filter(t => t.id !== taskId)
-        tasksObj[todoListId] = filteredTasks
-        setTasks({...tasksObj})
-    }
+
+    // CRUD Tasks
 
     const addTask = (title: string, todoListId: string) => {
         const newTask: TaskType = {id: v1(), title: title, isDone: false}
@@ -101,12 +68,31 @@ function App() {
         setTasks({...tasksObj})
     }
 
-    const changeStatus = (taskId: string, newIsDone: boolean, todoListId: string) => {
+    const changeTaskStatus = (taskId: string, newIsDone: boolean, todoListId: string) => {
         let tasks = tasksObj[todoListId]
         const newState = tasks.map(t => taskId === t.id ? {...t, isDone: newIsDone} : t)
         tasksObj[todoListId] = newState
         setTasks({...tasksObj})
     }
+
+    const removeTask = (taskId: string, todoListId: string) => {
+        let tasks = tasksObj[todoListId]
+        let filteredTasks = tasks.filter(t => t.id !== taskId)
+        tasksObj[todoListId] = filteredTasks
+        setTasks({...tasksObj})
+    }
+
+    const changeTaskTitle = (taskId: string, newTitle: string, todoListId: string) => {
+        //достаем нужный массив по todoListId:
+        let tasks = tasksObj[todoListId]
+        //находим и изменяем нужную таску:
+        const newState = tasks.map(t => taskId === t.id ? {...t, title: newTitle} : t)
+        tasksObj[todoListId] = newState
+        //сетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
+        setTasks({...tasksObj})
+    }
+
+    // CRUD TodoLists
 
     const removeTodoList = (todoListId: string) => {
         let filteredTodoList = todoLists.filter((tl) => tl.id !== todoListId)
@@ -125,20 +111,45 @@ function App() {
         setTasks({...tasksObj, [todoList.id]: []})
     }
 
-    const changeTaskTitle = (taskId: string, newTitle: string, todoListId: string) => {
-        //достаем нужный массив по todoListId:
-        let tasks = tasksObj[todoListId]
-        //находим и изменяем нужную таску:
-        const newState = tasks.map(t => taskId === t.id ? {...t, title: newTitle} : t)
-        tasksObj[todoListId] = newState
-        //сетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
-        setTasks({...tasksObj})
-    }
-
     const changeTodoListTitle = (id: string, newTitle: string) => {
         setTodoLists(todoLists.map(tl => tl.id === id ? {...tl, title: newTitle} : tl))
     }
 
+    const changeTodoListFilter = (value: FilterValuesType, todoListId: string) => {
+        let todoList = todoLists.find(tl => tl.id === todoListId)
+        if (todoList) {
+            todoList.filter = value
+            setTodoLists([...todoLists])
+        }
+    }
+
+    // Theme
+
+    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
+
+    const theme = createTheme({
+        palette: {
+            mode: themeMode === 'light' ? 'light' : 'dark',
+            primary: {
+                light: '#93e3a9',
+                main: '#1bcf68',
+                dark: '#00a234',
+                contrastText: '#ffffff',
+            },
+            secondary: {
+                light: '#f1d05b',
+                main: '#ecae2c',
+                dark: '#e6721f',
+                contrastText: '#2e3d34',
+            },
+        },
+    })
+
+    const changeModeHandler = () => {
+        setThemeMode(themeMode == 'light' ? 'dark' : 'light')
+    }
+
+    //UI
 
     return (
         <div>
@@ -186,9 +197,9 @@ function App() {
                                             title={tl.title}
                                             tasks={tasksForTodoList}
                                             removeTask={removeTask}
-                                            changeFilter={changeFilter}
+                                            changeFilter={changeTodoListFilter}
                                             addTask={addTask}
-                                            changeTaskStatus={changeStatus}
+                                            changeTaskStatus={changeTaskStatus}
                                             filter={tl.filter}
                                             removeTodoList={removeTodoList}
                                             changeTaskTitle={changeTaskTitle}
