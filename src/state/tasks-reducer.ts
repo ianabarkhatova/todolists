@@ -1,9 +1,10 @@
 import {FilterValuesType, tasksObjType, TodoListType} from "../App";
 import {v1} from "uuid";
 import {TaskType} from "../todoList/TodoList";
-import {AddTodolistActionType, RemoveTodolistActionType} from "./todolists-reducer";
+import {AddTodolistActionType, RemoveTodolistActionType, todoListId1, todoListId2} from "./todolists-reducer";
+import {TasksObjType} from "../AppWithRedux";
 
-export type addTaskActionType = {
+export type AddTaskActionType = {
     type: 'ADD-TASK'
     payload: {
         title: string,
@@ -11,7 +12,7 @@ export type addTaskActionType = {
     }
 }
 
-export type changeTaskStatusActionType = {
+export type ChangeTaskStatusActionType = {
     type: 'CHANGE-TASK-STATUS'
     payload: {
         taskId: string,
@@ -20,7 +21,7 @@ export type changeTaskStatusActionType = {
     }
 }
 
-export type removeTaskActionType = {
+export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
     payload: {
         taskId: string
@@ -28,7 +29,7 @@ export type removeTaskActionType = {
     }
 }
 
-export type changeTaskTitleActionType = {
+export type ChangeTaskTitleActionType = {
     type: 'CHANGE-TASK-TITLE'
     payload: {
         taskId: string,
@@ -39,17 +40,33 @@ export type changeTaskTitleActionType = {
 
 
 type ActionType =
-    | addTaskActionType
-    | changeTaskStatusActionType
-    | removeTaskActionType
-    | changeTaskTitleActionType
+    | AddTaskActionType
+    | ChangeTaskStatusActionType
+    | RemoveTaskActionType
+    | ChangeTaskTitleActionType
     | AddTodolistActionType
     | RemoveTodolistActionType
 
 
+const initialState: TasksObjType = {
+    [todoListId1]: [
+        {id: v1(), title: 'HTML&CSS', isDone: true},
+        {id: v1(), title: 'JS', isDone: true},
+        {id: v1(), title: 'React JS', isDone: false},
+        {id: v1(), title: 'Redux', isDone: false},
+        {id: v1(), title: 'REST API', isDone: false},
+        {id: v1(), title: 'Typescript', isDone: false},
+    ],
+    [todoListId2]: [
+        {id: v1(), title: 'Book', isDone: false},
+        {id: v1(), title: 'Milk', isDone: true},
+        {id: v1(), title: 'Bread', isDone: true},
+    ]
+}
+
 // Reducer принимает state(initialState) и action и возвращает новый стейт типа TodoListType[]:
 
-export const tasksReducer = (state: tasksObjType, action: ActionType): tasksObjType => {
+export const tasksReducer = (state: tasksObjType = initialState, action: ActionType): tasksObjType => {
     switch (action.type) {
 
         case 'ADD-TASK': {
@@ -98,27 +115,30 @@ export const tasksReducer = (state: tasksObjType, action: ActionType): tasksObjT
             const stateCopy = {...state}
             delete stateCopy[action.payload.todolistId]
             return stateCopy
+
+            //при деструктуризации создается новый объект:
+            // const {[action.payload.todolistId]: [], ...rest} = state
+            // return rest
         }
 
-
         default:
-            throw new Error("I don't understand this action type")
+            return state
     }
 }
 
-export const addTaskAC = (title: string, todolistId: string): addTaskActionType => {
+export const addTaskAC = (title: string, todolistId: string): AddTaskActionType => {
     return {type: 'ADD-TASK', payload: {title, todolistId}} as const
 }
 
-export const changeTaskStatusAC = (taskId: string, newIsDone: boolean, todolistId: string): changeTaskStatusActionType => {
+export const changeTaskStatusAC = (taskId: string, newIsDone: boolean, todolistId: string): ChangeTaskStatusActionType => {
     return {type: 'CHANGE-TASK-STATUS', payload: {taskId, todolistId, newIsDone}} as const
 }
 
-export const removeTaskAC = (taskId: string, todolistId: string): removeTaskActionType => {
+export const removeTaskAC = (taskId: string, todolistId: string): RemoveTaskActionType => {
     return {type: 'REMOVE-TASK', payload: {taskId, todolistId}} as const
 }
 
-export const changeTaskTitleAC = (taskId: string, newTitle: string, todolistId: string): changeTaskTitleActionType => {
+export const changeTaskTitleAC = (taskId: string, newTitle: string, todolistId: string): ChangeTaskTitleActionType => {
     return {type: 'CHANGE-TASK-TITLE', payload: {taskId, newTitle, todolistId}} as const
 }
 

@@ -17,7 +17,7 @@ export type TodoListPropsType = {
     title: string
     tasks: TaskType[]
     removeTask: (taskId: string, todoListId: string) => void
-    changeFilter: (value: FilterValuesType, todoListId: string) => void
+    changeFilter: (todoListId: string, value: FilterValuesType) => void
     addTask: (title: string, todoListId: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean, todoListId: string) => void
     changeTaskTitle: (taskId: string, newTitle: string, todoListId: string) => void
@@ -78,9 +78,9 @@ export const TodoList = ({
     );
 
 
-    const setAllTasksHandler = () => changeFilter("all", id)
-    const setActiveTasksHandler = () => changeFilter("active", id)
-    const setCompletedTasksHandler = () => changeFilter("completed", id)
+    const setAllTasksHandler = () => changeFilter(id,"all")
+    const setActiveTasksHandler = () => changeFilter(id, "active")
+    const setCompletedTasksHandler = () => changeFilter(id, "completed")
     const removeTodoListHandler = () => {
         removeTodoList(id)
     }
