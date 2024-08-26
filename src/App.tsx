@@ -28,7 +28,6 @@ export type tasksObjType = {
 type ThemeMode = 'dark' | 'light'
 
 function App() {
-
     // Business logic layer
 
     let todoListId1 = v1()

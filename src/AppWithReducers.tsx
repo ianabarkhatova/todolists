@@ -38,7 +38,6 @@ type ThemeMode = 'dark' | 'light'
 function AppWithReducers() {
 
     // Business logic layer
-
     let todoListId1 = v1()
     let todoListId2 = v1()
 
@@ -46,7 +45,6 @@ function AppWithReducers() {
         {id: todoListId1, title: 'What to learn', filter: 'all'},
         {id: todoListId2, title: 'What to buy', filter: 'all'}
     ])
-
     let [tasksObj, dispatchToTasks] = useReducer(tasksReducer, {
         [todoListId1]: [
             {id: v1(), title: 'HTML&CSS', isDone: true},
