@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback} from "react";
+import React, {ChangeEvent, memo, useCallback} from "react";
 import {IconButton, ListItem, Checkbox} from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {EditableSpan} from "./EditableSpan";
@@ -15,7 +15,7 @@ export type TaskPropsType = {
     todolistId: string
 };
 
-export const Task = React.memo(({task, todolistId}: TaskPropsType) => {
+export const Task = memo(({task, todolistId}: TaskPropsType) => {
     const dispatch = useDispatch();
 
     const removeTask = useCallback(() => {

@@ -1,9 +1,9 @@
-import React, {ChangeEvent, useCallback} from "react";
+import React, {ChangeEvent, memo, useCallback} from "react";
 import {FilterValuesType} from "../App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import IconButton from '@mui/material/IconButton'
-import {Box, Button, Checkbox, List, ListItem} from "@mui/material";
+import {Box, Button, ButtonProps, Checkbox, List, ListItem} from "@mui/material";
 import {filterButtonsContainerSx, getListItemSx} from "./TodoList.styles";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {TodoListType} from "../AppWithRedux";
@@ -23,7 +23,7 @@ export type TodoListPropsType = {
     todolist: TodoListType
 };
 
-export const TodoListWithRedux = React.memo(({todolist}: TodoListPropsType) => {
+export const TodoListWithRedux = memo(({todolist}: TodoListPropsType) => {
     console.log('TodoList was called')
 
     const {id, filter, title} = todolist
@@ -92,32 +92,47 @@ export const TodoListWithRedux = React.memo(({todolist}: TodoListPropsType) => {
         </ul>
 
         <Box sx={filterButtonsContainerSx}>
-            <Button
+            <ButtonWithMemo
                 size={'small'}
                 onClick={setAllTasks}
                 variant={filter === "all" ? "outlined" : "text"}
                 color='inherit'
             >
                 All
-            </Button>
-            <Button
+            </ButtonWithMemo>
+            <ButtonWithMemo
                 size={'small'}
                 onClick={setActiveTasks}
                 variant={filter === "active" ? "outlined" : "text"}
                 color='primary'
             >
                 Active
-            </Button>
-            <Button
+            </ButtonWithMemo>
+            <ButtonWithMemo
                 size={'small'}
                 onClick={setCompletedTasks}
                 variant={filter === "completed" ? "outlined" : "text"}
                 color='secondary'
             >
                 Completed
-            </Button>
+            </ButtonWithMemo>
         </Box>
     </div>;
+})
+
+type ButtonWithMemoPropsType = ButtonProps & {} // прошлые пропсы (MaterialUI) + пропсы для расширения кнопки на будущее
+// {children} - все, что находится между открывающимся и закрывающимся тегами
+
+const ButtonWithMemo = memo(({variant, onClick, color, children, ...rest }: ButtonWithMemoPropsType) => {
+    return (
+        <Button
+            variant={variant}
+            onClick={onClick}
+            color={color}
+            {...rest}
+        >{children}
+        </Button>
+    )
 })
 
 

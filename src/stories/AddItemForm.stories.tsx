@@ -1,16 +1,42 @@
+import type {Meta, StoryObj} from '@storybook/react';
+import {fn} from '@storybook/test';
+import {action} from '@storybook/addon-actions'
+
+import {AddItemForm, AddItemFormPropsType} from "../todoList/AddItemForm";
 import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
 import {TextField} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import AddBoxIcon from "@mui/icons-material/AddBox";
 
-export type AddItemFormPropsType = {
-    addItem: (title: string) => void
+const meta: Meta<typeof AddItemForm> = {
+    title: 'TODOLISTS/AddItemForm',
+    parameters: {
+        layout: 'centered'
+    },
+    component: AddItemForm,
+    tags: ['autodocs'],
+    argTypes: {
+        addItem: {
+            description: 'Button clicked',
+            // action: 'clicked',
+        }
+    },
+    args: {addItem: fn()}
 }
 
-export const AddItemForm = memo(({addItem}: AddItemFormPropsType) => {
+export default meta;
+type Story = StoryObj<typeof AddItemForm>;
+
+export const AddItemFormStory: Story = {};
+
+export const AddItemFormWithErrorStory = {
+    render: (args: AddItemFormPropsType) => <AddItemFormWithError addItem={args.addItem}/>
+}
+
+const AddItemFormWithError = memo(({addItem}: AddItemFormPropsType) => {
     console.log('AddItemForm was called')
     const [taskTitle, setTaskTitle] = useState('')
-    const [error, setError] = useState<string | null>(null)
+    const [error, setError] = useState<string | null>("Title is required")
 
     const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setError(null)

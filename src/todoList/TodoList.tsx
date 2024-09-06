@@ -87,11 +87,9 @@ export const TodoList = ({
     const addTaskHandler = (title: string) => {
         addTask(title, id);
     }
-
     const onChangeTodoListTitleHandler = (newTitle: string) => {
         changeTodoListTitle(id, newTitle)
     }
-
 
     // const userTaskTitleLengthWarning = taskTitle.length > 15 &&
     //     <div>Your task title should be not less than 15 characters</div>
