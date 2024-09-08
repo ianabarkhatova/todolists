@@ -27,7 +27,6 @@ export const TodoListWithRedux = memo(({todolist}: TodoListPropsType) => {
     console.log('TodoList was called')
 
     const {id, filter, title} = todolist
-    //достаем tasks из глобального объекта state с помощью useSelector
     let tasks = useSelector<AppRootStateType, TaskType[]>(
         state => state.tasks[id]
     )

@@ -49,19 +49,7 @@ type ActionType =
 
 
 const initialState: TasksObjType = {
-    // [todoListId1]: [
-    //     {id: v1(), title: 'HTML&CSS', isDone: true},
-    //     {id: v1(), title: 'JS', isDone: true},
-    //     {id: v1(), title: 'React JS', isDone: false},
-    //     {id: v1(), title: 'Redux', isDone: false},
-    //     {id: v1(), title: 'REST API', isDone: false},
-    //     {id: v1(), title: 'Typescript', isDone: false},
-    // ],
-    // [todoListId2]: [
-    //     {id: v1(), title: 'Book', isDone: false},
-    //     {id: v1(), title: 'Milk', isDone: true},
-    //     {id: v1(), title: 'Bread', isDone: true},
-    // ]
+    count: []
 }
 
 // Reducer принимает state(initialState) и action и возвращает новый стейт типа TodoListType[]:

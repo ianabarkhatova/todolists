@@ -34,55 +34,15 @@ function AppWithRedux() {
     console.log('App was called')
 
     // Business logic layer
-
-//достаем todoLists из глобального объекта state с помощью useSelector
     let todoLists = useSelector<AppRootStateType, TodoListType[]>(
         state => state.todoLists)
+
     const dispatch = useDispatch()
-
-    // CRUD Tasks
-
-    // const addTask = (title: string, todoListId: string) => {
-    //     const action = addTaskAC(title, todoListId)
-    //     dispatch(action)
-    // }
-    //
-    // const changeTaskStatus = (taskId: string, newIsDone: boolean, todoListId: string) => {
-    //     const action = changeTaskStatusAC(taskId, newIsDone, todoListId)
-    //     dispatch(action)
-    // }
-    //
-    // const removeTask = (taskId: string, todoListId: string) => {
-    //     const action = removeTaskAC(taskId, todoListId)
-    //     dispatch(action)
-    // }
-    //
-    // const changeTaskTitle = (taskId: string, newTitle: string, todoListId: string) => {
-    //     const action = changeTaskTitleAC(taskId, newTitle, todoListId)
-    //     dispatch(action)
-    // }
-
-    // CRUD TodoLists
-
-    // const removeTodoList = (todoListId: string) => {
-    //     const action = removeTodolistAC(todoListId)
-    //     dispatch(action)
-    // }
 
     const addTodoList = (title: string) => {
         const action = addTodolistAC(title)
         dispatch(action)
     }
-
-    // const changeTodoListTitle = (id: string, newTitle: string) => {
-    //     const action = changeTodolistTitleAC(id, newTitle)
-    //     dispatch(action)
-    // }
-    //
-    // const changeTodoListFilter = (todolistId: string, value: FilterValuesType) => {
-    //     const action = changeTodolistFilterAC(todolistId, value)
-    //     dispatch(action)
-    // }
 
     // Theme
 

@@ -5,13 +5,10 @@ import {EditableSpan} from "./EditableSpan";
 import {useDispatch} from "react-redux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
 import {getListItemSx} from "./TodoList.styles";
+import {TaskType} from "./TodoListWithRedux";
 
 export type TaskPropsType = {
-    task: {
-        id: string
-        title: string
-        isDone: boolean
-    },
+    task: TaskType,
     todolistId: string
 };
 
