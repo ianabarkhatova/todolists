@@ -1,4 +1,5 @@
 import {SxProps} from "@mui/material";
+import {TaskStatuses} from "../api/todolists-api";
 
 
 export const filterButtonsContainerSx: SxProps = {
@@ -6,8 +7,8 @@ export const filterButtonsContainerSx: SxProps = {
     justifyContent: 'space-between'
 }
 
-export const getListItemSx = (isDone: boolean): SxProps => ({
+export const getListItemSx = (status: TaskStatuses): SxProps => ({
     p: 0,
     justifyContent: 'space-between',
-    opacity: isDone ? 0.5 : 1,
+    opacity: status === TaskStatuses.Completed ? 0.5 : 1,
 })

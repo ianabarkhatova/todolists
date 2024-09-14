@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TaskType, TodoList} from "./todoList/TodoList";
+import {TodoList} from "./todoList/TodoList";
 import {v1} from "uuid";
 import {AddItemForm} from "./todoList/AddItemForm";
 import AppBar from '@mui/material/AppBar';
@@ -12,14 +12,8 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
 import {MenuButton} from "./components/MenuButton";
 import {createTheme, CssBaseline, Switch, ThemeProvider} from "@mui/material";
-
-export type FilterValuesType = "all" | "completed" | "active"
-
-export type TodoListType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
+import {FilterValuesType, TodolistDomainType} from "./state/todolists-reducer";
+import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolists-api";
 
 export type tasksObjType = {
     [key: string]: TaskType[],
@@ -33,24 +27,75 @@ function App() {
     let todoListId1 = v1()
     let todoListId2 = v1()
 
-    let [todoLists, setTodoLists] = useState<Array<TodoListType>>([
-        {id: todoListId1, title: 'What to learn', filter: 'all'},
-        {id: todoListId2, title: 'What to buy', filter: 'all'}
+    let [todoLists, setTodoLists] = useState<Array<TodolistDomainType>>([
+        {
+            id: todoListId1,
+            title: 'What to learn',
+            filter: 'all',
+            addedDate: '',
+            order: 0
+        },
+        {
+            id: todoListId2,
+            title: 'What to buy',
+            filter: 'all',
+            addedDate: '',
+            order: 0
+        }
     ])
 
     let [tasksObj, setTasks] = useState<tasksObjType>({
         [todoListId1]: [
-            {id: v1(), title: 'HTML&CSS', isDone: true},
-            {id: v1(), title: 'JS', isDone: true},
-            {id: v1(), title: 'React JS', isDone: false},
-            {id: v1(), title: 'Redux', isDone: false},
-            {id: v1(), title: 'REST API', isDone: false},
-            {id: v1(), title: 'Typescript', isDone: false},
+            {
+                description: 'description',
+                title: 'HTML&CSS',
+                status: TaskStatuses.Completed,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                id: v1(),
+                todoListId: todoListId1,
+                order: 0,
+                addedDate: '',
+            },
+            {
+                description: 'description',
+                title: 'JS',
+                status: TaskStatuses.Completed,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                id: v1(),
+                todoListId: todoListId1,
+                order: 1,
+                addedDate: '',
+            },
         ],
         [todoListId2]: [
-            {id: v1(), title: 'Book', isDone: false},
-            {id: v1(), title: 'Milk', isDone: true},
-            {id: v1(), title: 'Bread', isDone: true},
+            {
+                description: 'description',
+                title: 'Milk',
+                status: TaskStatuses.Completed,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                id: v1(),
+                todoListId: todoListId2,
+                order: 0,
+                addedDate: '',
+            },
+            {
+                description: 'description',
+                title: 'Book',
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Hi,
+                startDate: '',
+                deadline: '',
+                id: v1(),
+                todoListId: todoListId2,
+                order: 1,
+                addedDate: '',
+            },
         ]
     })
 
@@ -58,7 +103,18 @@ function App() {
     // CRUD Tasks
 
     const addTask = (title: string, todoListId: string) => {
-        const newTask: TaskType = {id: v1(), title: title, isDone: false}
+        const newTask: TaskType = {
+            description: 'description',
+            title: title,
+            status: TaskStatuses.New,
+            priority: TaskPriorities.Low,
+            startDate: '',
+            deadline: '',
+            id: v1(),
+            todoListId: todoListId,
+            order: 1,
+            addedDate: '',
+        }
         //если передаем title c таким же именем, можно писать так:
         // title,
         let tasks = tasksObj[todoListId]
@@ -67,9 +123,9 @@ function App() {
         setTasks({...tasksObj})
     }
 
-    const changeTaskStatus = (taskId: string, newIsDone: boolean, todoListId: string) => {
+    const changeTaskStatus = (taskId: string, status: TaskStatuses, todoListId: string) => {
         let tasks = tasksObj[todoListId]
-        const newState = tasks.map(t => taskId === t.id ? {...t, isDone: newIsDone} : t)
+        const newState = tasks.map(t => taskId === t.id ? {...t, status: status} : t)
         tasksObj[todoListId] = newState
         setTasks({...tasksObj})
     }
@@ -101,9 +157,11 @@ function App() {
     }
 
     const addTodoList = (title: string) => {
-        let todoList: TodoListType = {
+        let todoList: TodolistDomainType = {
             id: v1(),
             title: title,
+            addedDate: '',
+            order: 1,
             filter: 'all'
         }
         setTodoLists([todoList, ...todoLists])
@@ -181,10 +239,10 @@ function App() {
                             let tasksForTodoList = tasksObj[tl.id]
 
                             if (tl.filter === "completed") {
-                                tasksForTodoList = tasksForTodoList.filter(t => t.isDone);
+                                tasksForTodoList = tasksForTodoList.filter(t => t.status === TaskStatuses.Completed);
                             }
                             if (tl.filter === "active") {
-                                tasksForTodoList = tasksForTodoList.filter(t => !t.isDone);
+                                tasksForTodoList = tasksForTodoList.filter(t => t.status === TaskStatuses.New);
                             }
 
                             return (

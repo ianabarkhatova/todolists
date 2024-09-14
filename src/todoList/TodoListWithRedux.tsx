@@ -1,27 +1,27 @@
-import React, {ChangeEvent, memo, useCallback} from "react";
-import {FilterValuesType} from "../App";
+import React, {memo, useCallback} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import IconButton from '@mui/material/IconButton'
-import {Box, Button, ButtonProps, Checkbox, List, ListItem} from "@mui/material";
-import {filterButtonsContainerSx, getListItemSx} from "./TodoList.styles";
+import {Box, Button, ButtonProps, List} from "@mui/material";
+import {filterButtonsContainerSx} from "./TodoList.styles";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import {TodoListType} from "../AppWithRedux";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../state/store";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
-import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../state/todolists-reducer";
+import {addTaskAC} from "../state/tasks-reducer";
+import {
+    changeTodolistFilterAC,
+    changeTodolistTitleAC,
+    removeTodolistAC,
+    TodolistDomainType
+} from "../state/todolists-reducer";
 import {Task} from "./Task";
-
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
+import {TaskStatuses, TaskType} from "../api/todolists-api";
 
 export type TodoListPropsType = {
-    todolist: TodoListType
+    todolist: TodolistDomainType
 };
+
+// export type TaskDomainType =
 
 export const TodoListWithRedux = memo(({todolist}: TodoListPropsType) => {
     console.log('TodoList was called')
@@ -34,10 +34,10 @@ export const TodoListWithRedux = memo(({todolist}: TodoListPropsType) => {
     const dispatch = useDispatch()
 
     if (filter === "completed") {
-        tasks = tasks.filter(t => t.isDone);
+        tasks = tasks.filter(t => t.status === TaskStatuses.Completed);
     }
     if (filter === "active") {
-        tasks = tasks.filter(t => !t.isDone);
+        tasks = tasks.filter(t => t.status === TaskStatuses.New);
     }
 
     const tasksElements: Array<JSX.Element> | JSX.Element = tasks.length === 0 ? (

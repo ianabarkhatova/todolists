@@ -1,13 +1,8 @@
 import React, {useRef} from "react";
 import {Button} from "@mui/material";
-import {FilterValuesType} from "../App";
+import {TaskStatuses, TaskType} from "../api/todolists-api";
+import {FilterValuesType} from "../state/todolists-reducer";
 
-
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
 
 export type TodoListPropsType = {
     title: string
@@ -44,7 +39,7 @@ export const TodoList = ({title, tasks, removeTask, changeFilter, addTask}: Todo
                     return (
                         // каждая таска попадает в переменную "t":
                         <li key={t.id}>
-                            <input type="checkbox" checked={t.isDone}/>
+                            <input type="checkbox" checked={t.status === TaskStatuses.Completed}/>
                             <span>{t.title}</span>
                             <button onClick={() => {
                                 removeTask(t.id)

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TaskType} from "./todoList/TodoList";
 import {AddItemForm} from "./todoList/AddItemForm";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,18 +10,11 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
 import {MenuButton} from "./components/MenuButton";
 import {createTheme, CssBaseline, Switch, ThemeProvider} from "@mui/material";
-import {addTodolistAC,} from "./state/todolists-reducer";
+import {addTodolistAC, TodolistDomainType,} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {TodoListWithRedux} from "./todoList/TodoListWithRedux";
-
-export type FilterValuesType = "all" | "completed" | "active"
-
-export type TodoListType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
+import {TaskType} from "./api/todolists-api";
 
 export type TasksObjType = {
     [key: string]: TaskType[],
@@ -34,7 +26,7 @@ function AppWithRedux() {
     console.log('App was called')
 
     // Business logic layer
-    let todoLists = useSelector<AppRootStateType, TodoListType[]>(
+    let todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(
         state => state.todoLists)
 
     const dispatch = useDispatch()
@@ -67,7 +59,7 @@ function AppWithRedux() {
     })
 
     const changeModeHandler = () => {
-        setThemeMode(themeMode == 'light' ? 'dark' : 'light')
+        setThemeMode(themeMode === 'light' ? 'dark' : 'light')
     }
 
     //UI
