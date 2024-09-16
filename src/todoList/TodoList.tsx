@@ -7,6 +7,10 @@ import {filterButtonsContainerSx, getListItemSx} from "./TodoList.styles";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {TaskStatuses, TaskType} from "../api/todolists-api";
 import {FilterValuesType} from "../state/todolists-reducer";
+import {useAppDispatch} from "../state/store";
+import {ThunkDispatch} from "redux-thunk";
+import {Action} from "redux";
+import {useDispatch} from "react-redux";
 
 export type TodoListPropsType = {
     title: string

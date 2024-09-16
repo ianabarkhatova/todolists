@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {AddItemForm} from "./todoList/AddItemForm";
 import AppBar from '@mui/material/AppBar';
@@ -10,7 +10,11 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
 import {MenuButton} from "./components/MenuButton";
 import {createTheme, CssBaseline, Switch, ThemeProvider} from "@mui/material";
-import {addTodolistAC, TodolistDomainType,} from "./state/todolists-reducer";
+import {
+    addTodolistAC,
+    fetchTodolistsTC,
+    TodolistDomainType,
+} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {TodoListWithRedux} from "./todoList/TodoListWithRedux";
@@ -23,13 +27,18 @@ export type TasksObjType = {
 type ThemeMode = 'dark' | 'light'
 
 function AppWithRedux() {
-    console.log('App was called')
-
     // Business logic layer
     let todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(
         state => state.todoLists)
 
     const dispatch = useDispatch()
+    // const dispatch: ThunkDispatch<any, any, Action> = useDispatch();
+
+    //мы не можем показать тудулисты, пока не отправим их в какой-либо стейт
+    useEffect(() => {
+        dispatch(fetchTodolistsTC());  // Note the parentheses to invoke the thunk
+    }, []);
+
 
     const addTodoList = (title: string) => {
         const action = addTodolistAC(title)
