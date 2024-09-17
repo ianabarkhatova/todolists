@@ -7,11 +7,11 @@ import {filterButtonsContainerSx} from "./TodoList.styles";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../state/store";
-import {addTaskAC, fetchTasksTC} from "../state/tasks-reducer";
+import {addTaskTC, fetchTasksTC} from "../state/tasks-reducer";
 import {
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC,
+    changeTodolistTitleTC,
+    removeTodolistTC,
     TodolistDomainType
 } from "../state/todolists-reducer";
 import {Task} from "./Task";
@@ -64,13 +64,15 @@ export const TodoListWithRedux = memo(({todolist}: TodoListPropsType) => {
 
 
     const removeTodoList = useCallback(() => {
-        dispatch(removeTodolistAC(id))
+        dispatch(removeTodolistTC(id))
     }, [])
+
     const changeTodoListTitle = useCallback((newTitle: string) => {
-        dispatch(changeTodolistTitleAC(id, newTitle))
+        dispatch(changeTodolistTitleTC(id, newTitle))
     }, [])
+
     const addTask = useCallback((title: string) => {
-        dispatch(addTaskAC(title, id));
+        dispatch(addTaskTC(title, id));
     }, [])
 
     // const userTaskTitleLengthWarning = taskTitle.length > 15 &&

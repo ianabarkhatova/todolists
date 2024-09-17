@@ -11,7 +11,7 @@ import Paper from '@mui/material/Paper';
 import {MenuButton} from "./components/MenuButton";
 import {createTheme, CssBaseline, Switch, ThemeProvider} from "@mui/material";
 import {
-    addTodolistAC,
+    addTodolistAC, addTodolistTC,
     fetchTodolistsTC,
     TodolistDomainType,
 } from "./state/todolists-reducer";
@@ -33,22 +33,17 @@ function AppWithRedux() {
 
     const dispatch = useDispatch()
     // const dispatch: ThunkDispatch<any, any, Action> = useDispatch();
-
     //мы не можем показать тудулисты, пока не отправим их в какой-либо стейт
     useEffect(() => {
         dispatch(fetchTodolistsTC());  // Note the parentheses to invoke the thunk
     }, []);
 
-
     const addTodoList = (title: string) => {
-        const action = addTodolistAC(title)
-        dispatch(action)
+        dispatch(addTodolistTC(title))
     }
 
     // Theme
-
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
-
     const theme = createTheme({
         palette: {
             mode: themeMode === 'light' ? 'light' : 'dark',
