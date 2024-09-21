@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import {AddItemForm} from "./todoList/AddItemForm";
+import {AddItemForm} from "../components/AddItemForm/AddItemForm";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -8,17 +8,17 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
-import {MenuButton} from "./components/MenuButton";
+import {MenuButton} from "../components/MenuButton/MenuButton";
 import {createTheme, CssBaseline, Switch, ThemeProvider} from "@mui/material";
 import {
-    addTodolistAC, addTodolistTC,
-    fetchTodolistsTC,
+    addTodolistTC,
+    getTodolistsTC,
     TodolistDomainType,
-} from "./state/todolists-reducer";
+} from "../state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./state/store";
-import {TodoListWithRedux} from "./todoList/TodoListWithRedux";
-import {TaskType} from "./api/todolists-api";
+import {AppRootStateType} from "../state/store";
+import {TodoListWithRedux} from "../features/Todolists/Todolist/TodoListWithRedux";
+import {TaskType} from "../api/todolists-api";
 
 export type TasksObjType = {
     [key: string]: TaskType[],
@@ -35,7 +35,7 @@ function AppWithRedux() {
     // const dispatch: ThunkDispatch<any, any, Action> = useDispatch();
     //мы не можем показать тудулисты, пока не отправим их в какой-либо стейт
     useEffect(() => {
-        dispatch(fetchTodolistsTC());  // Note the parentheses to invoke the thunk
+        dispatch(getTodolistsTC());  // Note the parentheses to invoke the thunk
     }, []);
 
     const addTodoList = (title: string) => {

@@ -1,9 +1,9 @@
 import React, {Profiler} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import AppWithReducers from "./AppWithReducers";
-import AppWithRedux from "./AppWithRedux";
+import App from './temp/App';
+import AppWithReducers from "./temp/AppWithReducers";
+import AppWithRedux from "./app/AppWithRedux";
 import {Provider} from "react-redux";
 import {store} from "./state/store";
 

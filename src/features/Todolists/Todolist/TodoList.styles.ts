@@ -1,5 +1,5 @@
 import {SxProps} from "@mui/material";
-import {TaskStatuses} from "../api/todolists-api";
+import {TaskStatuses} from "../../../api/todolists-api";
 
 
 export const filterButtonsContainerSx: SxProps = {

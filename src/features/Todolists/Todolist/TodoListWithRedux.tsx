@@ -1,21 +1,21 @@
 import React, {memo, useCallback, useEffect} from "react";
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
+import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
+import {EditableSpan} from "../../../components/EditableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton'
 import {Box, Button, ButtonProps, List} from "@mui/material";
 import {filterButtonsContainerSx} from "./TodoList.styles";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../state/store";
-import {addTaskTC, fetchTasksTC} from "../state/tasks-reducer";
+import {AppRootStateType} from "../../../state/store";
+import {addTaskTC, getTasksTC} from "../../../state/tasks-reducer";
 import {
     changeTodolistFilterAC,
     changeTodolistTitleTC,
     removeTodolistTC,
     TodolistDomainType
-} from "../state/todolists-reducer";
-import {Task} from "./Task";
-import {TaskStatuses, TaskType} from "../api/todolists-api";
+} from "../../../state/todolists-reducer";
+import {Task} from "./Task/Task";
+import {TaskStatuses, TaskType} from "../../../api/todolists-api";
 
 export type TodoListPropsType = {
     todolist: TodolistDomainType
@@ -33,7 +33,7 @@ export const TodoListWithRedux = memo(({todolist}: TodoListPropsType) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchTasksTC(id))
+        dispatch(getTasksTC(id))
     }, [])
 
     if (filter === "completed") {

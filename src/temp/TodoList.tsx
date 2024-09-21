@@ -1,9 +1,9 @@
 import React, {ChangeEvent} from "react";
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
+import {AddItemForm} from "../components/AddItemForm/AddItemForm";
+import {EditableSpan} from "../components/EditableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton'
 import {Box, Button, Checkbox, List, ListItem} from "@mui/material";
-import {filterButtonsContainerSx, getListItemSx} from "./TodoList.styles";
+import {filterButtonsContainerSx, getListItemSx} from "../features/Todolists/Todolist/TodoList.styles";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {TaskStatuses, TaskType} from "../api/todolists-api";
 import {FilterValuesType} from "../state/todolists-reducer";

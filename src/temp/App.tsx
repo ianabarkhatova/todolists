@@ -1,8 +1,8 @@
-import React, {useReducer, useState} from 'react';
-import './App.css';
-import {TodoList} from "./todoList/TodoList";
+import React, {useState} from 'react';
+import '../app/App.css';
+import {TodoList} from "./TodoList";
 import {v1} from "uuid";
-import {AddItemForm} from "./todoList/AddItemForm";
+import {AddItemForm} from "../components/AddItemForm/AddItemForm";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -10,17 +10,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
-import {MenuButton} from "./components/MenuButton";
+import {MenuButton} from "../components/MenuButton/MenuButton";
 import {createTheme, CssBaseline, Switch, ThemeProvider} from "@mui/material";
-import {
-    addTodolistAC,
-    changeTodolistFilterAC,
-    changeTodolistTitleAC, FilterValuesType,
-    removeTodolistAC,
-    todolistsReducer
-} from "./state/todolists-reducer";
-import {addTaskAC, updateTaskAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
-import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolists-api";
+import {FilterValuesType, TodolistDomainType} from "../state/todolists-reducer";
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolists-api";
 
 export type tasksObjType = {
     [key: string]: TaskType[],
@@ -28,13 +21,13 @@ export type tasksObjType = {
 
 type ThemeMode = 'dark' | 'light'
 
-function AppWithReducers() {
-
+function App() {
     // Business logic layer
+
     let todoListId1 = v1()
     let todoListId2 = v1()
 
-    let [todoLists, dispatchToTodolists] = useReducer(todolistsReducer, [
+    let [todoLists, setTodoLists] = useState<Array<TodolistDomainType>>([
         {
             id: todoListId1,
             title: 'What to learn',
@@ -50,7 +43,8 @@ function AppWithReducers() {
             order: 0
         }
     ])
-    let [tasksObj, dispatchToTasks] = useReducer(tasksReducer, {
+
+    let [tasksObj, setTasks] = useState<tasksObjType>({
         [todoListId1]: [
             {
                 description: 'description',
@@ -109,60 +103,81 @@ function AppWithReducers() {
     // CRUD Tasks
 
     const addTask = (title: string, todoListId: string) => {
-        const action = addTaskAC({
+        const newTask: TaskType = {
             description: 'description',
             title: title,
-            status: TaskStatuses.Completed,
+            status: TaskStatuses.New,
             priority: TaskPriorities.Low,
             startDate: '',
             deadline: '',
-            id: '1',
+            id: v1(),
             todoListId: todoListId,
-            order: 0,
+            order: 1,
             addedDate: '',
-        },)
-        dispatchToTasks(action)
+        }
+        //если передаем title c таким же именем, можно писать так:
+        // title,
+        let tasks = tasksObj[todoListId]
+        let newTasks = [newTask, ...tasks]
+        tasksObj[todoListId] = newTasks
+        setTasks({...tasksObj})
     }
 
     const changeTaskStatus = (taskId: string, status: TaskStatuses, todoListId: string) => {
-        const action = updateTaskAC(taskId, {status}, todoListId)
-        dispatchToTasks(action)
+        let tasks = tasksObj[todoListId]
+        const newState = tasks.map(t => taskId === t.id ? {...t, status: status} : t)
+        tasksObj[todoListId] = newState
+        setTasks({...tasksObj})
     }
 
     const removeTask = (taskId: string, todoListId: string) => {
-        const action = removeTaskAC(taskId, todoListId)
-        dispatchToTasks(action)
+        let tasks = tasksObj[todoListId]
+        let filteredTasks = tasks.filter(t => t.id !== taskId)
+        tasksObj[todoListId] = filteredTasks
+        setTasks({...tasksObj})
     }
 
     const changeTaskTitle = (taskId: string, newTitle: string, todoListId: string) => {
-        const action = updateTaskAC(taskId, {title: newTitle}, todoListId)
-        dispatchToTasks(action)
+        //достаем нужный массив по todoListId:
+        let tasks = tasksObj[todoListId]
+        //находим и изменяем нужную таску:
+        const newState = tasks.map(t => taskId === t.id ? {...t, title: newTitle} : t)
+        tasksObj[todoListId] = newState
+        //сетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
+        setTasks({...tasksObj})
     }
 
     // CRUD TodoLists
 
     const removeTodoList = (todoListId: string) => {
-        const action = removeTodolistAC(todoListId)
-        dispatchToTodolists(action)
-        dispatchToTasks(action)
+        let filteredTodoList = todoLists.filter((tl) => tl.id !== todoListId)
+        setTodoLists(filteredTodoList)
+        delete tasksObj[todoListId]
+        setTasks({...tasksObj})
     }
 
     const addTodoList = (title: string) => {
-        const action = addTodolistAC({
-            id: v1(), title: title, addedDate: '', order: 0
-        })
-        dispatchToTasks(action)
-        dispatchToTodolists(action)
+        let todoList: TodolistDomainType = {
+            id: v1(),
+            title: title,
+            addedDate: '',
+            order: 1,
+            filter: 'all'
+        }
+        setTodoLists([todoList, ...todoLists])
+        setTasks({...tasksObj, [todoList.id]: []})
     }
 
     const changeTodoListTitle = (id: string, newTitle: string) => {
-        const action = changeTodolistTitleAC(id, newTitle)
-        dispatchToTodolists(action)
+        setTodoLists(todoLists.map(tl => tl.id === id ? {...tl, title: newTitle} : tl))
     }
 
-    const changeTodoListFilter = (todolistId: string, value: FilterValuesType) => {
-        const action = changeTodolistFilterAC(todolistId, value)
-        dispatchToTodolists(action)
+    const changeTodoListFilter = (todoListId: string, value: FilterValuesType) => {
+        let todoList = todoLists.find(tl => tl.id === todoListId)
+        if (todoList) {
+            todoList.filter = value
+            setTodoLists([...todoLists])
+        }
     }
 
     // Theme
@@ -258,4 +273,4 @@ function AppWithReducers() {
     );
 }
 
-export default AppWithReducers;
+export default App;

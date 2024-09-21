@@ -1,10 +1,10 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {Task} from "../todoList/Task";
-import {ReduxStoreProviderDecorator} from './decorators/ReduxStoreProviderDecorator'
+import {Task} from "./Task";
+import {ReduxStoreProviderDecorator} from '../../../../stories/decorators/ReduxStoreProviderDecorator'
 import {Provider} from "react-redux";
-import {store} from "../state/store";
+import {store} from "../../../../state/store";
 import React from "react";
-import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
+import {TaskPriorities, TaskStatuses} from "../../../../api/todolists-api";
 
 
 const meta: Meta<typeof Task> = {
