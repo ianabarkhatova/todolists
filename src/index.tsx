@@ -1,8 +1,6 @@
-import React, {Profiler} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './temp/App';
-import AppWithReducers from "./temp/AppWithReducers";
 import AppWithRedux from "./app/AppWithRedux";
 import {Provider} from "react-redux";
 import {store} from "./state/store";

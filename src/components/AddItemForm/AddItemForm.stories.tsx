@@ -18,8 +18,7 @@ const meta: Meta<typeof AddItemForm> = {
     argTypes: {
         addItem: {
             description: 'Button clicked',
-            // action: 'clicked',
-        }
+        },
     },
     args: {addItem: fn()}
 }
@@ -32,6 +31,11 @@ export const AddItemFormStory: Story = {};
 export const AddItemFormWithErrorStory = {
     render: (args: AddItemFormPropsType) => <AddItemFormWithError addItem={args.addItem}/>
 }
+
+export const AddItemFormDisabledStory = {
+    render: (args: AddItemFormPropsType) => <AddItemForm disabled={true} addItem={args.addItem}/>
+}
+
 
 const AddItemFormWithError = memo(({addItem}: AddItemFormPropsType) => {
     console.log('AddItemForm was called')

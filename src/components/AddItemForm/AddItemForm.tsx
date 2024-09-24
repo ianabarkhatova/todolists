@@ -4,10 +4,11 @@ import IconButton from "@mui/material/IconButton";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 
 export type AddItemFormPropsType = {
-    addItem: (title: string) => void
+    addItem: (title: string) => void,
+    disabled?: boolean
 }
 
-export const AddItemForm = memo(({addItem}: AddItemFormPropsType) => {
+export const AddItemForm = memo(({addItem, disabled = false}: AddItemFormPropsType) => {
     console.log('AddItemForm was called')
     const [taskTitle, setTaskTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
@@ -39,8 +40,9 @@ export const AddItemForm = memo(({addItem}: AddItemFormPropsType) => {
             onKeyDown={keyDownAddTaskHandler}
             error={!!error}
             helperText={error}
+            disabled={disabled}
         />
-        <IconButton onClick={addTaskHandler} color={'primary'}>
+        <IconButton onClick={addTaskHandler} color={'primary'} disabled={disabled}>
             <AddBoxIcon/>
         </IconButton>
     </div>

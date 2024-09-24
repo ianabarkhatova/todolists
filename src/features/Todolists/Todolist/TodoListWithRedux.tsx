@@ -19,11 +19,12 @@ import {TaskStatuses, TaskType} from "../../../api/todolists-api";
 
 export type TodoListPropsType = {
     todolist: TodolistDomainType
+    demo?: boolean
 };
 
 // export type TaskDomainType =
 
-export const TodoListWithRedux = memo(({todolist}: TodoListPropsType) => {
+export const TodoListWithRedux = memo(({todolist, demo = false}: TodoListPropsType) => {
 
     const {id, filter, title} = todolist
     let tasks = useSelector<AppRootStateType, TaskType[]>(
@@ -32,7 +33,11 @@ export const TodoListWithRedux = memo(({todolist}: TodoListPropsType) => {
 
     const dispatch = useDispatch()
 
+    // if demo mode (for Storybook), the function will break
     useEffect(() => {
+        if (demo) {
+            return
+        }
         dispatch(getTasksTC(id))
     }, [])
 
@@ -84,12 +89,12 @@ export const TodoListWithRedux = memo(({todolist}: TodoListPropsType) => {
                 title={title}
                 onChange={changeTodoListTitle}
             />
-            <IconButton aria-label="delete" onClick={removeTodoList}>
+            <IconButton aria-label="delete" onClick={removeTodoList} disabled={todolist.entityStatus === 'loading'}>
                 <DeleteOutlineIcon/>
             </IconButton>
         </h3>
 
-        <AddItemForm addItem={addTask}/>
+        <AddItemForm addItem={addTask} disabled={todolist.entityStatus === 'loading'}/>
 
         <ul>
             {tasksElements}

@@ -1,4 +1,3 @@
-import {tasksObjType} from '../temp/App'
 import {
     addTaskAC,
     updateTaskAC,
@@ -6,10 +5,11 @@ import {
     setTasksAC,
     tasksReducer
 } from "./tasks-reducer";
-import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolists-reducer";
+import {removeTodolistAC, setTodolistsAC} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
+import {TasksObjType} from "../app/AppWithRedux";
 
-let startState: tasksObjType
+let startState: TasksObjType
 
 beforeEach(() => {
     startState = {
