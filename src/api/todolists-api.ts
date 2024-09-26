@@ -17,17 +17,17 @@ export const todolistsAPI = {
     },
 
     createTodolist(title: string) {
-        return instance.post<ResponseType<{ item: TodolistType }>>
+        return instance.post<GeneralResponseType<{ item: TodolistType }>>
         ('todo-lists', {title: title})
     },
 
     updateTodolist(todolistId: string, title: string) {
-        return instance.put<ResponseType>(
+        return instance.put<GeneralResponseType>(
             `todo-lists/${todolistId}`, {title: title})
     },
 
     deleteTodolist(todolistId: string) {
-        return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
+        return instance.delete<GeneralResponseType>(`todo-lists/${todolistId}`)
     },
 
     getTasks(todolistId: string) {
@@ -35,17 +35,17 @@ export const todolistsAPI = {
     },
 
     createTask(todolistId: string, taskTitle: string) {
-        return instance.post<ResponseType<{ item: TaskType }>>(
+        return instance.post<GeneralResponseType<{ item: TaskType }>>(
             `/todo-lists/${todolistId}/tasks`, {title: taskTitle})
     },
 
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
-        return instance.put<ResponseType<{ item: TaskType }>>(
+        return instance.put<GeneralResponseType<{ item: TaskType }>>(
             `/todo-lists/${todolistId}/tasks/${taskId}`, model)
     },
 
     deleteTask(todolistId: string, taskId: string) {
-        return instance.delete<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskId}`)
+        return instance.delete<GeneralResponseType>(`/todo-lists/${todolistId}/tasks/${taskId}`)
     },
 }
 
@@ -60,12 +60,13 @@ type FieldErrorType = {
     error: string
     field: string
 }
-export type ResponseType<D = {}> = {
+export type GeneralResponseType<D = {}> = {
     messages: string[],
     fieldsErrors: FieldErrorType[],
     resultCode: number
     data: D
 }
+
 export enum TaskStatuses {
     New = 0,
     InProgress = 1,
@@ -91,7 +92,7 @@ export type TaskType = {
     order: number
     addedDate: string
 }
-type GetTasksResponseType = {
+export type GetTasksResponseType = {
     items: TaskType[],
     totalCount: number,
     error: string | null

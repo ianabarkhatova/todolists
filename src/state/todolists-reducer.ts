@@ -42,7 +42,7 @@ export const changeTodolistFilterAC = (todolistId: string, value: FilterValuesTy
     {type: 'CHANGE-TODOLIST-FILTER', id: todolistId, filter: value} as const)
 export const setTodolistsAC = (todolists: TodolistType[]) => (
     {type: 'SET-TODOLISTS', todolists: todolists} as const)
-export const changeTodolistEntityStatusAC = (id: string, status: RequestStatusType) => (
+export const changeTodolistStatusAC = (id: string, status: RequestStatusType) => (
     {type: 'CHANGE-TODOLIST-ENTITY-STATUS', id, status} as const)
 
 
@@ -53,6 +53,7 @@ export const getTodolistsTC = () => (dispatch: ThunkDispatch) => {
         .then((res) => {
             dispatch(setTodolistsAC(res.data))
             dispatch(setAppStatusAC('succeeded'))
+            console.log("getTodolists ", res)
         })
         .catch((error) => {
             handleServiceNetworkError(dispatch, error)
@@ -60,13 +61,13 @@ export const getTodolistsTC = () => (dispatch: ThunkDispatch) => {
 }
 export const removeTodolistTC = (todolistId: string) => (dispatch: ThunkDispatch) => {
     dispatch(setAppStatusAC('loading'))
-    dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
-
+    dispatch(changeTodolistStatusAC(todolistId, 'loading'))
     todolistsAPI.deleteTodolist(todolistId)
         .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(removeTodolistAC(todolistId))
                 dispatch(setAppStatusAC('succeeded'))
+                console.log("removeTodolist ", res)
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -83,6 +84,7 @@ export const addTodolistTC = (title: string) => (dispatch: ThunkDispatch) => {
             if (res.data.resultCode === 0) {
                 dispatch(addTodolistAC(res.data.data.item))
                 dispatch(setAppStatusAC('succeeded'))
+                console.log("addTodolist ", res)
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -98,8 +100,9 @@ export const changeTodolistTitleTC = (todolistId: string, title: string) => (dis
             if (res.data.resultCode === 0) {
                 dispatch(changeTodolistTitleAC(todolistId, title))
                 dispatch(setAppStatusAC('succeeded'))
+                console.log("changeTodolist ", res)
             } else {
-                handleServerAppError(res.data, dispatch)
+                // handleServerAppError(res.data, dispatch)
             }
         })
         .catch((error) => {
@@ -118,7 +121,7 @@ export type TodolistActionType =
     | SetTodolistsActionType
     | ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof changeTodolistFilterAC>
-    | ReturnType<typeof changeTodolistEntityStatusAC>
+    | ReturnType<typeof changeTodolistStatusAC>
 
 
 export type FilterValuesType = "all" | "completed" | "active"

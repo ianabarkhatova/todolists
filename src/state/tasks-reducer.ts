@@ -61,8 +61,13 @@ export const getTasksTC = (todolistId: string) => (dispatch: ThunkDispatch) => {
     dispatch(setAppStatusAC('loading'))
     todolistsAPI.getTasks(todolistId)
         .then((res) => {
-            dispatch(setTasksAC(res.data.items, todolistId))
-            dispatch(setAppStatusAC('succeeded'))
+            if (res.data.error === null) {
+                dispatch(setTasksAC(res.data.items, todolistId))
+                dispatch(setAppStatusAC('succeeded'))
+                // console.log("getTasks ", res)
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
         })
         .catch((error) => {
             handleServiceNetworkError(dispatch, error)
