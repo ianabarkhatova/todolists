@@ -1,5 +1,5 @@
 import {
-    addTodolistAC, changeTodolistStatusAC, changeTodolistFilterAC,
+    addTodolistAC, changeTodolistEntityStatusAC, changeTodolistFilterAC,
     changeTodolistTitleAC, FilterValuesType, removeTodolistAC, setTodolistsAC, TodolistDomainType, todolistsReducer
 } from './todolists-reducer'
 import {v1} from 'uuid'
@@ -84,7 +84,7 @@ test('correct filter of todolist should be changed', () => {
 test('correct todolist entity status should be changed', () => {
 
     let newStatus: RequestStatusType = 'loading'
-    const action = changeTodolistStatusAC(todolistId2, newStatus)
+    const action = changeTodolistEntityStatusAC(todolistId2, newStatus)
     const endState = todolistsReducer(startState, action)
 
     expect(endState[0].entityStatus).toBe('idle')

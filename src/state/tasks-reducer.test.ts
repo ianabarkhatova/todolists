@@ -25,6 +25,7 @@ beforeEach(() => {
                 todoListId: 'todolistId1',
                 order: 0,
                 addedDate: '',
+                entityStatus: 'loading'
             },
             {
                 description: 'description',
@@ -37,6 +38,7 @@ beforeEach(() => {
                 todoListId: 'todolistId1',
                 order: 0,
                 addedDate: '',
+                entityStatus: 'idle'
             },
             {
                 description: 'description',
@@ -49,6 +51,7 @@ beforeEach(() => {
                 todoListId: 'todolistId1',
                 order: 0,
                 addedDate: '',
+                entityStatus: "idle"
             },
             {
                 description: 'description',
@@ -61,6 +64,7 @@ beforeEach(() => {
                 todoListId: 'todolistId1',
                 order: 0,
                 addedDate: '',
+                entityStatus: "idle"
             },
             {
                 description: 'description',
@@ -73,6 +77,7 @@ beforeEach(() => {
                 todoListId: 'todolistId1',
                 order: 0,
                 addedDate: '',
+                entityStatus: "idle"
             },
             {
                 description: 'description',
@@ -85,6 +90,7 @@ beforeEach(() => {
                 todoListId: 'todolistId1',
                 order: 0,
                 addedDate: '',
+                entityStatus: "idle"
             }
         ],
         'todolistId2': [
@@ -99,6 +105,7 @@ beforeEach(() => {
                 todoListId: 'todolistId2',
                 order: 0,
                 addedDate: '',
+                entityStatus: "idle"
             },
             {
                 description: 'description',
@@ -111,6 +118,7 @@ beforeEach(() => {
                 todoListId: 'todolistId2',
                 order: 0,
                 addedDate: '',
+                entityStatus: "idle"
             }
         ]
     }
@@ -220,16 +228,18 @@ test('correct task should be removed from correct todoList', () => {
 test('correct task should be added to correct todoList', () => {
 
     const action = addTaskAC({
-        todoListId: 'todolistId2',
-        title: 'juice',
-        status: TaskStatuses.New,
-        addedDate: '',
-        deadline: '',
-        description: '',
-        order: 0,
-        priority: 0,
-        startDate: '',
-        id: 'id exists'}
+            todoListId: 'todolistId2',
+            title: 'juice',
+            status: TaskStatuses.New,
+            addedDate: '',
+            deadline: '',
+            description: '',
+            order: 0,
+            priority: 0,
+            startDate: '',
+            id: 'id exists',
+            entityStatus: "idle"
+        }
     )
 
     const endState = tasksReducer(startState, action)
@@ -292,8 +302,8 @@ test('property with todolistId should be deleted', () => {
 test('empty arrays should be added when we set todolists', () => {
 
     const action = setTodolistsAC([
-        {id: '1', title: 'title 1', order: 0, addedDate: ''},
-        {id: '2', title: 'title 2', order: 1, addedDate: ''}
+            {id: '1', title: 'title 1', order: 0, addedDate: ''},
+            {id: '2', title: 'title 2', order: 1, addedDate: ''}
         ]
     )
 

@@ -66,7 +66,7 @@ export const TodoList = ({
                         sx={getListItemSx(TaskStatuses.Completed)}>
                         <div>
                             <Checkbox checked={t.status === TaskStatuses.Completed} onChange={checkBoxOnChangeHandler}/>
-                            <EditableSpan title={t.title} onChange={onChangeTaskTitleHandler}/>
+                            <EditableSpan title={t.title} onChange={onChangeTaskTitleHandler} disabled={false}/>
                         </div>
                         <IconButton aria-label="delete" onClick={removeTaskHandler}>
                             <DeleteOutlineIcon/>
@@ -100,6 +100,7 @@ export const TodoList = ({
             <EditableSpan
                 title={title}
                 onChange={onChangeTodoListTitleHandler}
+                disabled={false}
             />
             <IconButton aria-label="delete" onClick={removeTodoListHandler}>
                 <DeleteOutlineIcon/>

@@ -2,14 +2,16 @@ import React, {ChangeEvent, memo, useCallback} from "react";
 import {Checkbox, IconButton, ListItem} from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {EditableSpan} from "../../../../components/EditableSpan/EditableSpan";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {removeTaskTC, updateTaskTC,} from "../../../../state/tasks-reducer";
 import {getListItemSx} from "../TodoList.styles";
 import {TaskStatuses, TaskType} from "../../../../api/todolists-api";
+import {RequestStatusType} from "../../../../state/app-reducer";
+import {AppRootStateType} from "../../../../state/store";
 
 export type TaskPropsType = {
     task: TaskType,
-    todolistId: string
+    todolistId: string,
 };
 
 export const Task = memo(({task, todolistId}: TaskPropsType) => {
@@ -29,6 +31,9 @@ export const Task = memo(({task, todolistId}: TaskPropsType) => {
         dispatch(updateTaskTC(task.id, todolistId, {title: newValue} ));
     }, [dispatch, task.id, todolistId]);
 
+    const appStatus = useSelector((state: AppRootStateType) => state.app.status);
+
+
     return (
         <ListItem
             sx={getListItemSx(task.status)}
@@ -41,11 +46,13 @@ export const Task = memo(({task, todolistId}: TaskPropsType) => {
                 <EditableSpan
                     title={task.title}
                     onChange={changeTaskTitle}
+                    disabled={task.entityStatus === 'loading' || appStatus === 'loading'}
                 />
             </div>
             <IconButton
                 aria-label="delete"
                 onClick={removeTask}
+                disabled={task.entityStatus === 'loading' || appStatus === 'loading'}
             >
                 <DeleteOutlineIcon/>
             </IconButton>

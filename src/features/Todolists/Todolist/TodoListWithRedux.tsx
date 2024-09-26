@@ -31,6 +31,9 @@ export const TodoListWithRedux = memo(({todolist, demo = false}: TodoListPropsTy
         state => state.tasks[id]
     )
 
+    const appStatus = useSelector((state: AppRootStateType) => state.app.status);
+
+
     const dispatch = useDispatch()
 
     // if demo mode (for Storybook), the function will break
@@ -80,16 +83,16 @@ export const TodoListWithRedux = memo(({todolist, demo = false}: TodoListPropsTy
         dispatch(addTaskTC(title, id));
     }, [])
 
-    // const userTaskTitleLengthWarning = taskTitle.length > 15 &&
-    //     <div>Your task title should be not less than 15 characters</div>
 
     return <div>
         <h3 style={{padding: '20px 0 20px'}}>
             <EditableSpan
                 title={title}
                 onChange={changeTodoListTitle}
+                disabled={todolist.entityStatus === 'loading'}
             />
-            <IconButton aria-label="delete" onClick={removeTodoList} disabled={todolist.entityStatus === 'loading'}>
+            <IconButton aria-label="delete" onClick={removeTodoList} disabled={todolist.entityStatus === 'loading'
+                || appStatus === 'loading'}>
                 <DeleteOutlineIcon/>
             </IconButton>
         </h3>

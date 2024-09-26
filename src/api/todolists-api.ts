@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {RequestStatusType} from "../state/app-reducer";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 const instance = axios.create({
@@ -91,6 +92,7 @@ export type TaskType = {
     todoListId: string
     order: number
     addedDate: string
+    entityStatus: RequestStatusType
 }
 export type GetTasksResponseType = {
     items: TaskType[],
