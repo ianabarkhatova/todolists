@@ -91,7 +91,8 @@ function AppWithRedux({demo = false}: AppPropsType) {
                 <Container fixed>
                     <Grid2 container sx={{mb: '30px'}}>
                         <AddItemForm
-                            addItem={addTodoList}/>
+                            addItem={addTodoList}
+                            />
                     </Grid2>
                     <Grid2 container spacing={4}>
                         {todoLists.map((tl) => {

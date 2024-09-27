@@ -31,8 +31,6 @@ export const Task = memo(({task, todolistId}: TaskPropsType) => {
         dispatch(updateTaskTC(task.id, todolistId, {title: newValue} ));
     }, [dispatch, task.id, todolistId]);
 
-    const appStatus = useSelector((state: AppRootStateType) => state.app.status);
-
 
     return (
         <ListItem
@@ -46,13 +44,13 @@ export const Task = memo(({task, todolistId}: TaskPropsType) => {
                 <EditableSpan
                     title={task.title}
                     onChange={changeTaskTitle}
-                    disabled={task.entityStatus === 'loading' || appStatus === 'loading'}
+                    disabled={task.entityStatus === 'loading'}
                 />
             </div>
             <IconButton
                 aria-label="delete"
                 onClick={removeTask}
-                disabled={task.entityStatus === 'loading' || appStatus === 'loading'}
+                disabled={task.entityStatus === 'loading'}
             >
                 <DeleteOutlineIcon/>
             </IconButton>

@@ -1,4 +1,9 @@
-import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType} from "./todolists-reducer";
+import {
+    AddTodolistActionType,
+    changeTodolistEntityStatusAC,
+    RemoveTodolistActionType,
+    SetTodolistsActionType
+} from "./todolists-reducer";
 import {TasksObjType} from "../app/AppWithRedux";
 import {TaskType, todolistsAPI, UpdateTaskModelType} from "../api/todolists-api";
 import {Dispatch} from "redux";
@@ -107,14 +112,7 @@ export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: T
         })
 }
 export const addTaskTC = (title: string, todolistId: string) =>
-    (dispatch: ThunkDispatch, getState: () => AppRootStateType) => {
-        const state = getState();
-        const appStatus = state.app.status;
-
-        if (appStatus === 'loading') {
-            // Если статус 'loading', блокируем повторное добавление таски
-            return;
-        }
+    (dispatch: ThunkDispatch,  getState: () => AppRootStateType) => {
 
         dispatch(setAppStatusAC('loading'))
         todolistsAPI.createTask(todolistId, title)

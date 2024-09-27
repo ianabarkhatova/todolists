@@ -16,23 +16,20 @@ import {
 } from "../../../state/todolists-reducer";
 import {Task} from "./Task/Task";
 import {TaskStatuses, TaskType} from "../../../api/todolists-api";
+import {RequestStatusType} from "../../../state/app-reducer";
 
 export type TodoListPropsType = {
     todolist: TodolistDomainType
     demo?: boolean
 };
 
-// export type TaskDomainType =
 
-export const TodoListWithRedux = memo(({todolist, demo = false}: TodoListPropsType) => {
+export const TodoListWithRedux = memo(({todolist, demo}: TodoListPropsType) => {
 
     const {id, filter, title} = todolist
     let tasks = useSelector<AppRootStateType, TaskType[]>(
         state => state.tasks[id]
     )
-
-    const appStatus = useSelector((state: AppRootStateType) => state.app.status);
-
 
     const dispatch = useDispatch()
 
@@ -91,8 +88,7 @@ export const TodoListWithRedux = memo(({todolist, demo = false}: TodoListPropsTy
                 onChange={changeTodoListTitle}
                 disabled={todolist.entityStatus === 'loading'}
             />
-            <IconButton aria-label="delete" onClick={removeTodoList} disabled={todolist.entityStatus === 'loading'
-                || appStatus === 'loading'}>
+            <IconButton aria-label="delete" onClick={removeTodoList} disabled={todolist.entityStatus === 'loading'}>
                 <DeleteOutlineIcon/>
             </IconButton>
         </h3>

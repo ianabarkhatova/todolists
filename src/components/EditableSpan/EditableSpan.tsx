@@ -9,8 +9,8 @@ type EditableSpanPropsType = {
 
 export const EditableSpan = memo(({title, onChange, disabled}: EditableSpanPropsType) => {
     console.log('EditableSpan')
-    let[editMode, setEditMode] = useState(false)
-    let[spanTitle, setSpanTitle] = useState('')
+    let [editMode, setEditMode] = useState(false)
+    let [spanTitle, setSpanTitle] = useState('')
 
     const activateEditMode = () => {
         !disabled &&
@@ -27,14 +27,15 @@ export const EditableSpan = memo(({title, onChange, disabled}: EditableSpanProps
         setSpanTitle(e.currentTarget.value)
     }
 
-    return editMode?
+    return editMode ?
         <TextField
             variant={'standard'}
             value={spanTitle}
             size={'small'}
             onChange={onChangeHandler}
             onBlur={activateViewMode}
-            autoFocus/> :
+            autoFocus
+            disabled={disabled}/> :
         <span onDoubleClick={activateEditMode}>{title}</span>
 })
 
