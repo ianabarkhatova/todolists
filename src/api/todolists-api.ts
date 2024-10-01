@@ -50,6 +50,15 @@ export const todolistsAPI = {
     },
 }
 
+export const authAPI = {
+    login (data: LoginParamsType) {
+        return instance.post<GeneralResponseType<{userId?: number}>>('auth/login', data)
+    },
+    me() {
+        return instance.get<GeneralResponseType<{id: number, email: string, login: string}>>('/auth/me')
+    }
+}
+
 // types
 export type TodolistType = {
     id: string,
@@ -106,4 +115,10 @@ export type UpdateTaskModelType = {
     priority: number
     startDate: string
     deadline: string
+}
+export type LoginParamsType = {
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    captcha?: string
 }

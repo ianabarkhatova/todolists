@@ -6,28 +6,33 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/store";
 import {addTodolistTC, getTodolistsTC, TodolistDomainType} from "../../state/todolists-reducer";
+import {Navigate} from "react-router-dom";
 
 
 export const TodolistsList = ({demo = false}) => {
 
     let todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(
         state => state.todoLists)
-
     const dispatch = useDispatch()
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIin)
 
     const addTodoList = (title: string) => {
         dispatch(addTodolistTC(title))
     }
 
     useEffect(() => {
-        if (demo) {
+        if (demo || !isLoggedIn) {
             return
         }
         dispatch(getTodolistsTC());  // Note the parentheses to invoke the thunk
     }, []);
 
-    return <>
 
+    if(!isLoggedIn) {
+        return <Navigate to={'/login'}/>
+    }
+
+    return <>
         <Grid2 container sx={{mb: '30px'}}>
             <AddItemForm
                 addItem={addTodoList}

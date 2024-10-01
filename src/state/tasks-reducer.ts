@@ -1,6 +1,5 @@
 import {
     AddTodolistActionType,
-    changeTodolistEntityStatusAC,
     RemoveTodolistActionType,
     SetTodolistsActionType
 } from "./todolists-reducer";
@@ -10,7 +9,6 @@ import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
 import {
     RequestStatusType,
-    setAppErrorAC,
     SetAppErrorActionType,
     setAppStatusAC,
     SetAppStatusActionType
