@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './App.css';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -21,6 +21,7 @@ import {TaskType} from "../api/todolists-api";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {initializeAppTC, RequestStatusType} from "../state/app-reducer";
 import {Outlet} from "react-router-dom";
+import {logOutTC} from "../state/auth-reducer";
 
 
 function AppWithRedux({demo = false}: AppPropsType) {
@@ -29,6 +30,7 @@ function AppWithRedux({demo = false}: AppPropsType) {
         (state) => state.app.status)
     const isInitialized = useSelector<AppRootStateType, boolean>(
         (state) => state.app.isInitialized)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIin)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -59,6 +61,10 @@ function AppWithRedux({demo = false}: AppPropsType) {
         setThemeMode(themeMode === 'light' ? 'dark' : 'light')
     }
 
+    const logOutHandler = useCallback(() => {
+        dispatch(logOutTC())
+    }, [])
+
     //UI
 
     if (!isInitialized) {
@@ -81,7 +87,7 @@ function AppWithRedux({demo = false}: AppPropsType) {
                         </IconButton>
                         <div>
                             <MenuButton>Login</MenuButton>
-                            <MenuButton>Logout</MenuButton>
+                            {isLoggedIn && <MenuButton onClick={logOutHandler}>Logout</MenuButton>}
                             <MenuButton background={theme.palette.primary.dark}>FAQ</MenuButton>
                             <Switch color={'default'} onChange={changeModeHandler}/>
                         </div>

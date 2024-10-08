@@ -1,5 +1,5 @@
 import {
-    AddTodolistActionType,
+    AddTodolistActionType, ClearTodolistsDataActionType,
     RemoveTodolistActionType,
     SetTodolistsActionType
 } from "./todolists-reducer";
@@ -13,7 +13,7 @@ import {
     setAppStatusAC,
     SetAppStatusActionType
 } from "./app-reducer";
-import {handleServerAppError, handleServiceNetworkError} from "../utils/error-utils";
+import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 const initialState: TasksObjType = {}
 
@@ -44,6 +44,7 @@ export const tasksReducer = (state: TasksObjType = initialState, action: TaskAct
             return stateCopy
         }
         case 'SET-TODOLISTS': {
+            // debugger
             const stateCopy = {...state}
             // создаем пустые массивы тасок для тудулистов:
             action.todolists.forEach(tl => {
@@ -52,6 +53,7 @@ export const tasksReducer = (state: TasksObjType = initialState, action: TaskAct
             return stateCopy
         }
         case 'SET-TASKS':
+            // debugger
             return {...state, [action.todolistId]: action.tasks}
 
         case 'CHANGE-TASK-ENTITY-STATUS':
@@ -60,6 +62,9 @@ export const tasksReducer = (state: TasksObjType = initialState, action: TaskAct
                 [action.todolistId]: state[action.todolistId]
                     .map(t => t.id === action.taskId ? {...t, entityStatus: action.status} : t)
             }
+
+        case 'CLEAR-DATA':
+            return {}
 
         default:
             return state
@@ -90,7 +95,7 @@ export const getTasksTC = (todolistId: string) => (dispatch: ThunkDispatch) => {
             }
         })
         .catch((error) => {
-            handleServiceNetworkError(dispatch, error)
+            handleServerNetworkError(dispatch, error)
         })
 }
 export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: ThunkDispatch) => {
@@ -106,11 +111,11 @@ export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: T
             }
         })
         .catch((error) => {
-            handleServiceNetworkError(dispatch, error)
+            handleServerNetworkError(dispatch, error)
         })
 }
 export const addTaskTC = (title: string, todolistId: string) =>
-    (dispatch: ThunkDispatch,  getState: () => AppRootStateType) => {
+    (dispatch: ThunkDispatch, getState: () => AppRootStateType) => {
 
         dispatch(setAppStatusAC('loading'))
         todolistsAPI.createTask(todolistId, title)
@@ -123,7 +128,7 @@ export const addTaskTC = (title: string, todolistId: string) =>
                 }
             })
             .catch((error) => {
-                handleServiceNetworkError(dispatch, error)
+                handleServerNetworkError(dispatch, error)
             })
     }
 export const updateTaskTC = (taskId: string, todolistId: string, domainModel: UpdateDomainTaskModelType) =>
@@ -163,7 +168,7 @@ export const updateTaskTC = (taskId: string, todolistId: string, domainModel: Up
                     }
                 })
                 .catch((error) => {
-                    handleServiceNetworkError(dispatch, error)
+                    handleServerNetworkError(dispatch, error)
                 })
         }
     }
@@ -178,6 +183,7 @@ export type TaskActionType =
     | SetTodolistsActionType
     | ReturnType<typeof setTasksAC>
     | ReturnType<typeof changeTaskEntityStatusAC>
+    | ClearTodolistsDataActionType
 
 export type UpdateDomainTaskModelType = {
     title?: string

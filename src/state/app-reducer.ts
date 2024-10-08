@@ -42,7 +42,7 @@ export const initializeAppTC = () => (dispatch: ThunkDispatch) => {
     })
 
     // .catch((error) => {
-    //     handleServiceNetworkError(dispatch, error)
+    //     handleServerNetworkError(dispatch, error)
     // })
 }
 

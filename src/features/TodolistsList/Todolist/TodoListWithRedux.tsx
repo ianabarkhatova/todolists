@@ -38,7 +38,7 @@ export const TodoListWithRedux = memo(({todolist, demo}: TodoListPropsType) => {
         if (demo) {
             return
         }
-        dispatch(getTasksTC(id))
+        // dispatch(getTasksTC(id))
     }, [])
 
     if (filter === "completed") {

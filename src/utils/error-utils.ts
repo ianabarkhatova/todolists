@@ -16,7 +16,7 @@ export const handleServerAppError = <D>(data: GeneralResponseType<D> | GetTasksR
     dispatch(setAppStatusAC('failed'))
 }
 
-export const handleServiceNetworkError = (dispatch: ErrorUtilsDispatchType, error: { message: string }) => {
+export const handleServerNetworkError = (dispatch: ErrorUtilsDispatchType, error: { message: string }) => {
     dispatch(setAppErrorAC(error.message ? error.message : 'Some error occurred'))
     dispatch(setAppStatusAC('failed'))
 }
