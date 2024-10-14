@@ -49,7 +49,7 @@
     "storybook": "storybook dev -p 9009",
     "build-storybook": "storybook build",
     "test-storybook": "test-storybook",
-    "heroku-postbuild": "yarn run build",
+    "heroku-postbuild": "npm run build",
     "serve": "serve -s build"
   },
   "eslintConfig": {
