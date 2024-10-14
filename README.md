@@ -7,7 +7,7 @@
 - react-router-dom
 - Axios
   
-# This project includes work with handling requests to and responses from the server
+This project includes work with handling requests to and responses from the server.
 
 
 
