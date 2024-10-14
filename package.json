@@ -2,7 +2,7 @@
   "name": "1-lesson",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ianabarkhatova.github.io/todolists",
+  "homepage": "https://ianabarkhatova.github.io/todo-list",
   "dependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.4",
@@ -21,7 +21,7 @@
     "@types/uuid": "^10.0.0",
     "axios": "^1.7.7",
     "formik": "^2.4.6",
-    "gh-pages": "^6.1.1",
+    "gh-pages": "^6.2.0",
     "material-ui": "^0.20.2",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
