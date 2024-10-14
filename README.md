@@ -1,11 +1,13 @@
 # Main technologies used:
 
-- React;
-- Redux;
-- Material UI library;
-- Formik library;
-- react-router-dom;
+- React
+- Redux
+- Material UI library
+- Formik library
+- react-router-dom
 - Axios
+  
+# This project includes work with handling requests to and responses from the server
 
 
 
