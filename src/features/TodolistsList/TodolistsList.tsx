@@ -1,4 +1,3 @@
-import Grid2 from "@mui/material/Grid2";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";
 import {TodoListWithRedux} from "./Todolist/TodoListWithRedux";
@@ -7,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/store";
 import {addTodolistTC, getTodolistsTC, TodolistDomainType} from "../../state/todolists-reducer";
 import {Navigate} from "react-router-dom";
+import {Grid2} from "@mui/material";
 
 
 export const TodolistsList = ({demo = false}) => {

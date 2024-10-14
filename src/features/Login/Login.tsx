@@ -6,12 +6,12 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import Grid2 from "@mui/material/Grid2";
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "../../state/auth-reducer";
 import {AppRootStateType} from "../../state/store";
 import {Navigate} from "react-router-dom";
+import {Grid2} from "@mui/material";
 
 // Custom validation function
 const validate = (values: initialValuesType) => {
