@@ -33,7 +33,6 @@ const router = createBrowserRouter([
         path: '/404',
         element: <ErrorPage/>
     }
-
 ]);
 
 const root = ReactDOM.createRoot(

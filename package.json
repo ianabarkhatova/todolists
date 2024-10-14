@@ -2,7 +2,7 @@
   "name": "1-lesson",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ianabarkhatova.github.io/TodoList",
+  "homepage": "https://ianabarkhatova.github.io/todolists",
   "dependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.4",
