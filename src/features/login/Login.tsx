@@ -7,11 +7,13 @@ import FormLabel from '@mui/material/FormLabel'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import {useFormik} from "formik";
-import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "../../state/auth-reducer";
 import {AppRootStateType} from "../../app/store";
 import {Navigate} from "react-router-dom";
 import {Grid2} from "@mui/material";
+import {useAppDispatch} from "../../common/hooks/useAppDispatch";
+import {useAppSelector} from "../../common/hooks/useAppSelector";
+import {selectIsLoggedIn} from "../../state/authSelectors";
 
 // Custom validation function
 const validate = (values: initialValuesType) => {
@@ -36,8 +38,8 @@ const validate = (values: initialValuesType) => {
 
 export const Login = () => {
 
-    const dispatch = useDispatch()
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIin)
+    const dispatch = useAppDispatch()
+    const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
     const formik = useFormik({
         initialValues: {

@@ -1,10 +1,10 @@
 import {Task} from "./Task/Task";
 import {List} from "@mui/material";
 import React from "react";
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../../../../../app/store";
-import {TaskStatuses, TaskType} from "../../../../../../api/todolistsApi";
+import {TaskStatuses} from "../../../../../../api/todolistsApi";
 import {TodolistDomainType} from "../../../../../../state/todolists-reducer";
+import {useAppSelector} from "../../../../../../common/hooks/useAppSelector";
+import {selectTasks} from "../../../../model/tasksSelectors";
 
 type Props = {
     todolist: TodolistDomainType
@@ -13,9 +13,8 @@ type Props = {
 export const Tasks = ({todolist}: Props) => {
 
     const {id} = todolist
-    let tasks = useSelector<AppRootStateType, TaskType[]>(
-        state => state.tasks[id]
-    )
+    let tasks = useAppSelector(selectTasks)[id]
+
 
     if (todolist.filter === "completed") {
         tasks = tasks.filter(t => t.status === TaskStatuses.Completed);

@@ -3,7 +3,7 @@ import {
     RemoveTodolistActionType,
     SetTodolistsActionType
 } from "./todolists-reducer";
-import {TasksObjType} from "../app/AppWithRedux";
+import {TasksObjType} from "../app/App";
 import {TaskType, UpdateTaskModelType} from "../api/todolistsApi";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "../app/store";

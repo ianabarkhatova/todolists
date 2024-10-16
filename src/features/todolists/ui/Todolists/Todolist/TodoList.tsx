@@ -1,14 +1,11 @@
 import React, {memo, useCallback, useEffect} from "react";
 import {AddItemForm} from "../../../../../common/components/AddItemForm/AddItemForm";
-import {EditableSpan} from "../../../../../common/components/EditableSpan/EditableSpan";
-import IconButton from '@mui/material/IconButton'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import {useDispatch} from "react-redux";
 import {addTaskTC} from "../../../../../state/tasks-reducer";
-import {changeTodolistTitleTC, removeTodolistTC, TodolistDomainType} from "../../../../../state/todolists-reducer";
+import {TodolistDomainType} from "../../../../../state/todolists-reducer";
 import {FilterTasksButtons} from "./FilterTasksButtons/FilterTasksButtons";
 import {Tasks} from "./Tasks/Tasks";
 import {TodolistTitle} from "./TodolistTitle/TodolistTitle";
+import {useAppDispatch} from "../../../../../common/hooks/useAppDispatch";
 
 export type TodoListProps = {
     todolist: TodolistDomainType
@@ -16,13 +13,13 @@ export type TodoListProps = {
 };
 
 
-export const TodoListWithRedux = memo(({todolist, demo}: TodoListProps) => {
+export const TodoList = memo(({todolist, demo}: TodoListProps) => {
 
     const {id} = todolist
     const addTask = useCallback((title: string) => {
         dispatch(addTaskTC(title, id));
     }, [])
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     // if demo mode (for Storybook), the function will break
     useEffect(() => {

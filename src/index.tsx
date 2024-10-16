@@ -6,13 +6,13 @@ import {Provider} from "react-redux";
 import {store} from "./app/store";
 import {Login} from "./features/login/Login";
 import {ErrorPage} from "./common/components/ErrorPage/ErrorPage";
-import {AppWithRedux} from "./app/AppWithRedux";
+import {App} from "./app/App";
 import {Todolists} from "./features/todolists/ui/Todolists/Todolists";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <AppWithRedux/>,
+        element: <App/>,
         errorElement: <Navigate to={'/404'}/>,
         children: [
             {

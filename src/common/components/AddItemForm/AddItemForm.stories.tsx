@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {fn} from '@storybook/test';
 import {action} from '@storybook/addon-actions'
 
-import {AddItemForm, AddItemFormPropsType} from "./AddItemForm";
+import {AddItemForm, AddItemFormProps} from "./AddItemForm";
 import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
 import {TextField} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
@@ -29,15 +29,15 @@ type Story = StoryObj<typeof AddItemForm>;
 export const AddItemFormStory: Story = {};
 
 export const AddItemFormWithErrorStory = {
-    render: (args: AddItemFormPropsType) => <AddItemFormWithError addItem={args.addItem}/>
+    render: (args: AddItemFormProps) => <AddItemFormWithError addItem={args.addItem}/>
 }
 
 export const AddItemFormDisabledStory = {
-    render: (args: AddItemFormPropsType) => <AddItemForm disabled={true} addItem={args.addItem}/>
+    render: (args: AddItemFormProps) => <AddItemForm disabled={true} addItem={args.addItem}/>
 }
 
 
-const AddItemFormWithError = memo(({addItem}: AddItemFormPropsType) => {
+const AddItemFormWithError = memo(({addItem}: AddItemFormProps) => {
     console.log('AddItemForm was called')
     const [taskTitle, setTaskTitle] = useState('')
     const [error, setError] = useState<string | null>("Title is required")

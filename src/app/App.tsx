@@ -1,22 +1,22 @@
 import React, {useEffect} from 'react';
 import '../features/todolists/ui/Todolists/Todolist/TodolistTitle/TodolistTitle.module.css';
 import {CircularProgress, CssBaseline, ThemeProvider} from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./store";
 import {TaskType} from "../api/todolistsApi";
 import {ErrorSnackbar} from "../common/components/ErrorSnackbar/ErrorSnackbar";
-import {initializeAppTC, ThemeModeType} from "./app-reducer";
+import {initializeAppTC} from "./app-reducer";
 import {getTheme} from "../common/theme/theme";
 import {Header} from "../common/components/Header/Header";
 import {Main} from "./Main";
+import {useAppDispatch} from "../common/hooks/useAppDispatch";
+import {useAppSelector} from "../common/hooks/useAppSelector";
+import {selectIsInitialized, selectThemeMode} from "./appSelectors";
 
 
-export const AppWithRedux = ({demo = false}: AppPropsType) => {
+export const App = ({demo = false}: Props) => {
     // BLL
-    const isInitialized = useSelector<AppRootStateType, boolean>(
-        (state) => state.app.isInitialized)
-    const dispatch = useDispatch()
-    const themeMode = useSelector<AppRootStateType, ThemeModeType>(state => state.app.themeMode)
+    const isInitialized = useAppSelector(selectIsInitialized)
+    const dispatch = useAppDispatch()
+    const themeMode = useAppSelector(selectThemeMode)
 
     useEffect(() => {
         dispatch(initializeAppTC())
@@ -49,7 +49,7 @@ export type TasksObjType = {
     [key: string]: TaskType[],
 }
 
-type AppPropsType = {
+type Props = {
     demo?: boolean
 }
 

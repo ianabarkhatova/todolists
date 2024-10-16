@@ -2,19 +2,19 @@ import {filterButtonsContainerSx} from '../Tasks/Task/Task.styles';
 import {Box, Button, ButtonProps} from "@mui/material";
 import React, {memo} from "react";
 import {changeTodolistFilterAC, FilterValuesType} from "../../../../../../state/todolists-reducer";
-import {useDispatch} from "react-redux";
-import {TodoListProps} from "../TodoListWithRedux";
+import {TodoListProps} from "../TodoList";
+import {useAppDispatch} from "../../../../../../common/hooks/useAppDispatch";
 
 export const FilterTasksButtons = ({todolist}: TodoListProps) => {
 
-    const dispatch = useDispatch()
-    const {id, filter, title} = todolist
+    const dispatch = useAppDispatch()
+    const {id, filter} = todolist
 
     const changeFilterTasksHandler = (filter: FilterValuesType) => {
         dispatch(changeTodolistFilterAC(id, filter))
     }
 
-    const ButtonWithMemo = memo(({variant, onClick, color, children, ...rest }: ButtonWithMemoPropsType) => {
+    const ButtonWithMemo = memo(({variant, onClick, color, children, ...rest }: Props) => {
         return (
             <Button
                 variant={variant}
@@ -25,7 +25,7 @@ export const FilterTasksButtons = ({todolist}: TodoListProps) => {
             </Button>
         )
     })
-    type ButtonWithMemoPropsType = ButtonProps & {} // прошлые пропсы (MaterialUI) + пропсы для расширения кнопки на будущее
+    type Props = ButtonProps & {} // прошлые пропсы (MaterialUI) + пропсы для расширения кнопки на будущее
     // {children} - все, что находится между открывающимся и закрывающимся тегами
 
     return (

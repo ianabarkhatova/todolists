@@ -54,7 +54,7 @@ export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
 export type SetIsInitializedActionType = ReturnType<typeof setAppInitializedAC>
 export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
 export type ChangeThemeActionType = ReturnType<typeof changeThemeAC>
-type AppActionType = SetAppStatusActionType | SetAppErrorActionType | SetIsInitializedActionType | ChangeThemeActionType
+export type AppActionType = SetAppStatusActionType | SetAppErrorActionType | SetIsInitializedActionType | ChangeThemeActionType
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 export type InitialStateType = {
     // происходит ли сейчас взаимодействие с сервером

@@ -2,18 +2,18 @@ import React, {ChangeEvent, memo, useCallback} from "react";
 import {Checkbox, IconButton, ListItem} from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {EditableSpan} from "../../../../../../../common/components/EditableSpan/EditableSpan";
-import {useDispatch} from "react-redux";
 import {removeTaskTC, updateTaskTC,} from "../../../../../../../state/tasks-reducer";
 import {TaskStatuses, TaskType} from "../../../../../../../api/todolistsApi";
 import {getListItemSx} from "./Task.styles";
+import {useAppDispatch} from "../../../../../../../common/hooks/useAppDispatch";
 
-export type TaskPropsType = {
+export type TaskProps = {
     task: TaskType,
     todolistId: string,
 };
 
-export const Task = memo(({task, todolistId}: TaskPropsType) => {
-    const dispatch = useDispatch();
+export const Task = memo(({task, todolistId}: TaskProps) => {
+    const dispatch = useAppDispatch();
 
     const removeTaskHandler = useCallback(() => {
         dispatch(removeTaskTC(task.id, todolistId));

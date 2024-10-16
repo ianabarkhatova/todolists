@@ -2,7 +2,7 @@ import {EditableSpan} from "../../../../../../common/components/EditableSpan/Edi
 import IconButton from "@mui/material/IconButton";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import {changeTodolistTitleTC, removeTodolistTC, TodolistDomainType} from "../../../../../../state/todolists-reducer";
-import {useDispatch} from "react-redux";
+import {useAppDispatch} from "../../../../../../common/hooks/useAppDispatch";
 
 type Props = {
     todolist: TodolistDomainType
@@ -10,7 +10,7 @@ type Props = {
 
 export const TodolistTitle = ({todolist}: Props) => {
     const {title, id} = todolist
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const removeTodoListHandler = () => {
         dispatch(removeTodolistTC(id))
