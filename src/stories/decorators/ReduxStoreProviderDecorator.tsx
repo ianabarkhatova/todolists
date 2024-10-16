@@ -4,10 +4,10 @@ import {applyMiddleware, combineReducers, legacy_createStore} from "redux";
 import {v1} from "uuid";
 import React from "react";
 import {Provider} from "react-redux";
-import {AppRootStateType, store} from "../../state/store";
+import {AppRootStateType, store} from "../../app/store";
 import thunk from "redux-thunk";
-import {appReducer} from "../../state/app-reducer";
-import {TaskPriorities, TaskStatuses} from "../../api/todolists-api";
+import {appReducer} from "../../app/app-reducer";
+import {TaskPriorities, TaskStatuses} from "../../api/todolistsApi";
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
@@ -95,7 +95,8 @@ const initialGlobalState: AppRootStateType = {
     app: {
         error: null,
         status: 'idle',
-        isInitialized: false
+        isInitialized: false,
+        themeMode: 'light'
     },
     auth: {
         isLoggedIin: false,

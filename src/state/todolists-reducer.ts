@@ -1,7 +1,7 @@
 import {v1} from "uuid";
-import {todolistsAPI, TodolistType} from "../api/todolists-api";
+import {todolistsApi, TodolistType} from "../api/todolistsApi";
 import {Dispatch} from "redux";
-import {RequestStatusType, setAppStatusAC, SetAppStatusActionType} from "./app-reducer";
+import {RequestStatusType, setAppStatusAC, SetAppStatusActionType} from "../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import {getTasksTC} from "./tasks-reducer";
 
@@ -53,7 +53,7 @@ export const clearTodolistsDataAC = () => (
 export const getTodolistsTC = () => (dispatch: any) => {
     // todo: type for dispatch above
     //не ставим loading т к приложение только загрузилось
-    todolistsAPI.getTodolists()
+    todolistsApi.getTodolists()
         .then((res) => {
             dispatch(setTodolistsAC(res.data))
             dispatch(setAppStatusAC('succeeded'))
@@ -71,7 +71,7 @@ export const getTodolistsTC = () => (dispatch: any) => {
 export const removeTodolistTC = (todolistId: string) => (dispatch: ThunkDispatch) => {
     dispatch(setAppStatusAC('loading'))
     dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
-    todolistsAPI.deleteTodolist(todolistId)
+    todolistsApi.deleteTodolist(todolistId)
         .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(removeTodolistAC(todolistId))
@@ -87,7 +87,7 @@ export const removeTodolistTC = (todolistId: string) => (dispatch: ThunkDispatch
 }
 export const addTodolistTC = (title: string) => (dispatch: ThunkDispatch) => {
     dispatch(setAppStatusAC('loading'))
-    todolistsAPI.createTodolist(title)
+    todolistsApi.createTodolist(title)
         .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(addTodolistAC(res.data.data.item))
@@ -103,7 +103,7 @@ export const addTodolistTC = (title: string) => (dispatch: ThunkDispatch) => {
 export const changeTodolistTitleTC = (todolistId: string, title: string) => (dispatch: ThunkDispatch) => {
     dispatch(setAppStatusAC('loading'))
     dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
-    todolistsAPI.updateTodolist(todolistId, title)
+    todolistsApi.updateTodolist(todolistId, title)
         .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(changeTodolistTitleAC(todolistId, title))

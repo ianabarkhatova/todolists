@@ -1,22 +1,7 @@
-import {
-    addTodolistAC,
-    AddTodolistActionType,
-    changeTodolistEntityStatusAC,
-    changeTodolistTitleAC,
-    clearTodolistsDataAC,
-    ClearTodolistsDataActionType,
-    RemoveTodolistActionType,
-    SetTodolistsActionType
-} from "./todolists-reducer";
-import {TasksObjType} from "../app/AppWithRedux";
-import {authAPI, LoginParamsType, TaskType, todolistsAPI, UpdateTaskModelType} from "../api/todolists-api";
+import {clearTodolistsDataAC, ClearTodolistsDataActionType} from "./todolists-reducer";
+import {authApi, LoginParamsType} from "../api/todolistsApi";
 import {Dispatch} from "redux";
-import {AppRootStateType} from "./store";
-import {
-    SetAppErrorActionType,
-    setAppStatusAC,
-    SetAppStatusActionType
-} from "./app-reducer";
+import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 const initialState = {
@@ -42,7 +27,7 @@ export const setIsLoggedInAC = (value: boolean) => ({type: 'login/SET-IS-LOGGED-
 export const loginTC = (data: LoginParamsType) =>
     (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
-        authAPI.login(data)
+        authApi.login(data)
             .then((res) => {
                 if (res.data.resultCode === 0) {
                     console.log(res.data.data)
@@ -61,7 +46,7 @@ export const loginTC = (data: LoginParamsType) =>
 export const logOutTC = () =>
     (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
-        authAPI.logout()
+        authApi.logout()
             .then((res) => {
                 if (res.data.resultCode === 0) {
                     console.log(res.data.data)

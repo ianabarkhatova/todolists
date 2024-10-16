@@ -4,16 +4,17 @@ import {
     SetTodolistsActionType
 } from "./todolists-reducer";
 import {TasksObjType} from "../app/AppWithRedux";
-import {TaskType, todolistsAPI, UpdateTaskModelType} from "../api/todolists-api";
+import {TaskType, UpdateTaskModelType} from "../api/todolistsApi";
 import {Dispatch} from "redux";
-import {AppRootStateType} from "./store";
+import {AppRootStateType} from "../app/store";
 import {
     RequestStatusType,
     SetAppErrorActionType,
     setAppStatusAC,
     SetAppStatusActionType
-} from "./app-reducer";
+} from "../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
+import {tasksApi} from "../api/tasksApi";
 
 const initialState: TasksObjType = {}
 
@@ -84,7 +85,7 @@ export const changeTaskEntityStatusAC = (taskId: string, todolistId: string, sta
 //thunk creators
 export const getTasksTC = (todolistId: string) => (dispatch: ThunkDispatch) => {
     dispatch(setAppStatusAC('loading'))
-    todolistsAPI.getTasks(todolistId)
+    tasksApi.getTasks(todolistId)
         .then((res) => {
             if (res.data.error === null) {
                 dispatch(setTasksAC(res.data.items, todolistId))
@@ -101,7 +102,7 @@ export const getTasksTC = (todolistId: string) => (dispatch: ThunkDispatch) => {
 export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: ThunkDispatch) => {
     dispatch(setAppStatusAC('loading'))
     dispatch(changeTaskEntityStatusAC(taskId, todolistId, 'loading'))
-    todolistsAPI.deleteTask(todolistId, taskId)
+    tasksApi.deleteTask(todolistId, taskId)
         .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(removeTaskAC(taskId, todolistId))
@@ -118,7 +119,7 @@ export const addTaskTC = (title: string, todolistId: string) =>
     (dispatch: ThunkDispatch, getState: () => AppRootStateType) => {
 
         dispatch(setAppStatusAC('loading'))
-        todolistsAPI.createTask(todolistId, title)
+        tasksApi.createTask(todolistId, title)
             .then(res => {
                 if (res.data.resultCode === 0) {
                     dispatch(addTaskAC(res.data.data.item))
@@ -157,7 +158,7 @@ export const updateTaskTC = (taskId: string, todolistId: string, domainModel: Up
         if (task) {
             dispatch(setAppStatusAC('loading'))
             dispatch(changeTaskEntityStatusAC(taskId, todolistId, 'loading'))
-            todolistsAPI.updateTask(todolistId, taskId, apiModel)
+            tasksApi.updateTask(todolistId, taskId, apiModel)
                 .then((res) => {
                     if (res.data.resultCode === 0) {
                         dispatch(updateTaskAC(taskId, domainModel, todolistId))

@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {createBrowserRouter, RouterProvider, Navigate} from "react-router-dom";
 import './index.css';
-import AppWithRedux from "./app/AppWithRedux";
 import {Provider} from "react-redux";
-import {store} from "./state/store";
-import {Login} from "./features/Login/Login";
-import {TodolistsList} from "./features/TodolistsList/TodolistsList";
-import {ErrorPage} from "./components/ErrorPage/ErrorPage";
+import {store} from "./app/store";
+import {Login} from "./features/login/Login";
+import {ErrorPage} from "./common/components/ErrorPage/ErrorPage";
+import {AppWithRedux} from "./app/AppWithRedux";
+import {Todolists} from "./features/todolists/ui/Todolists/Todolists";
 
 const router = createBrowserRouter([
     {
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "todolists",
-                element: <TodolistsList/>,
+                element: <Todolists/>,
             },
         ],
     },

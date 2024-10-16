@@ -1,69 +1,26 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import './App.css';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import {MenuButton} from "../components/MenuButton/MenuButton";
-import {
-    CircularProgress,
-    createTheme,
-    CssBaseline,
-    dividerClasses,
-    LinearProgress,
-    Switch,
-    ThemeProvider
-} from "@mui/material";
+import React, {useEffect} from 'react';
+import '../features/todolists/ui/Todolists/Todolist/TodolistTitle/TodolistTitle.module.css';
+import {CircularProgress, CssBaseline, ThemeProvider} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../state/store";
-import {TaskType} from "../api/todolists-api";
-import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
-import {initializeAppTC, RequestStatusType} from "../state/app-reducer";
-import {Outlet} from "react-router-dom";
-import {logOutTC} from "../state/auth-reducer";
+import {AppRootStateType} from "./store";
+import {TaskType} from "../api/todolistsApi";
+import {ErrorSnackbar} from "../common/components/ErrorSnackbar/ErrorSnackbar";
+import {initializeAppTC, ThemeModeType} from "./app-reducer";
+import {getTheme} from "../common/theme/theme";
+import {Header} from "../common/components/Header/Header";
+import {Main} from "./Main";
 
 
-function AppWithRedux({demo = false}: AppPropsType) {
-    // Business logic layer
-    const status = useSelector<AppRootStateType, RequestStatusType>(
-        (state) => state.app.status)
+export const AppWithRedux = ({demo = false}: AppPropsType) => {
+    // BLL
     const isInitialized = useSelector<AppRootStateType, boolean>(
         (state) => state.app.isInitialized)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIin)
     const dispatch = useDispatch()
+    const themeMode = useSelector<AppRootStateType, ThemeModeType>(state => state.app.themeMode)
 
     useEffect(() => {
         dispatch(initializeAppTC())
     }, []);
-
-    // Theme
-    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
-    const theme = createTheme({
-        palette: {
-            mode: themeMode === 'light' ? 'light' : 'dark',
-            primary: {
-                light: '#93e3a9',
-                main: '#1bcf68',
-                dark: '#00a234',
-                contrastText: '#ffffff',
-            },
-            secondary: {
-                light: '#f1d05b',
-                main: '#ecae2c',
-                dark: '#e6721f',
-                contrastText: '#2e3d34',
-            },
-        },
-    })
-
-    const changeModeHandler = () => {
-        setThemeMode(themeMode === 'light' ? 'dark' : 'light')
-    }
-
-    const logOutHandler = useCallback(() => {
-        dispatch(logOutTC())
-    }, [])
 
     //UI
 
@@ -77,26 +34,11 @@ function AppWithRedux({demo = false}: AppPropsType) {
 
     return (
         <div>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={getTheme(themeMode)}>
                 <CssBaseline/>
                 <ErrorSnackbar/>
-                <AppBar position='static' sx={{mb: '30px'}}>
-                    <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
-                        <IconButton color='inherit'>
-                            <MenuIcon/>
-                        </IconButton>
-                        <div>
-                            <MenuButton>Login</MenuButton>
-                            {isLoggedIn && <MenuButton onClick={logOutHandler}>Logout</MenuButton>}
-                            <MenuButton background={theme.palette.primary.dark}>FAQ</MenuButton>
-                            <Switch color={'default'} onChange={changeModeHandler}/>
-                        </div>
-                    </Toolbar>
-                    {status === 'loading' && <LinearProgress/>}
-                </AppBar>
-                <Container fixed>
-                    <Outlet/>
-                </Container>
+                <Header/>
+                <Main/>
             </ThemeProvider>
         </div>
     );
@@ -111,6 +53,4 @@ type AppPropsType = {
     demo?: boolean
 }
 
-type ThemeMode = 'dark' | 'light'
 
-export default AppWithRedux;
