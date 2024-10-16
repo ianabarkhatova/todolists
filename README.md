@@ -6,10 +6,8 @@
 - Formik library
 - react-router-dom
 - Axios
-  
+
 This project includes work with handling requests to and responses from the server.
-
-
 
 # Getting Started with Create React App
 
