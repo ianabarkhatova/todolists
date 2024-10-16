@@ -4,7 +4,7 @@ import {ReduxStoreProviderDecorator} from '../../../../../../../stories/decorato
 import {Provider} from "react-redux";
 import {store} from "../../../../../../../app/store";
 import React from "react";
-import {TaskPriorities, TaskStatuses} from "../../../../../../../api/todolistsApi";
+import {TaskPriority, TaskStatus} from "../../../../../../../common/enums/enums";
 
 
 const meta: Meta<typeof Task> = {
@@ -19,13 +19,13 @@ const meta: Meta<typeof Task> = {
         task: {
             id: '12ehjhddiuiwhu',
             title: 'JS',
-            status: TaskStatuses.New,
+            status: TaskStatus.New,
             addedDate: '',
             deadline: '',
             order: 0,
             startDate: '',
             description: 'desc', todoListId: "todoListId1",
-            priority: TaskPriorities.Hi,
+            priority: TaskPriority.Hi,
             entityStatus: 'idle'
         },
         todolistId: 'd4sduhn4t45k4kjnsf',
@@ -43,13 +43,13 @@ export const TaskIsDoneStory: Story = {
             {
                 id: '12ehjhddiuiwhu',
                 title: 'JS',
-                status: TaskStatuses.Completed,
+                status: TaskStatus.Completed,
                 addedDate: '',
                 deadline: '',
                 order: 0,
                 startDate: '',
                 description: 'desc', todoListId: "todoListId1",
-                priority: TaskPriorities.Hi,
+                priority: TaskPriority.Hi,
                 entityStatus: 'idle'
             }
         }

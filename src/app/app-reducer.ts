@@ -1,4 +1,4 @@
-import {authApi} from "../api/todolistsApi";
+import {authApi} from "../features/todolists/api/todolistsApi";
 import {handleServerAppError} from "../utils/error-utils";
 import {LoginActionType, setIsLoggedInAC} from "../state/auth-reducer";
 import {Dispatch} from "redux";

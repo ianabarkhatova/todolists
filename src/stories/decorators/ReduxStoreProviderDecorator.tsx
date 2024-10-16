@@ -7,7 +7,7 @@ import {Provider} from "react-redux";
 import {AppRootStateType, store} from "../../app/store";
 import thunk from "redux-thunk";
 import {appReducer} from "../../app/app-reducer";
-import {TaskPriorities, TaskStatuses} from "../../api/todolistsApi";
+import {TaskPriority, TaskStatus} from "../../common/enums/enums";
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
@@ -37,9 +37,9 @@ const initialGlobalState: AppRootStateType = {
             {
                 id: v1(),
                 title: 'HTML&CSS',
-                status: TaskStatuses.Completed,
+                status: TaskStatus.Completed,
                 description: '',
-                priority: TaskPriorities.Low,
+                priority: TaskPriority.Low,
                 order: 0,
                 deadline: '',
                 addedDate: '',
@@ -51,9 +51,9 @@ const initialGlobalState: AppRootStateType = {
             {
                 id: v1(),
                 title: 'JS',
-                status: TaskStatuses.New,
+                status: TaskStatus.New,
                 description: '',
-                priority: TaskPriorities.Low,
+                priority: TaskPriority.Low,
                 order: 1,
                 deadline: '',
                 addedDate: '',
@@ -66,9 +66,9 @@ const initialGlobalState: AppRootStateType = {
             {
                 id: v1(),
                 title: 'Typescript',
-                status: TaskStatuses.New,
+                status: TaskStatus.New,
                 description: '',
-                priority: TaskPriorities.Low,
+                priority: TaskPriority.Low,
                 order: 0,
                 deadline: '',
                 addedDate: '',
@@ -79,9 +79,9 @@ const initialGlobalState: AppRootStateType = {
             {
                 id: v1(),
                 title: 'Ajax',
-                status: TaskStatuses.Completed,
+                status: TaskStatus.Completed,
                 description: '',
-                priority: TaskPriorities.Low,
+                priority: TaskPriority.Low,
                 order: 1,
                 deadline: '',
                 addedDate: '',

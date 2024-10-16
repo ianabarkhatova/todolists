@@ -1,10 +1,10 @@
 import {Task} from "./Task/Task";
 import {List} from "@mui/material";
 import React from "react";
-import {TaskStatuses} from "../../../../../../api/todolistsApi";
 import {TodolistDomainType} from "../../../../../../state/todolists-reducer";
 import {useAppSelector} from "../../../../../../common/hooks/useAppSelector";
 import {selectTasks} from "../../../../model/tasksSelectors";
+import {TaskStatus} from "../../../../../../common/enums/enums";
 
 type Props = {
     todolist: TodolistDomainType
@@ -17,10 +17,10 @@ export const Tasks = ({todolist}: Props) => {
 
 
     if (todolist.filter === "completed") {
-        tasks = tasks.filter(t => t.status === TaskStatuses.Completed);
+        tasks = tasks.filter(t => t.status === TaskStatus.Completed);
     }
     if (todolist.filter === "active") {
-        tasks = tasks.filter(t => t.status === TaskStatuses.New);
+        tasks = tasks.filter(t => t.status === TaskStatus.New);
     }
 
     return (

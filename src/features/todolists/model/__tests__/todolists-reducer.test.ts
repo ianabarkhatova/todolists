@@ -3,7 +3,7 @@ import {
     changeTodolistTitleAC, FilterValuesType, removeTodolistAC, setTodolistsAC, TodolistDomainType, todolistsReducer
 } from '../../../../state/todolists-reducer'
 import {v1} from 'uuid'
-import {TodolistType} from "../../../../api/todolistsApi";
+import {TodolistType} from "../../api/todolistsApi";
 import {RequestStatusType} from "../../../../app/app-reducer";
 
 let todolistId1: string
@@ -78,7 +78,7 @@ test('correct filter of todolist should be changed', () => {
     const endState = todolistsReducer(startState, action)
 
     expect(endState[0].filter).toBe('all')
-    expect(endState[1].filter).toBe(action.filter)
+    expect(endState[1].filter).toBe(action.payload.value)
 })
 
 test('correct todolist entity status should be changed', () => {
@@ -88,7 +88,7 @@ test('correct todolist entity status should be changed', () => {
     const endState = todolistsReducer(startState, action)
 
     expect(endState[0].entityStatus).toBe('idle')
-    expect(endState[1].entityStatus).toBe(action.status)
+    expect(endState[1].entityStatus).toBe(action.payload.status)
 })
 
 test('todolists should be set to the state', () => {

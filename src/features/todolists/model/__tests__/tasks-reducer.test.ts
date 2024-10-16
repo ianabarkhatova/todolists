@@ -6,8 +6,8 @@ import {
     tasksReducer
 } from "../../../../state/tasks-reducer";
 import {removeTodolistAC, setTodolistsAC} from "../../../../state/todolists-reducer";
-import {TaskPriorities, TaskStatuses} from "../../../../api/todolistsApi";
 import {TasksObjType} from "../../../../app/App";
+import {TaskPriority, TaskStatus} from "../../../../common/enums/enums";
 
 let startState: TasksObjType
 
@@ -17,8 +17,8 @@ beforeEach(() => {
             {
                 description: 'description',
                 title: 'HTML&CSS',
-                status: TaskStatuses.Completed,
-                priority: TaskPriorities.Low,
+                status: TaskStatus.Completed,
+                priority: TaskPriority.Low,
                 startDate: '',
                 deadline: '',
                 id: '1',
@@ -30,8 +30,8 @@ beforeEach(() => {
             {
                 description: 'description',
                 title: 'JS',
-                status: TaskStatuses.Completed,
-                priority: TaskPriorities.Low,
+                status: TaskStatus.Completed,
+                priority: TaskPriority.Low,
                 startDate: '',
                 deadline: '',
                 id: '2',
@@ -43,8 +43,8 @@ beforeEach(() => {
             {
                 description: 'description',
                 title: 'React JS',
-                status: TaskStatuses.New,
-                priority: TaskPriorities.Low,
+                status: TaskStatus.New,
+                priority: TaskPriority.Low,
                 startDate: '',
                 deadline: '',
                 id: '3',
@@ -56,8 +56,8 @@ beforeEach(() => {
             {
                 description: 'description',
                 title: 'Redux',
-                status: TaskStatuses.New,
-                priority: TaskPriorities.Low,
+                status: TaskStatus.New,
+                priority: TaskPriority.Low,
                 startDate: '',
                 deadline: '',
                 id: '4',
@@ -69,8 +69,8 @@ beforeEach(() => {
             {
                 description: 'description',
                 title: 'REST API',
-                status: TaskStatuses.New,
-                priority: TaskPriorities.Low,
+                status: TaskStatus.New,
+                priority: TaskPriority.Low,
                 startDate: '',
                 deadline: '',
                 id: '5',
@@ -82,8 +82,8 @@ beforeEach(() => {
             {
                 description: 'description',
                 title: 'Typescript',
-                status: TaskStatuses.New,
-                priority: TaskPriorities.Low,
+                status: TaskStatus.New,
+                priority: TaskPriority.Low,
                 startDate: '',
                 deadline: '',
                 id: '6',
@@ -97,8 +97,8 @@ beforeEach(() => {
             {
                 description: 'description',
                 title: 'Book',
-                status: TaskStatuses.New,
-                priority: TaskPriorities.Low,
+                status: TaskStatus.New,
+                priority: TaskPriority.Low,
                 startDate: '',
                 deadline: '',
                 id: '1',
@@ -110,8 +110,8 @@ beforeEach(() => {
             {
                 description: 'description',
                 title: 'Bread',
-                status: TaskStatuses.Completed,
-                priority: TaskPriorities.Low,
+                status: TaskStatus.Completed,
+                priority: TaskPriority.Low,
                 startDate: '',
                 deadline: '',
                 id: '2',
@@ -134,8 +134,8 @@ test('correct task should be removed from correct todoList', () => {
             {
                 description: 'description',
                 title: 'HTML&CSS',
-                status: TaskStatuses.Completed,
-                priority: TaskPriorities.Low,
+                status: TaskStatus.Completed,
+                priority: TaskPriority.Low,
                 startDate: '',
                 deadline: '',
                 id: '1',
@@ -147,8 +147,8 @@ test('correct task should be removed from correct todoList', () => {
             {
                 description: 'description',
                 title: 'JS',
-                status: TaskStatuses.Completed,
-                priority: TaskPriorities.Low,
+                status: TaskStatus.Completed,
+                priority: TaskPriority.Low,
                 startDate: '',
                 deadline: '',
                 id: '2',
@@ -160,8 +160,8 @@ test('correct task should be removed from correct todoList', () => {
             {
                 description: 'description',
                 title: 'React JS',
-                status: TaskStatuses.New,
-                priority: TaskPriorities.Low,
+                status: TaskStatus.New,
+                priority: TaskPriority.Low,
                 startDate: '',
                 deadline: '',
                 id: '3',
@@ -173,8 +173,8 @@ test('correct task should be removed from correct todoList', () => {
             {
                 description: 'description',
                 title: 'Redux',
-                status: TaskStatuses.New,
-                priority: TaskPriorities.Low,
+                status: TaskStatus.New,
+                priority: TaskPriority.Low,
                 startDate: '',
                 deadline: '',
                 id: '4',
@@ -186,8 +186,8 @@ test('correct task should be removed from correct todoList', () => {
             {
                 description: 'description',
                 title: 'REST API',
-                status: TaskStatuses.New,
-                priority: TaskPriorities.Low,
+                status: TaskStatus.New,
+                priority: TaskPriority.Low,
                 startDate: '',
                 deadline: '',
                 id: '5',
@@ -199,8 +199,8 @@ test('correct task should be removed from correct todoList', () => {
             {
                 description: 'description',
                 title: 'Typescript',
-                status: TaskStatuses.New,
-                priority: TaskPriorities.Low,
+                status: TaskStatus.New,
+                priority: TaskPriority.Low,
                 startDate: '',
                 deadline: '',
                 id: '6',
@@ -214,8 +214,8 @@ test('correct task should be removed from correct todoList', () => {
             {
                 description: 'description',
                 title: 'Book',
-                status: TaskStatuses.New,
-                priority: TaskPriorities.Low,
+                status: TaskStatus.New,
+                priority: TaskPriority.Low,
                 startDate: '',
                 deadline: '',
                 id: '1',
@@ -237,7 +237,7 @@ test('correct task should be added to correct todoList', () => {
     const action = addTaskAC({
             todoListId: 'todolistId2',
             title: 'juice',
-            status: TaskStatuses.New,
+            status: TaskStatus.New,
             addedDate: '',
             deadline: '',
             description: '',
@@ -255,16 +255,16 @@ test('correct task should be added to correct todoList', () => {
     expect(endState['todolistId2'].length).toBe(3)
     expect(endState['todolistId2'][0].id).toBeDefined()
     expect(endState['todolistId2'][0].title).toBe('juice')
-    expect(endState['todolistId2'][0].status).toBe(TaskStatuses.New)
+    expect(endState['todolistId2'][0].status).toBe(TaskStatus.New)
 })
 
 test('status of specified task should be changed', () => {
 
-    const action = updateTaskAC('2', {status: TaskStatuses.New}, 'todolistId2')
+    const action = updateTaskAC('2', {status: TaskStatus.New}, 'todolistId2')
     const endState = tasksReducer(startState, action)
 
-    expect(endState['todolistId2'][1].status).toBe(TaskStatuses.New)
-    expect(endState['todolistId1'][1].status).toBe(TaskStatuses.Completed)
+    expect(endState['todolistId2'][1].status).toBe(TaskStatus.New)
+    expect(endState['todolistId1'][1].status).toBe(TaskStatus.Completed)
     expect(endState['todolistId2'].length).toBe(2)
     expect(endState['todolistId1'].length).toBe(6)
 })

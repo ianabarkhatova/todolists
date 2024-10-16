@@ -1,5 +1,5 @@
 import {SxProps} from "@mui/material";
-import {TaskStatuses} from "../../../../../../../api/todolistsApi";
+import {TaskStatus} from "../../../../../../../common/enums/enums";
 
 
 export const filterButtonsContainerSx: SxProps = {
@@ -7,8 +7,8 @@ export const filterButtonsContainerSx: SxProps = {
     justifyContent: 'space-between'
 }
 
-export const getListItemSx = (status: TaskStatuses): SxProps => ({
+export const getListItemSx = (status: TaskStatus): SxProps => ({
     p: 0,
     justifyContent: 'space-between',
-    opacity: status === TaskStatuses.Completed ? 0.5 : 1,
+    opacity: status === TaskStatus.Completed ? 0.5 : 1,
 })

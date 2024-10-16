@@ -1,8 +1,9 @@
 import {clearTodolistsDataAC, ClearTodolistsDataActionType} from "./todolists-reducer";
-import {authApi, LoginParamsType} from "../api/todolistsApi";
+import {authApi} from "../features/todolists/api/todolistsApi";
 import {Dispatch} from "redux";
 import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
+import {LoginParamsType} from "../common/types/types";
 
 const initialState = {
     isLoggedIin: false,

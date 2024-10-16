@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import '../features/todolists/ui/Todolists/Todolist/TodolistTitle/TodolistTitle.module.css';
 import {CircularProgress, CssBaseline, ThemeProvider} from "@mui/material";
-import {TaskType} from "../api/todolistsApi";
 import {ErrorSnackbar} from "../common/components/ErrorSnackbar/ErrorSnackbar";
 import {initializeAppTC} from "./app-reducer";
 import {getTheme} from "../common/theme/theme";
@@ -10,6 +9,7 @@ import {Main} from "./Main";
 import {useAppDispatch} from "../common/hooks/useAppDispatch";
 import {useAppSelector} from "../common/hooks/useAppSelector";
 import {selectIsInitialized, selectThemeMode} from "./appSelectors";
+import {TaskType} from "../features/todolists/api/tasksApi.types";
 
 
 export const App = ({demo = false}: Props) => {

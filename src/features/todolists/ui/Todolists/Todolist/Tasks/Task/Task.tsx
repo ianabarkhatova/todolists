@@ -3,9 +3,10 @@ import {Checkbox, IconButton, ListItem} from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {EditableSpan} from "../../../../../../../common/components/EditableSpan/EditableSpan";
 import {removeTaskTC, updateTaskTC,} from "../../../../../../../state/tasks-reducer";
-import {TaskStatuses, TaskType} from "../../../../../../../api/todolistsApi";
 import {getListItemSx} from "./Task.styles";
 import {useAppDispatch} from "../../../../../../../common/hooks/useAppDispatch";
+import {TaskType} from "../../../../../api/tasksApi.types";
+import {TaskStatus} from "../../../../../../../common/enums/enums";
 
 export type TaskProps = {
     task: TaskType,
@@ -21,7 +22,7 @@ export const Task = memo(({task, todolistId}: TaskProps) => {
 
     const changeTaskStatusHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         const newStatus = e.currentTarget.checked
-            ? TaskStatuses.Completed : TaskStatuses.New;
+            ? TaskStatus.Completed : TaskStatus.New;
         dispatch(updateTaskTC(task.id, todolistId, {status: newStatus}));
     }, []);
 
@@ -36,7 +37,7 @@ export const Task = memo(({task, todolistId}: TaskProps) => {
         >
             <div>
                 <Checkbox
-                    checked={task.status === TaskStatuses.Completed}
+                    checked={task.status === TaskStatus.Completed}
                     onChange={changeTaskStatusHandler}
                 />
                 <EditableSpan

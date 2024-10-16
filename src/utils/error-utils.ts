@@ -1,6 +1,7 @@
 import {setAppErrorAC, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../app/app-reducer";
-import {GeneralResponseType, GetTasksResponseType} from "../api/todolistsApi";
 import {Dispatch} from "redux";
+import {GetTasksResponseType} from "../features/todolists/api/tasksApi.types";
+import {GeneralResponseType} from "../common/types/types";
 
 export const handleServerAppError = <D>(data: GeneralResponseType<D> | GetTasksResponseType, dispatch: ErrorUtilsDispatchType) => {
     if ('messages' in data) {
