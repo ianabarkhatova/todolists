@@ -2,7 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom"
 import { App } from "../../app/App"
 import { Login } from "../../features/auth/ui/Login/Login"
 import { Todolists } from "../../features/todolists/ui/Todolists/Todolists"
-import { ErrorPage } from "common/components"
+import { Page404 } from "common/components"
 import React from "react"
 
 export const Path = {
@@ -13,7 +13,6 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <Navigate to={"/404"} />,
     children: [
       {
         index: true,
@@ -27,10 +26,14 @@ export const router = createBrowserRouter([
         path: "/todolists",
         element: <Todolists />,
       },
+      {
+        path: "/404",
+        element: <Page404 />,
+      },
+      {
+        path: "*",
+        element: <Navigate to={"/404"} />,
+      },
     ],
-  },
-  {
-    path: "/404",
-    element: <ErrorPage />,
   },
 ])
