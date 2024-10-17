@@ -7,7 +7,7 @@ import { Provider } from "react-redux"
 import { AppRootStateType, store } from "../../app/store"
 import thunk from "redux-thunk"
 import { appReducer } from "../../app/app-reducer"
-import { TaskPriority, TaskStatus } from "../../common/enums/enums"
+import { TaskPriority, TaskStatus } from "common/enums/enums"
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,

@@ -9,7 +9,7 @@ const initialState = {
   isLoggedIin: false,
 }
 
-export const authReducer = (state: InitialStateType = initialState, action: LoginActionType): InitialStateType => {
+export const authReducer = (state: InitialStateType = initialState, action: AuthActionType): InitialStateType => {
   switch (action.type) {
     case "Login/SET-IS-LOGGED-IN":
       return { ...state, isLoggedIin: action.isLoggedIn }
@@ -31,6 +31,7 @@ export const loginTC = (data: LoginArgs) => (dispatch: ThunkDispatch) => {
         console.log(res.data.data)
         dispatch(setIsLoggedInAC(true))
         dispatch(setAppStatusAC("succeeded"))
+        localStorage.setItem("sn-token", res.data.data.token)
       } else {
         handleServerAppError(res.data, dispatch)
       }
@@ -39,7 +40,6 @@ export const loginTC = (data: LoginArgs) => (dispatch: ThunkDispatch) => {
       handleServerNetworkError(dispatch, error)
     })
 }
-
 export const logOutTC = () => (dispatch: ThunkDispatch) => {
   dispatch(setAppStatusAC("loading"))
   authApi
@@ -48,6 +48,7 @@ export const logOutTC = () => (dispatch: ThunkDispatch) => {
       if (res.data.resultCode === 0) {
         console.log(res.data.data)
         dispatch(setIsLoggedInAC(false))
+        localStorage.removeItem("sn-token")
         dispatch(setAppStatusAC("succeeded"))
         dispatch(clearTodolistsDataAC())
       } else {
@@ -60,9 +61,7 @@ export const logOutTC = () => (dispatch: ThunkDispatch) => {
 }
 
 // types
-export type LoginActionType = SetAppStatusActionType | SetAppErrorActionType | ReturnType<typeof setIsLoggedInAC>
+export type AuthActionType = SetAppStatusActionType | SetAppErrorActionType | ReturnType<typeof setIsLoggedInAC>
 
 type InitialStateType = typeof initialState
-type ThunkDispatch = Dispatch<
-  SetAppErrorActionType | SetAppStatusActionType | LoginActionType | ClearTodolistsDataActionType
->
+type ThunkDispatch = Dispatch<AuthActionType | ClearTodolistsDataActionType>

@@ -34,7 +34,6 @@ export const Header = () => {
           <MenuIcon />
         </IconButton>
         <div>
-          <MenuButton>Login</MenuButton>
           {isLoggedIn && <MenuButton onClick={logOutHandler}>Logout</MenuButton>}
           <MenuButton background={theme.palette.primary.dark}>FAQ</MenuButton>
           <Switch color={"default"} onChange={changeModeHandler} />

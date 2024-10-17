@@ -1,5 +1,5 @@
 import { handleServerAppError } from "../utils/error-utils"
-import { LoginActionType, setIsLoggedInAC } from "../features/auth/model/auth-reducer"
+import { AuthActionType, setIsLoggedInAC } from "../features/auth/model/auth-reducer"
 import { Dispatch } from "redux"
 import { authApi } from "../features/auth/api/authApi"
 
@@ -33,9 +33,11 @@ export const changeThemeAC = (value: ThemeModeType) => ({ type: "APP/CHANGE-THEM
 
 // thunk creators
 export const initializeAppTC = () => (dispatch: ThunkDispatch) => {
+  dispatch(setAppStatusAC("loading"))
   authApi.me().then((res) => {
     // debugger
     if (res.data.resultCode === 0) {
+      dispatch(setAppStatusAC("succeeded"))
       dispatch(setIsLoggedInAC(true))
     } else {
       handleServerAppError(res.data, dispatch)
@@ -68,8 +70,6 @@ export type InitialStateType = {
   isInitialized: boolean
   themeMode: ThemeModeType
 }
-type ThunkDispatch = Dispatch<
-  SetAppErrorActionType | SetAppStatusActionType | LoginActionType | SetIsInitializedActionType
->
+type ThunkDispatch = Dispatch<AuthActionType | SetIsInitializedActionType>
 
 export type ThemeModeType = "dark" | "light"

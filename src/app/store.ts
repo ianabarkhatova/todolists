@@ -3,7 +3,7 @@ import { TodolistActionType, todolistsReducer } from "../state/todolists-reducer
 import { applyMiddleware, combineReducers, legacy_createStore } from "redux"
 import thunk, { ThunkDispatch } from "redux-thunk"
 import { AppActionType, appReducer } from "./app-reducer"
-import { authReducer, LoginActionType } from "../features/auth/model/auth-reducer"
+import { authReducer, AuthActionType } from "../features/auth/model/auth-reducer"
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,
@@ -18,7 +18,7 @@ export type AppRootStateType = ReturnType<typeof rootReducer>
 // создаем тип диспатча который принимает как AC так и TC
 export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, ActionType>
 
-type ActionType = TaskActionType | TodolistActionType | LoginActionType | AppActionType
+type ActionType = TaskActionType | TodolistActionType | AuthActionType | AppActionType
 
 // а это, чтобы можно было в консоли браузера обращаться к store в любой момент
 // @ts-ignore
