@@ -1,6 +1,6 @@
 import { instance } from "common/instance/instance"
 import { TodolistType } from "./todolistsApi.types"
-import { GeneralResponse, LoginParams } from "common/types"
+import { GeneralResponse } from "common/types"
 
 // api
 export const todolistsApi = {
@@ -16,17 +16,5 @@ export const todolistsApi = {
   },
   deleteTodolist(todolistId: string) {
     return instance.delete<GeneralResponse>(`todo-lists/${todolistId}`)
-  },
-}
-
-export const authApi = {
-  login(data: LoginParams) {
-    return instance.post<GeneralResponse<{ userId?: number }>>("auth/login", data)
-  },
-  logout() {
-    return instance.delete<GeneralResponse<{ userId?: number }>>("auth/login")
-  },
-  me() {
-    return instance.get<GeneralResponse<{ id: number; email: string; login: string }>>("/auth/me")
   },
 }

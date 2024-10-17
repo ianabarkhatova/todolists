@@ -7,12 +7,12 @@ import FormLabel from "@mui/material/FormLabel"
 import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import { useFormik } from "formik"
-import { loginTC } from "../../../../state/auth-reducer"
+import { loginTC } from "../../model/auth-reducer"
 import { Navigate } from "react-router-dom"
 import { Grid2 } from "@mui/material"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
 import { useAppSelector } from "common/hooks/useAppSelector"
-import { selectIsLoggedIn } from "../../../../state/authSelectors"
+import { selectIsLoggedIn } from "../../model/authSelectors"
 
 // Custom validation function
 const validate = (values: initialValuesType) => {
@@ -62,12 +62,6 @@ export const Login = () => {
         <form onSubmit={formik.handleSubmit}>
           <FormControl>
             <FormLabel>
-              {/*<p>*/}
-              {/*  To log in get registered*/}
-              {/*  <a href={"https://social-network.samuraijs.com/"} target={"_blank"}>*/}
-              {/*    here*/}
-              {/*  </a>*/}
-              {/*</p>*/}
               <p>To log in, use test account credentials:</p>
               <p>Email: free@samuraijs.com</p>
               <p>Password: free</p>
@@ -106,7 +100,6 @@ export const Login = () => {
 }
 
 // types
-
 type FormikErrorType = {
   email?: string
   password?: string

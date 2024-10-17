@@ -1,7 +1,7 @@
-import { authApi } from "../features/todolists/api/todolistsApi"
 import { handleServerAppError } from "../utils/error-utils"
-import { LoginActionType, setIsLoggedInAC } from "../state/auth-reducer"
+import { LoginActionType, setIsLoggedInAC } from "../features/auth/model/auth-reducer"
 import { Dispatch } from "redux"
+import { authApi } from "../features/auth/api/authApi"
 
 const initialState: InitialStateType = {
   status: "idle",

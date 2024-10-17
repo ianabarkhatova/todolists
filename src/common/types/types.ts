@@ -9,10 +9,3 @@ export type GeneralResponse<D = {}> = {
   resultCode: number
   data: D
 }
-
-export type LoginParams = {
-  email: string
-  password: string
-  rememberMe: boolean
-  captcha?: string
-}

@@ -7,7 +7,7 @@ import { Navigate } from "react-router-dom"
 import { Grid2 } from "@mui/material"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
 import { useAppSelector } from "common/hooks/useAppSelector"
-import { selectIsLoggedIn } from "../../../../state/authSelectors"
+import { selectIsLoggedIn } from "../../../auth/model/authSelectors"
 import { selectTodolists } from "../../model/todolistsSelectors"
 
 export const Todolists = ({ demo = false }) => {

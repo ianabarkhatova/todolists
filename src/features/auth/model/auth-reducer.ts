@@ -1,9 +1,9 @@
-import { clearTodolistsDataAC, ClearTodolistsDataActionType } from "./todolists-reducer"
-import { authApi } from "../features/todolists/api/todolistsApi"
+import { clearTodolistsDataAC, ClearTodolistsDataActionType } from "../../../state/todolists-reducer"
 import { Dispatch } from "redux"
-import { SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType } from "../app/app-reducer"
-import { handleServerAppError, handleServerNetworkError } from "../utils/error-utils"
-import { LoginParams } from "common/types"
+import { SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType } from "../../../app/app-reducer"
+import { handleServerAppError, handleServerNetworkError } from "../../../utils/error-utils"
+import { LoginArgs } from "../api/authApi.types"
+import { authApi } from "../api/authApi"
 
 const initialState = {
   isLoggedIin: false,
@@ -12,17 +12,17 @@ const initialState = {
 export const authReducer = (state: InitialStateType = initialState, action: LoginActionType): InitialStateType => {
   switch (action.type) {
     case "Login/SET-IS-LOGGED-IN":
-      return { ...state, isLoggedIin: action.value }
+      return { ...state, isLoggedIin: action.isLoggedIn }
     default:
       return state
   }
 }
 
 // action creators
-export const setIsLoggedInAC = (value: boolean) => ({ type: "Login/SET-IS-LOGGED-IN", value }) as const
+export const setIsLoggedInAC = (isLoggedIn: boolean) => ({ type: "Login/SET-IS-LOGGED-IN", isLoggedIn }) as const
 
 //thunk creators
-export const loginTC = (data: LoginParams) => (dispatch: ThunkDispatch) => {
+export const loginTC = (data: LoginArgs) => (dispatch: ThunkDispatch) => {
   dispatch(setAppStatusAC("loading"))
   authApi
     .login(data)

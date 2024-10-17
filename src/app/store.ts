@@ -3,7 +3,7 @@ import { TodolistActionType, todolistsReducer } from "../state/todolists-reducer
 import { applyMiddleware, combineReducers, legacy_createStore } from "redux"
 import thunk, { ThunkDispatch } from "redux-thunk"
 import { AppActionType, appReducer } from "./app-reducer"
-import { authReducer, LoginActionType } from "../state/auth-reducer"
+import { authReducer, LoginActionType } from "../features/auth/model/auth-reducer"
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,
