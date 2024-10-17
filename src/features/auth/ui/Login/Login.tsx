@@ -7,12 +7,12 @@ import FormLabel from "@mui/material/FormLabel"
 import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import { useFormik } from "formik"
-import { loginTC } from "../../state/auth-reducer"
+import { loginTC } from "../../../../state/auth-reducer"
 import { Navigate } from "react-router-dom"
 import { Grid2 } from "@mui/material"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
 import { useAppSelector } from "common/hooks/useAppSelector"
-import { selectIsLoggedIn } from "../../state/authSelectors"
+import { selectIsLoggedIn } from "../../../../state/authSelectors"
 
 // Custom validation function
 const validate = (values: initialValuesType) => {
@@ -26,8 +26,8 @@ const validate = (values: initialValuesType) => {
 
   if (!values.password) {
     errors.password = "Required"
-  } else if (values.password.length < 7) {
-    errors.password = "Password must contain at least 7 characters"
+    // } else if (values.password.length < 7) {
+    //   errors.password = "Password must contain at least 7 characters"
   }
 
   console.log(errors)
