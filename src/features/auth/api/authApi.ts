@@ -1,5 +1,5 @@
 import { GeneralResponse } from "common/types"
-import { instance } from "common/instance/instance"
+import { instance } from "common/instance"
 import { LoginArgs, LoginUser } from "./authApi.types"
 
 export const authApi = {

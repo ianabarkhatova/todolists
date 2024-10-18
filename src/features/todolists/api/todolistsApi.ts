@@ -1,4 +1,4 @@
-import { instance } from "common/instance/instance"
+import { instance } from "common/instance"
 import { TodolistType } from "./todolistsApi.types"
 import { GeneralResponse } from "common/types"
 

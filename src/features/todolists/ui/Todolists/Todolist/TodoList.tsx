@@ -1,11 +1,11 @@
 import React, { memo, useCallback, useEffect } from "react"
-import { AddItemForm } from "../../../../../common/components/AddItemForm/AddItemForm"
-import { addTaskTC } from "../../../../../state/tasks-reducer"
-import { TodolistDomainType } from "../../../../../state/todolists-reducer"
+import { AddItemForm } from "common/components"
+import { addTaskTC } from "../../../model/tasks-reducer"
+import { TodolistDomainType } from "../../../model/todolists-reducer"
 import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
 import { Tasks } from "./Tasks/Tasks"
 import { TodolistTitle } from "./TodolistTitle/TodolistTitle"
-import { useAppDispatch } from "common/hooks/useAppDispatch"
+import { useAppDispatch } from "common/hooks"
 
 export type TodoListProps = {
   todolist: TodolistDomainType

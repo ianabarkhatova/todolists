@@ -1,11 +1,12 @@
 import { v1 } from "uuid"
-import { todolistsApi } from "../features/todolists/api/todolistsApi"
+import { todolistsApi } from "../api/todolistsApi"
 import { Dispatch } from "redux"
-import { RequestStatusType, setAppStatusAC, SetAppStatusActionType } from "../app/app-reducer"
-import { handleServerAppError, handleServerNetworkError } from "../utils/error-utils"
+import { RequestStatusType, setAppStatusAC, SetAppStatusActionType } from "../../../app/app-reducer"
 import { getTasksTC } from "./tasks-reducer"
-import { TodolistType } from "../features/todolists/api/todolistsApi.types"
-import { resultCode } from "common/enums/enums"
+import { TodolistType } from "../api/todolistsApi.types"
+import { resultCode } from "common/enums"
+import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
+import { handleServerAppError } from "common/utils/handleServerAppError"
 
 export let todoListId1 = v1()
 export let todoListId2 = v1()

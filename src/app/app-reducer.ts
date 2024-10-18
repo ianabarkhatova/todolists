@@ -1,8 +1,9 @@
-import { handleServerAppError, handleServerNetworkError } from "../utils/error-utils"
 import { AuthActionType, setIsLoggedInAC } from "../features/auth/model/auth-reducer"
 import { Dispatch } from "redux"
 import { authApi } from "../features/auth/api/authApi"
-import { resultCode } from "common/enums/enums"
+import { resultCode } from "common/enums"
+import { handleServerAppError } from "common/utils/handleServerAppError"
+import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 
 const initialState: InitialStateType = {
   status: "idle",

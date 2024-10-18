@@ -8,7 +8,7 @@ import {
   setTodolistsAC,
   TodolistDomainType,
   todolistsReducer,
-} from "../../../../state/todolists-reducer"
+} from "../todolists-reducer"
 import { v1 } from "uuid"
 import { RequestStatusType } from "../../../../app/app-reducer"
 import { TodolistType } from "../../api/todolistsApi.types"

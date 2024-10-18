@@ -1,8 +1,8 @@
 import { Task } from "./Task/Task"
 import { List } from "@mui/material"
 import React from "react"
-import { TodolistDomainType } from "../../../../../../state/todolists-reducer"
-import { useAppSelector } from "common/hooks/useAppSelector"
+import { TodolistDomainType } from "../../../../model/todolists-reducer"
+import { useAppSelector } from "common/hooks"
 import { selectTasks } from "../../../../model/tasksSelectors"
 import { TaskStatus } from "common/enums/enums"
 

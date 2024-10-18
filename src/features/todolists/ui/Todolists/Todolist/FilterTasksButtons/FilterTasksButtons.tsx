@@ -1,9 +1,9 @@
 import { filterButtonsContainerSx } from "../Tasks/Task/Task.styles"
 import { Box, Button, ButtonProps } from "@mui/material"
 import React, { memo } from "react"
-import { changeTodolistFilterAC, FilterValuesType } from "../../../../../../state/todolists-reducer"
+import { changeTodolistFilterAC, FilterValuesType } from "../../../../model/todolists-reducer"
 import { TodoListProps } from "../TodoList"
-import { useAppDispatch } from "common/hooks/useAppDispatch"
+import { useAppDispatch } from "common/hooks"
 
 export const FilterTasksButtons = ({ todolist }: TodoListProps) => {
   const dispatch = useAppDispatch()

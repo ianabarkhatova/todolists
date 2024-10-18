@@ -1,5 +1,5 @@
-import { tasksReducer } from "../../state/tasks-reducer"
-import { todoListId1, todoListId2, todolistsReducer } from "../../state/todolists-reducer"
+import { tasksReducer } from "../../features/todolists/model/tasks-reducer"
+import { todoListId1, todoListId2, todolistsReducer } from "../../features/todolists/model/todolists-reducer"
 import { applyMiddleware, combineReducers, legacy_createStore } from "redux"
 import { v1 } from "uuid"
 import React from "react"

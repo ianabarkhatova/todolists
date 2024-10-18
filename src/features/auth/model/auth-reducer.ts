@@ -1,10 +1,11 @@
-import { clearTodolistsDataAC, ClearTodolistsDataActionType } from "../../../state/todolists-reducer"
+import { clearTodolistsDataAC, ClearTodolistsDataActionType } from "../../todolists/model/todolists-reducer"
 import { Dispatch } from "redux"
 import { SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType } from "../../../app/app-reducer"
-import { handleServerAppError, handleServerNetworkError } from "../../../utils/error-utils"
 import { LoginArgs } from "../api/authApi.types"
 import { authApi } from "../api/authApi"
-import { resultCode } from "common/enums/enums"
+import { resultCode } from "common/enums"
+import { handleServerAppError } from "common/utils/handleServerAppError"
+import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 
 const initialState = {
   isLoggedIin: false,

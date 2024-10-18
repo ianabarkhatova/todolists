@@ -1,5 +1,5 @@
-import { addTaskAC, updateTaskAC, removeTaskAC, setTasksAC, tasksReducer } from "../../../../state/tasks-reducer"
-import { removeTodolistAC, setTodolistsAC } from "../../../../state/todolists-reducer"
+import { addTaskAC, updateTaskAC, removeTaskAC, setTasksAC, tasksReducer } from "../tasks-reducer"
+import { removeTodolistAC, setTodolistsAC } from "../todolists-reducer"
 import { TasksObjType } from "../../../../app/App"
 import { TaskPriority, TaskStatus } from "../../../../common/enums/enums"
 

@@ -4,7 +4,7 @@ import { RouterProvider } from "react-router-dom"
 import "./index.css"
 import { Provider } from "react-redux"
 import { store } from "./app/store"
-import { router } from "common/router/router"
+import { router } from "common/router"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 

@@ -1,5 +1,5 @@
-import { TaskActionType, tasksReducer } from "../state/tasks-reducer"
-import { TodolistActionType, todolistsReducer } from "../state/todolists-reducer"
+import { TaskActionType, tasksReducer } from "../features/todolists/model/tasks-reducer"
+import { TodolistActionType, todolistsReducer } from "../features/todolists/model/todolists-reducer"
 import { applyMiddleware, combineReducers, legacy_createStore } from "redux"
 import thunk, { ThunkDispatch } from "redux-thunk"
 import { AppActionType, appReducer } from "./app-reducer"

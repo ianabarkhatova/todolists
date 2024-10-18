@@ -10,8 +10,8 @@ import { useFormik } from "formik"
 import { loginTC } from "../../model/auth-reducer"
 import { Navigate } from "react-router-dom"
 import { Grid2 } from "@mui/material"
-import { useAppDispatch } from "common/hooks/useAppDispatch"
-import { useAppSelector } from "common/hooks/useAppSelector"
+import { useAppDispatch } from "common/hooks"
+import { useAppSelector } from "common/hooks"
 import { selectIsLoggedIn } from "../../model/authSelectors"
 
 // Custom validation function

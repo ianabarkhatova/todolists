@@ -4,14 +4,20 @@ import {
   RemoveTodolistActionType,
   SetTodolistsActionType,
 } from "./todolists-reducer"
-import { TasksObjType } from "../app/App"
+import { TasksObjType } from "../../../app/App"
 import { Dispatch } from "redux"
-import { AppRootStateType } from "../app/store"
-import { RequestStatusType, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType } from "../app/app-reducer"
-import { handleServerAppError, handleServerNetworkError } from "../utils/error-utils"
-import { tasksApi } from "../features/todolists/api/tasksApi"
-import { TaskType, UpdateTaskModel } from "../features/todolists/api/tasksApi.types"
-import { resultCode } from "common/enums/enums"
+import { AppRootStateType } from "../../../app/store"
+import {
+  RequestStatusType,
+  SetAppErrorActionType,
+  setAppStatusAC,
+  SetAppStatusActionType,
+} from "../../../app/app-reducer"
+import { tasksApi } from "../api/tasksApi"
+import { TaskType, UpdateTaskModel } from "../api/tasksApi.types"
+import { resultCode } from "common/enums"
+import { handleServerAppError } from "common/utils/handleServerAppError"
+import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 
 const initialState: TasksObjType = {}
 

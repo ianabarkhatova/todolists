@@ -3,14 +3,14 @@ import "../features/todolists/ui/Todolists/Todolist/TodolistTitle/TodolistTitle.
 import { CircularProgress, CssBaseline, ThemeProvider } from "@mui/material"
 import { ErrorSnackbar } from "common/components"
 import { initializeAppTC } from "./app-reducer"
-import { getTheme } from "common/theme/theme"
+import { getTheme } from "common/theme"
 import { Header } from "common/components"
 import { Main } from "./Main"
-import { useAppDispatch } from "common/hooks/useAppDispatch"
-import { useAppSelector } from "common/hooks/useAppSelector"
+import { useAppSelector } from "common/hooks"
 import { selectIsInitialized, selectThemeMode } from "./appSelectors"
 import { TaskType } from "../features/todolists/api/tasksApi.types"
 import s from "./App.module.css"
+import { useAppDispatch } from "common/hooks"
 
 export const App = ({ demo = false }: Props) => {
   // BLL
