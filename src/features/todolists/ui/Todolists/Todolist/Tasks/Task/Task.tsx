@@ -7,13 +7,15 @@ import { useAppDispatch } from "common/hooks"
 import { TaskStatus } from "common/enums/enums"
 import { EditableSpan } from "common/components"
 import { TaskType } from "../../../../../api/tasksApi.types"
+import { TodolistDomainType } from "../../../../../model/todolists-reducer"
 
 export type TaskProps = {
   task: TaskType
   todolistId: string
+  todolist: TodolistDomainType
 }
 
-export const Task = memo(({ task, todolistId }: TaskProps) => {
+export const Task = memo(({ task, todolistId, todolist }: TaskProps) => {
   const dispatch = useAppDispatch()
 
   const removeTaskHandler = useCallback(() => {
@@ -35,10 +37,22 @@ export const Task = memo(({ task, todolistId }: TaskProps) => {
   return (
     <ListItem sx={getListItemSx(task.status)}>
       <div>
-        <Checkbox checked={task.status === TaskStatus.Completed} onChange={changeTaskStatusHandler} />
-        <EditableSpan title={task.title} onChange={changeTaskTitleHandler} disabled={task.entityStatus === "loading"} />
+        <Checkbox
+          checked={task.status === TaskStatus.Completed}
+          onChange={changeTaskStatusHandler}
+          disabled={task.entityStatus === "loading" || todolist.entityStatus === "loading"}
+        />
+        <EditableSpan
+          title={task.title}
+          onChange={changeTaskTitleHandler}
+          disabled={task.entityStatus === "loading" || todolist.entityStatus === "loading"}
+        />
       </div>
-      <IconButton aria-label="delete" onClick={removeTaskHandler} disabled={task.entityStatus === "loading"}>
+      <IconButton
+        aria-label="delete"
+        onClick={removeTaskHandler}
+        disabled={task.entityStatus === "loading" || todolist.entityStatus === "loading"}
+      >
         <DeleteOutlineIcon />
       </IconButton>
     </ListItem>

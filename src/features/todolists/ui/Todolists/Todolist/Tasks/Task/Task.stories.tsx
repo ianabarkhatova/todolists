@@ -28,6 +28,14 @@ const meta: Meta<typeof Task> = {
       priority: TaskPriority.Hi,
       entityStatus: "idle",
     },
+    todolist: {
+      id: "todolistId1",
+      title: "My TodoList",
+      order: 0,
+      addedDate: "",
+      filter: "all",
+      entityStatus: "idle",
+    },
     todolistId: "d4sduhn4t45k4kjnsf",
   },
 }
@@ -52,6 +60,14 @@ export const TaskIsDoneStory: Story = {
           description: "desc",
           todoListId: "todoListId1",
           priority: TaskPriority.Hi,
+          entityStatus: "idle",
+        }}
+        todolist={{
+          id: "todolistId1",
+          title: "My TodoList",
+          order: 0,
+          addedDate: "",
+          filter: "all",
           entityStatus: "idle",
         }}
         todolistId={"sfsdf34534hskdf"}

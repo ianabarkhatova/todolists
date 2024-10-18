@@ -9,7 +9,7 @@ type Props = {
 }
 
 export const TodolistTitle = ({ todolist }: Props) => {
-  const { title, id } = todolist
+  const { title, id, entityStatus } = todolist
   const dispatch = useAppDispatch()
 
   const removeTodoListHandler = () => {
@@ -27,7 +27,7 @@ export const TodolistTitle = ({ todolist }: Props) => {
         onChange={changeTodoListTitleHandler}
         disabled={todolist.entityStatus === "loading"}
       />
-      <IconButton aria-label="delete" onClick={removeTodoListHandler} disabled={todolist.entityStatus === "loading"}>
+      <IconButton aria-label="delete" onClick={removeTodoListHandler} disabled={entityStatus === "loading"}>
         <DeleteOutlineIcon />
       </IconButton>
     </h3>
