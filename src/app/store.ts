@@ -4,6 +4,7 @@ import { applyMiddleware, combineReducers, legacy_createStore } from "redux"
 import thunk, { ThunkDispatch } from "redux-thunk"
 import { AppActionType, appReducer } from "./app-reducer"
 import { authReducer, AuthActionType } from "../features/auth/model/auth-reducer"
+import { configureStore } from "@reduxjs/toolkit"
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,
@@ -12,8 +13,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
 })
 
-export const store = legacy_createStore(rootReducer, applyMiddleware(thunk))
-export type AppRootStateType = ReturnType<typeof rootReducer>
+export const store = configureStore({ reducer: rootReducer })
+export type AppRootStateType = ReturnType<typeof store.getState>
 
 // создаем тип диспатча который принимает как AC так и TC
 export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, ActionType>

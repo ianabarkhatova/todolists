@@ -1,9 +1,10 @@
-import { AuthActionType, setIsLoggedInAC } from "../features/auth/model/auth-reducer"
+import { AuthActionType, setIsLoggedIn } from "../features/auth/model/auth-reducer"
 import { Dispatch } from "redux"
 import { authApi } from "../features/auth/api/authApi"
 import { resultCode } from "common/enums"
 import { handleServerAppError } from "common/utils/handleServerAppError"
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
+import { AppDispatch } from "./store"
 
 const initialState: InitialStateType = {
   status: "idle",
@@ -34,7 +35,7 @@ export const setAppInitializedAC = (value: boolean) => ({ type: "APP/SET-IS-INIT
 export const changeThemeAC = (value: ThemeModeType) => ({ type: "APP/CHANGE-THEME", value }) as const
 
 // thunk creators
-export const initializeAppTC = () => (dispatch: ThunkDispatch) => {
+export const initializeAppTC = (): AppDispatch => (dispatch: any) => {
   dispatch(setAppStatusAC("loading"))
   authApi
     .me()
@@ -42,7 +43,7 @@ export const initializeAppTC = () => (dispatch: ThunkDispatch) => {
       // debugger
       if (res.data.resultCode === resultCode.Success) {
         dispatch(setAppStatusAC("succeeded"))
-        dispatch(setIsLoggedInAC(true))
+        dispatch(setIsLoggedIn({ isLoggedIn: true }))
       } else {
         handleServerAppError(res.data, dispatch)
       }
