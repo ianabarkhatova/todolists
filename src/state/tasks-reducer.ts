@@ -11,6 +11,7 @@ import { RequestStatusType, SetAppErrorActionType, setAppStatusAC, SetAppStatusA
 import { handleServerAppError, handleServerNetworkError } from "../utils/error-utils"
 import { tasksApi } from "../features/todolists/api/tasksApi"
 import { TaskType, UpdateTaskModel } from "../features/todolists/api/tasksApi.types"
+import { resultCode } from "common/enums/enums"
 
 const initialState: TasksObjType = {}
 
@@ -105,7 +106,7 @@ export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: T
   tasksApi
     .deleteTask({ todolistId, taskId })
     .then((res) => {
-      if (res.data.resultCode === 0) {
+      if (res.data.resultCode === resultCode.Success) {
         dispatch(removeTaskAC(taskId, todolistId))
         dispatch(setAppStatusAC("succeeded"))
       } else {
@@ -122,7 +123,7 @@ export const addTaskTC =
     tasksApi
       .createTask({ todolistId, title })
       .then((res) => {
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === resultCode.Success) {
           dispatch(addTaskAC(res.data.data.item))
           dispatch(setAppStatusAC("succeeded"))
         } else {
@@ -163,7 +164,7 @@ export const updateTaskTC =
       tasksApi
         .updateTask({ todolistId, taskId, apiModel })
         .then((res) => {
-          if (res.data.resultCode === 0) {
+          if (res.data.resultCode === resultCode.Success) {
             dispatch(updateTaskAC(taskId, domainModel, todolistId))
             dispatch(setAppStatusAC("succeeded"))
             dispatch(changeTaskEntityStatusAC(taskId, todolistId, "succeeded"))

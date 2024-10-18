@@ -10,6 +10,7 @@ import { useAppDispatch } from "common/hooks/useAppDispatch"
 import { useAppSelector } from "common/hooks/useAppSelector"
 import { selectIsInitialized, selectThemeMode } from "./appSelectors"
 import { TaskType } from "../features/todolists/api/tasksApi.types"
+import s from "./App.module.css"
 
 export const App = ({ demo = false }: Props) => {
   // BLL
@@ -17,27 +18,27 @@ export const App = ({ demo = false }: Props) => {
   const dispatch = useAppDispatch()
   const themeMode = useAppSelector(selectThemeMode)
 
+  // check if is user logged in
   useEffect(() => {
     dispatch(initializeAppTC())
   }, [])
-
-  //UI
-
-  if (!isInitialized) {
-    return (
-      <div style={{ position: "fixed", top: "30%", textAlign: "center", width: "100%" }}>
-        <CircularProgress />
-      </div>
-    )
-  }
 
   return (
     <div>
       <ThemeProvider theme={getTheme(themeMode)}>
         <CssBaseline />
         <ErrorSnackbar />
-        <Header />
-        <Main />
+        {isInitialized && (
+          <>
+            <Header />
+            <Main />
+          </>
+        )}
+        {!isInitialized && (
+          <div className={s.circularProgressContainer}>
+            <CircularProgress size={150} thickness={3} />
+          </div>
+        )}
       </ThemeProvider>
     </div>
   )

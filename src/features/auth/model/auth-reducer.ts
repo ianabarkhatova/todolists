@@ -4,6 +4,7 @@ import { SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType } from ".
 import { handleServerAppError, handleServerNetworkError } from "../../../utils/error-utils"
 import { LoginArgs } from "../api/authApi.types"
 import { authApi } from "../api/authApi"
+import { resultCode } from "common/enums/enums"
 
 const initialState = {
   isLoggedIin: false,
@@ -27,7 +28,7 @@ export const loginTC = (data: LoginArgs) => (dispatch: ThunkDispatch) => {
   authApi
     .login(data)
     .then((res) => {
-      if (res.data.resultCode === 0) {
+      if (res.data.resultCode === resultCode.Success) {
         console.log(res.data.data)
         dispatch(setIsLoggedInAC(true))
         dispatch(setAppStatusAC("succeeded"))
@@ -45,7 +46,7 @@ export const logOutTC = () => (dispatch: ThunkDispatch) => {
   authApi
     .logout()
     .then((res) => {
-      if (res.data.resultCode === 0) {
+      if (res.data.resultCode === resultCode.Success) {
         console.log(res.data.data)
         dispatch(setIsLoggedInAC(false))
         localStorage.removeItem("sn-token")

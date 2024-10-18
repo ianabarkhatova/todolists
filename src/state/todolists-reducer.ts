@@ -5,6 +5,7 @@ import { RequestStatusType, setAppStatusAC, SetAppStatusActionType } from "../ap
 import { handleServerAppError, handleServerNetworkError } from "../utils/error-utils"
 import { getTasksTC } from "./tasks-reducer"
 import { TodolistType } from "../features/todolists/api/todolistsApi.types"
+import { resultCode } from "common/enums/enums"
 
 export let todoListId1 = v1()
 export let todoListId2 = v1()
@@ -75,7 +76,7 @@ export const removeTodolistTC = (todolistId: string) => (dispatch: ThunkDispatch
   todolistsApi
     .deleteTodolist(todolistId)
     .then((res) => {
-      if (res.data.resultCode === 0) {
+      if (res.data.resultCode === resultCode.Success) {
         dispatch(removeTodolistAC(todolistId))
         dispatch(setAppStatusAC("succeeded"))
         console.log("removeTodolist ", res)
@@ -92,7 +93,7 @@ export const addTodolistTC = (title: string) => (dispatch: ThunkDispatch) => {
   todolistsApi
     .createTodolist(title)
     .then((res) => {
-      if (res.data.resultCode === 0) {
+      if (res.data.resultCode === resultCode.Success) {
         dispatch(addTodolistAC(res.data.data.item))
         dispatch(setAppStatusAC("succeeded"))
       } else {
@@ -109,7 +110,7 @@ export const changeTodolistTitleTC = (todolistId: string, title: string) => (dis
   todolistsApi
     .updateTodolist({ todolistId, title })
     .then((res) => {
-      if (res.data.resultCode === 0) {
+      if (res.data.resultCode === resultCode.Success) {
         dispatch(changeTodolistTitleAC(todolistId, title))
         dispatch(setAppStatusAC("succeeded"))
         dispatch(changeTodolistEntityStatusAC(todolistId, "succeeded"))

@@ -1,6 +1,6 @@
 import { GeneralResponse } from "common/types"
 import { instance } from "common/instance/instance"
-import { LoginArgs } from "./authApi.types"
+import { LoginArgs, LoginUser } from "./authApi.types"
 
 export const authApi = {
   login(payload: LoginArgs) {
@@ -10,6 +10,6 @@ export const authApi = {
     return instance.delete<GeneralResponse<{ userId?: number }>>("auth/login")
   },
   me() {
-    return instance.get<GeneralResponse<{ id: number; email: string; login: string }>>("auth/me")
+    return instance.get<GeneralResponse<LoginUser>>("auth/me")
   },
 }

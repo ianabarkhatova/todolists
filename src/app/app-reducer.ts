@@ -1,7 +1,8 @@
-import { handleServerAppError } from "../utils/error-utils"
+import { handleServerAppError, handleServerNetworkError } from "../utils/error-utils"
 import { AuthActionType, setIsLoggedInAC } from "../features/auth/model/auth-reducer"
 import { Dispatch } from "redux"
 import { authApi } from "../features/auth/api/authApi"
+import { resultCode } from "common/enums/enums"
 
 const initialState: InitialStateType = {
   status: "idle",
@@ -34,20 +35,23 @@ export const changeThemeAC = (value: ThemeModeType) => ({ type: "APP/CHANGE-THEM
 // thunk creators
 export const initializeAppTC = () => (dispatch: ThunkDispatch) => {
   dispatch(setAppStatusAC("loading"))
-  authApi.me().then((res) => {
-    // debugger
-    if (res.data.resultCode === 0) {
-      dispatch(setAppStatusAC("succeeded"))
-      dispatch(setIsLoggedInAC(true))
-    } else {
-      handleServerAppError(res.data, dispatch)
-    }
-    dispatch(setAppInitializedAC(true))
-  })
-
-  // .catch((error) => {
-  //     handleServerNetworkError(dispatch, error)
-  // })
+  authApi
+    .me()
+    .then((res) => {
+      // debugger
+      if (res.data.resultCode === resultCode.Success) {
+        dispatch(setAppStatusAC("succeeded"))
+        dispatch(setIsLoggedInAC(true))
+      } else {
+        handleServerAppError(res.data, dispatch)
+      }
+    })
+    .catch((error) => {
+      handleServerNetworkError(dispatch, error)
+    })
+    .finally(() => {
+      dispatch(setAppInitializedAC(true))
+    })
 }
 
 // types
