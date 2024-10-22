@@ -1,7 +1,8 @@
 # Main technologies used:
 
 - React
-- Redux
+- Typescript
+- Redux Toolkit
 - Material UI library
 - Formik library
 - react-router-dom
