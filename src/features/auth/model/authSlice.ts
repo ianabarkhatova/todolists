@@ -7,6 +7,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { AppDispatch } from "../../../app/store"
 import { setAppStatus } from "../../../app/appSlice"
 import { clearTodolistsData } from "../../todolists/model/todolistsSlice"
+import { clearTasksData } from "../../todolists/model/tasksSlice"
 
 export const authSlice = createSlice({
   name: "auth",
@@ -55,6 +56,7 @@ export const logOutTC = () => (dispatch: AppDispatch) => {
         localStorage.removeItem("sn-token")
         dispatch(setAppStatus({ status: "succeeded" }))
         dispatch(clearTodolistsData())
+        dispatch(clearTasksData())
       } else {
         handleServerAppError(res.data, dispatch)
       }

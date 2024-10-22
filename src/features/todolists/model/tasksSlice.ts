@@ -34,9 +34,6 @@ export const tasksSlice = createSlice({
     setTasks: (state, action: PayloadAction<{ tasks: TaskType[]; todolistId: string }>) => {
       state[action.payload.todolistId] = action.payload.tasks
     },
-    clearData: () => {
-      return {}
-    },
     changeTaskEntityStatus: (
       state,
       action: PayloadAction<{ taskId: string; todolistId: string; status: RequestStatusType }>,
@@ -44,6 +41,9 @@ export const tasksSlice = createSlice({
       const tasks = state[action.payload.todolistId]
       const index = tasks.findIndex((task) => task.id === action.payload.taskId)
       if (index !== -1) tasks[index].entityStatus = action.payload.status
+    },
+    clearTasksData: () => {
+      return {}
     },
   },
   extraReducers: (builder) => {
@@ -63,7 +63,7 @@ export const tasksSlice = createSlice({
 })
 
 export const tasksReducer = tasksSlice.reducer
-export const { addTask, removeTask, changeTaskEntityStatus, setTasks, updateTask, clearData } = tasksSlice.actions
+export const { addTask, removeTask, changeTaskEntityStatus, setTasks, updateTask, clearTasksData } = tasksSlice.actions
 
 //thunk creators
 export const getTasksTC = (todolistId: string) => (dispatch: AppDispatch) => {
