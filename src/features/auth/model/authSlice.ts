@@ -8,7 +8,7 @@ import { AppDispatch } from "../../../app/store"
 import { setAppStatus } from "../../../app/appSlice"
 import { clearTodolistsData } from "../../todolists/model/todolistsSlice"
 
-const authSlice = createSlice({
+export const authSlice = createSlice({
   name: "auth",
   initialState: {
     isLoggedIin: false,
@@ -18,32 +18,33 @@ const authSlice = createSlice({
       state.isLoggedIin = action.payload.isLoggedIn
     },
   },
+  selectors: {
+    selectIsLoggedIn: (sliceState) => sliceState.isLoggedIin,
+  },
 })
 
 export const authReducer = authSlice.reducer
 export const { setIsLoggedIn } = authSlice.actions
 
 //thunk creators
-export const loginTC =
-  (data: LoginArgs): AppDispatch =>
-  (dispatch: any) => {
-    dispatch(setAppStatus({ status: "loading" }))
-    authApi
-      .login(data)
-      .then((res) => {
-        if (res.data.resultCode === resultCode.Success) {
-          dispatch(setIsLoggedIn({ isLoggedIn: true }))
-          dispatch(setAppStatus({ status: "succeeded" }))
-          localStorage.setItem("sn-token", res.data.data.token)
-        } else {
-          handleServerAppError(res.data, dispatch)
-        }
-      })
-      .catch((error) => {
-        handleServerNetworkError(dispatch, error)
-      })
-  }
-export const logOutTC = (): AppDispatch => (dispatch: any) => {
+export const loginTC = (data: LoginArgs) => (dispatch: AppDispatch) => {
+  dispatch(setAppStatus({ status: "loading" }))
+  authApi
+    .login(data)
+    .then((res) => {
+      if (res.data.resultCode === resultCode.Success) {
+        dispatch(setIsLoggedIn({ isLoggedIn: true }))
+        dispatch(setAppStatus({ status: "succeeded" }))
+        localStorage.setItem("sn-token", res.data.data.token)
+      } else {
+        handleServerAppError(res.data, dispatch)
+      }
+    })
+    .catch((error) => {
+      handleServerNetworkError(dispatch, error)
+    })
+}
+export const logOutTC = () => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
   authApi
     .logout()

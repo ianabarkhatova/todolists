@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useEffect } from "react"
 import { AddItemForm } from "common/components"
-import { addTaskTC } from "../../../model/tasks-reducer"
+import { addTaskTC } from "../../../model/tasksSlice"
 import { TodolistDomainType } from "../../../model/todolistsSlice"
 import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
 import { Tasks } from "./Tasks/Tasks"

@@ -1,4 +1,4 @@
-import { tasksReducer } from "../../features/todolists/model/tasks-reducer"
+import { tasksReducer } from "../../features/todolists/model/tasksSlice"
 import { todoListId1, todoListId2, todolistsReducer } from "../../features/todolists/model/todolistsSlice"
 import { applyMiddleware, combineReducers, legacy_createStore } from "redux"
 import { v1 } from "uuid"

@@ -5,6 +5,7 @@ import { handleServerAppError } from "common/utils/handleServerAppError"
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 import { AppDispatch } from "./store"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { Dispatch } from "redux"
 
 const appSlice = createSlice({
   name: "app",
@@ -28,13 +29,14 @@ const appSlice = createSlice({
       state.themeMode = action.payload.themeMode
     },
   },
+  selectors: {},
 })
 
 export const appReducer = appSlice.reducer
 export const { setAppStatus, setAppError, setAppInitialized, changeTheme } = appSlice.actions
 
 // thunk creators
-export const initializeAppTC = (): AppDispatch => (dispatch: any) => {
+export const initializeAppTC = () => (dispatch: AppDispatch) => {
   dispatch(
     setAppStatus({ status: "loading" }),
     authApi

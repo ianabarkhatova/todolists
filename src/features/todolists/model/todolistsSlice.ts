@@ -2,7 +2,7 @@ import { v1 } from "uuid"
 import { todolistsApi } from "../api/todolistsApi"
 import { Dispatch } from "redux"
 import { RequestStatusType, setAppStatus, ThemeModeType } from "../../../app/appSlice"
-import { getTasksTC } from "./tasks-reducer"
+import { getTasksTC } from "./tasksSlice"
 import { TodolistType } from "../api/todolistsApi.types"
 import { resultCode } from "common/enums"
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
@@ -59,7 +59,7 @@ export const {
 } = todolistsSlice.actions
 
 //thunk creators
-export const getTodolistsTC = (): AppDispatch => (dispatch: any) => {
+export const getTodolistsTC = () => (dispatch: AppDispatch) => {
   // todo: type for dispatch above
   //не ставим loading т к приложение только загрузилось
   todolistsApi

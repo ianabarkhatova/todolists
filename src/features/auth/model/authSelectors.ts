@@ -1,3 +1,3 @@
-import { AppRootStateType } from "../../../app/store"
+import { authSlice } from "./authSlice"
 
-export const selectIsLoggedIn = (state: AppRootStateType) => state.auth.isLoggedIin
+export const { selectIsLoggedIn } = authSlice.selectors

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, memo, useCallback } from "react"
 import { Checkbox, IconButton, ListItem } from "@mui/material"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
-import { removeTaskTC, updateTaskTC } from "../../../../../model/tasks-reducer"
+import { removeTaskTC, updateTaskTC } from "../../../../../model/tasksSlice"
 import { getListItemSx } from "./Task.styles"
 import { useAppDispatch } from "common/hooks"
 import { TaskStatus } from "common/enums"
