@@ -1,6 +1,7 @@
 # Main technologies used:
 
 - React
+- Typescript
 - Redux Toolkit
 - Material UI library
 - Formik library
