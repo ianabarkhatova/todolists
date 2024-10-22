@@ -5,16 +5,17 @@ import MenuIcon from "@mui/icons-material/Menu"
 import { MenuButton } from "common/components"
 import { LinearProgress, Switch } from "@mui/material"
 import React, { useCallback } from "react"
-import { logOutTC } from "../../../features/auth/model/auth-reducer"
-import { changeThemeAC } from "../../../app/app-reducer"
+import { logOutTC } from "../../../features/auth/model/authSlice"
 import { getTheme } from "../../theme"
 import { useAppDispatch } from "common/hooks"
 import { useAppSelector } from "common/hooks"
 import { selectIsLoggedIn } from "../../../features/auth/model/authSelectors"
 import { selectStatus, selectThemeMode } from "../../../app/appSelectors"
+import { changeTheme } from "../../../app/appSlice"
+import { useDispatch } from "react-redux"
 
 export const Header = () => {
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const status = useAppSelector(selectStatus)
 
@@ -22,7 +23,7 @@ export const Header = () => {
     dispatch(logOutTC())
   }, [])
   const changeModeHandler = () => {
-    dispatch(changeThemeAC(themeMode === "light" ? "dark" : "light"))
+    dispatch(changeTheme({ themeMode: "light" ? "dark" : "light" }))
   }
   const themeMode = useAppSelector(selectThemeMode)
   const theme = getTheme(themeMode)

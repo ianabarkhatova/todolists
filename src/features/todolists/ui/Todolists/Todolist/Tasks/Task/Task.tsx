@@ -7,7 +7,7 @@ import { useAppDispatch } from "common/hooks"
 import { TaskStatus } from "common/enums"
 import { EditableSpan } from "common/components"
 import { TaskType } from "../../../../../api/tasksApi.types"
-import { TodolistDomainType } from "../../../../../model/todolists-reducer"
+import { TodolistDomainType } from "../../../../../model/todolistsSlice"
 
 export type TaskProps = {
   task: TaskType

@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect } from "react"
 import { AddItemForm } from "common/components"
 import { addTaskTC } from "../../../model/tasks-reducer"
-import { TodolistDomainType } from "../../../model/todolists-reducer"
+import { TodolistDomainType } from "../../../model/todolistsSlice"
 import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
 import { Tasks } from "./Tasks/Tasks"
 import { TodolistTitle } from "./TodolistTitle/TodolistTitle"

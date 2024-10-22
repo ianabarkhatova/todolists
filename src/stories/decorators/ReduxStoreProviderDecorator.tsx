@@ -1,12 +1,12 @@
 import { tasksReducer } from "../../features/todolists/model/tasks-reducer"
-import { todoListId1, todoListId2, todolistsReducer } from "../../features/todolists/model/todolists-reducer"
+import { todoListId1, todoListId2, todolistsReducer } from "../../features/todolists/model/todolistsSlice"
 import { applyMiddleware, combineReducers, legacy_createStore } from "redux"
 import { v1 } from "uuid"
 import React from "react"
 import { Provider } from "react-redux"
 import { AppRootStateType, store } from "../../app/store"
 import thunk from "redux-thunk"
-import { appReducer } from "../../app/app-reducer"
+import { appReducer } from "../../app/appSlice"
 import { TaskPriority, TaskStatus } from "common/enums/enums"
 
 const rootReducer = combineReducers({

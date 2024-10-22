@@ -1,7 +1,7 @@
 import { filterButtonsContainerSx } from "../Tasks/Task/Task.styles"
 import { Box, Button, ButtonProps } from "@mui/material"
 import React, { memo } from "react"
-import { changeTodolistFilterAC, FilterValuesType } from "../../../../model/todolists-reducer"
+import { changeTodolistFilter, FilterValuesType } from "../../../../model/todolistsSlice"
 import { TodoListProps } from "../TodoList"
 import { useAppDispatch } from "common/hooks"
 
@@ -10,7 +10,7 @@ export const FilterTasksButtons = ({ todolist }: TodoListProps) => {
   const { id, filter } = todolist
 
   const changeFilterTasksHandler = (filter: FilterValuesType) => {
-    dispatch(changeTodolistFilterAC(id, filter))
+    dispatch(changeTodolistFilter({ todolistId: id, filter: filter }))
   }
 
   const ButtonWithMemo = memo(({ variant, onClick, color, children, ...rest }: Props) => {

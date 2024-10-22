@@ -1,7 +1,7 @@
-import { setAppErrorAC, setAppStatusAC } from "../../app/app-reducer"
-import { ErrorUtilsDispatchType } from "common/utils/ErrorUtils.types"
+import { setAppError, setAppStatus } from "../../app/appSlice"
+import { Dispatch } from "redux"
 
-export const handleServerNetworkError = (dispatch: ErrorUtilsDispatchType, error: { message: string }) => {
-  dispatch(setAppErrorAC(error.message ? error.message : "Some error occurred"))
-  dispatch(setAppStatusAC("failed"))
+export const handleServerNetworkError = (dispatch: Dispatch, error: { message: string }) => {
+  dispatch(setAppError({ error: error.message ? error.message : "Some error occurred" }))
+  dispatch(setAppStatus({ status: "failed" }))
 }

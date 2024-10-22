@@ -1,6 +1,3 @@
-import { clearTodolistsDataAC, ClearTodolistsDataActionType } from "../../todolists/model/todolists-reducer"
-import { Dispatch } from "redux"
-import { SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType } from "../../../app/app-reducer"
 import { LoginArgs } from "../api/authApi.types"
 import { authApi } from "../api/authApi"
 import { resultCode } from "common/enums"
@@ -8,7 +5,8 @@ import { handleServerAppError } from "common/utils/handleServerAppError"
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { AppDispatch } from "../../../app/store"
-import { ThunkDispatch } from "redux-thunk"
+import { setAppStatus } from "../../../app/appSlice"
+import { clearTodolistsData } from "../../todolists/model/todolistsSlice"
 
 const authSlice = createSlice({
   name: "auth",
@@ -29,14 +27,13 @@ export const { setIsLoggedIn } = authSlice.actions
 export const loginTC =
   (data: LoginArgs): AppDispatch =>
   (dispatch: any) => {
-    dispatch(setAppStatusAC("loading"))
+    dispatch(setAppStatus({ status: "loading" }))
     authApi
       .login(data)
       .then((res) => {
         if (res.data.resultCode === resultCode.Success) {
-          console.log(res.data.data)
           dispatch(setIsLoggedIn({ isLoggedIn: true }))
-          dispatch(setAppStatusAC("succeeded"))
+          dispatch(setAppStatus({ status: "succeeded" }))
           localStorage.setItem("sn-token", res.data.data.token)
         } else {
           handleServerAppError(res.data, dispatch)
@@ -47,7 +44,7 @@ export const loginTC =
       })
   }
 export const logOutTC = (): AppDispatch => (dispatch: any) => {
-  dispatch(setAppStatusAC("loading"))
+  dispatch(setAppStatus({ status: "loading" }))
   authApi
     .logout()
     .then((res) => {
@@ -55,8 +52,8 @@ export const logOutTC = (): AppDispatch => (dispatch: any) => {
         console.log(res.data.data)
         dispatch(setIsLoggedIn({ isLoggedIn: false }))
         localStorage.removeItem("sn-token")
-        dispatch(setAppStatusAC("succeeded"))
-        dispatch(clearTodolistsDataAC())
+        dispatch(setAppStatus({ status: "succeeded" }))
+        dispatch(clearTodolistsData())
       } else {
         handleServerAppError(res.data, dispatch)
       }
@@ -65,6 +62,3 @@ export const logOutTC = (): AppDispatch => (dispatch: any) => {
       handleServerNetworkError(dispatch, error)
     })
 }
-
-// types
-export type AuthActionType = SetAppStatusActionType | SetAppErrorActionType

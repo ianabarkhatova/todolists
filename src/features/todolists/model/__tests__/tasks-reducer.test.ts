@@ -1,7 +1,7 @@
 import { addTaskAC, updateTaskAC, removeTaskAC, setTasksAC, tasksReducer } from "../tasks-reducer"
-import { removeTodolistAC, setTodolistsAC } from "../todolists-reducer"
 import { TasksObjType } from "../../../../app/App"
-import { TaskPriority, TaskStatus } from "../../../../common/enums/enums"
+import { TaskPriority, TaskStatus } from "../../../../common/enums"
+import { removeTodolist, setTodolists } from "../todolistsSlice"
 
 let startState: TasksObjType
 
@@ -285,7 +285,7 @@ test("status of specified task title should be changed", () => {
 // })
 
 test("property with todolistId should be deleted", () => {
-  const action = removeTodolistAC("todolistId2")
+  const action = removeTodolist({ todolistId: "todolistId2" })
   const endState = tasksReducer(startState, action)
 
   const keys = Object.keys(endState)
@@ -295,10 +295,12 @@ test("property with todolistId should be deleted", () => {
 })
 
 test("empty arrays should be added when we set todolists", () => {
-  const action = setTodolistsAC([
-    { id: "1", title: "title 1", order: 0, addedDate: "" },
-    { id: "2", title: "title 2", order: 1, addedDate: "" },
-  ])
+  const action = setTodolists({
+    todolists: [
+      { id: "1", title: "title 1", order: 0, addedDate: "" },
+      { id: "2", title: "title 2", order: 1, addedDate: "" },
+    ],
+  })
 
   const endState = tasksReducer({}, action)
 

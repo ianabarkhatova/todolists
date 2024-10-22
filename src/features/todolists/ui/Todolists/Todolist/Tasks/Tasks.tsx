@@ -1,7 +1,7 @@
 import { Task } from "./Task/Task"
 import { List } from "@mui/material"
 import React from "react"
-import { TodolistDomainType } from "../../../../model/todolists-reducer"
+import { TodolistDomainType } from "../../../../model/todolistsSlice"
 import { useAppSelector } from "common/hooks"
 import { selectTasks } from "../../../../model/tasksSelectors"
 import { TaskStatus } from "common/enums/enums"
@@ -12,7 +12,7 @@ type Props = {
 
 export const Tasks = ({ todolist }: Props) => {
   const { id } = todolist
-  let tasks = useAppSelector(selectTasks)[id]
+  let tasks = useAppSelector(selectTasks)[id] || []
 
   if (todolist.filter === "completed") {
     tasks = tasks.filter((t) => t.status === TaskStatus.Completed)

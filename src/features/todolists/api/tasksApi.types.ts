@@ -1,4 +1,4 @@
-import { RequestStatusType } from "../../../app/app-reducer"
+import { RequestStatusType } from "../../../app/appSlice"
 import { TaskPriority, TaskStatus } from "common/enums/enums"
 
 export type GetTasksResponse = {
