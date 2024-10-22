@@ -9,11 +9,12 @@ import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 import { handleServerAppError } from "common/utils/handleServerAppError"
 import { AppDispatch } from "../../../app/store"
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit"
+import { selectTodolists } from "./todolistsSelectors"
 
 export let todoListId1 = v1()
 export let todoListId2 = v1()
 
-const todolistsSlice = createSlice({
+export const todolistsSlice = createSlice({
   name: "todolists",
   initialState: [] as TodolistDomainType[],
   reducers: {
@@ -60,7 +61,6 @@ export const {
 
 //thunk creators
 export const getTodolistsTC = () => (dispatch: AppDispatch) => {
-  // todo: type for dispatch above
   //не ставим loading т к приложение только загрузилось
   todolistsApi
     .getTodolists()

@@ -5,9 +5,8 @@ import { handleServerAppError } from "common/utils/handleServerAppError"
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 import { AppDispatch } from "./store"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { Dispatch } from "redux"
 
-const appSlice = createSlice({
+export const appSlice = createSlice({
   name: "app",
   initialState: {
     status: "idle" as RequestStatusType,
@@ -29,7 +28,6 @@ const appSlice = createSlice({
       state.themeMode = action.payload.themeMode
     },
   },
-  selectors: {},
 })
 
 export const appReducer = appSlice.reducer
