@@ -1,4 +1,4 @@
-import { addTask, removeTask, setTasks, tasksReducer, updateTask } from "../tasksSlice"
+import { addTask, fetchTasks, removeTask, tasksReducer, updateTask } from "../tasksSlice"
 import { TasksObjType } from "../../../../app/App"
 import { TaskPriority, TaskStatus } from "../../../../common/enums"
 import { removeTodolist, setTodolists } from "../todolistsSlice"
@@ -314,7 +314,15 @@ test("empty arrays should be added when we set todolists", () => {
 })
 
 test("tasks should be added for todolist", () => {
-  const action = setTasks({ tasks: startState["todolistId1"], todolistId: "todolistId1" })
+  type Action = Omit<ReturnType<typeof fetchTasks.fulfilled>, "meta">
+
+  const action: Action = {
+    type: fetchTasks.fulfilled.type,
+    payload: {
+      tasks: startState["todolistId1"],
+      todolistId: "todolistId1",
+    },
+  }
 
   const endState = tasksReducer(
     {

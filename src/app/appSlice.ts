@@ -57,7 +57,6 @@ export const initializeAppTC = () => (dispatch: AppDispatch) => {
 }
 
 // types
-
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
 
 export type InitialStateType = {

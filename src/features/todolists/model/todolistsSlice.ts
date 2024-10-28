@@ -1,15 +1,14 @@
 import { v1 } from "uuid"
 import { todolistsApi } from "../api/todolistsApi"
 import { Dispatch } from "redux"
-import { RequestStatusType, setAppStatus, ThemeModeType } from "../../../app/appSlice"
-import { getTasksTC } from "./tasksSlice"
+import { RequestStatusType, setAppStatus } from "../../../app/appSlice"
 import { TodolistType } from "../api/todolistsApi.types"
 import { resultCode } from "common/enums"
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 import { handleServerAppError } from "common/utils/handleServerAppError"
 import { AppDispatch } from "../../../app/store"
-import { createSlice, current, PayloadAction } from "@reduxjs/toolkit"
-import { selectTodolists } from "./todolistsSelectors"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { fetchTasks } from "./tasksSlice"
 
 export let todoListId1 = v1()
 export let todoListId2 = v1()
@@ -71,7 +70,7 @@ export const getTodolistsTC = () => (dispatch: AppDispatch) => {
     })
     .then((todolists) => {
       todolists.forEach((tl) => {
-        dispatch(getTasksTC(tl.id))
+        dispatch(fetchTasks(tl.id))
       })
     })
     .catch((error) => {
