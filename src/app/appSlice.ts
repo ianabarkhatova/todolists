@@ -1,6 +1,6 @@
 import { setIsLoggedIn } from "../features/auth/model/authSlice"
 import { authApi } from "../features/auth/api/authApi"
-import { resultCode } from "common/enums"
+import { ResultCode } from "common/enums"
 import { handleServerAppError } from "common/utils/handleServerAppError"
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 import { AppDispatch } from "./store"
@@ -40,7 +40,7 @@ export const initializeAppTC = () => (dispatch: AppDispatch) => {
     authApi
       .me()
       .then((res) => {
-        if (res.data.resultCode === resultCode.Success) {
+        if (res.data.resultCode === ResultCode.Success) {
           dispatch(setAppStatus({ status: "succeeded" }))
           dispatch(setIsLoggedIn({ isLoggedIn: true }))
         } else {

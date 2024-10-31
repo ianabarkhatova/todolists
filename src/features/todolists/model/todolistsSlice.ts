@@ -3,7 +3,7 @@ import { todolistsApi } from "../api/todolistsApi"
 import { Dispatch } from "redux"
 import { RequestStatusType, setAppStatus } from "../../../app/appSlice"
 import { TodolistType } from "../api/todolistsApi.types"
-import { resultCode } from "common/enums"
+import { ResultCode } from "common/enums"
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 import { handleServerAppError } from "common/utils/handleServerAppError"
 import { AppDispatch } from "../../../app/store"
@@ -83,7 +83,7 @@ export const removeTodolistTC = (todolistId: string) => (dispatch: Dispatch) => 
   todolistsApi
     .deleteTodolist(todolistId)
     .then((res) => {
-      if (res.data.resultCode === resultCode.Success) {
+      if (res.data.resultCode === ResultCode.Success) {
         dispatch(removeTodolist({ todolistId: todolistId }))
         dispatch(setAppStatus({ status: "succeeded" }))
         console.log("removeTodolist ", res)
@@ -100,7 +100,7 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
   todolistsApi
     .createTodolist(title)
     .then((res) => {
-      if (res.data.resultCode === resultCode.Success) {
+      if (res.data.resultCode === ResultCode.Success) {
         dispatch(addTodolist({ todolist: res.data.data.item }))
         dispatch(setAppStatus({ status: "succeeded" }))
       } else {
@@ -117,7 +117,7 @@ export const changeTodolistTitleTC = (todolistId: string, title: string) => (dis
   todolistsApi
     .updateTodolist({ todolistId, title })
     .then((res) => {
-      if (res.data.resultCode === resultCode.Success) {
+      if (res.data.resultCode === ResultCode.Success) {
         dispatch(changeTodolistTitle({ todolistId: todolistId, title: title }))
         dispatch(setAppStatus({ status: "succeeded" }))
         dispatch(changeTodolistEntityStatus({ todolistId: todolistId, status: "succeeded" }))

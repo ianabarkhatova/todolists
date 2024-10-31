@@ -1,6 +1,6 @@
 import { LoginArgs } from "../api/authApi.types"
 import { authApi } from "../api/authApi"
-import { resultCode } from "common/enums"
+import { ResultCode } from "common/enums"
 import { handleServerAppError } from "common/utils/handleServerAppError"
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
@@ -30,7 +30,7 @@ export const loginTC = (data: LoginArgs) => (dispatch: AppDispatch) => {
   authApi
     .login(data)
     .then((res) => {
-      if (res.data.resultCode === resultCode.Success) {
+      if (res.data.resultCode === ResultCode.Success) {
         dispatch(setIsLoggedIn({ isLoggedIn: true }))
         dispatch(setAppStatus({ status: "succeeded" }))
         localStorage.setItem("sn-token", res.data.data.token)
@@ -47,7 +47,7 @@ export const logOutTC = () => (dispatch: AppDispatch) => {
   authApi
     .logout()
     .then((res) => {
-      if (res.data.resultCode === resultCode.Success) {
+      if (res.data.resultCode === ResultCode.Success) {
         console.log(res.data.data)
         dispatch(setIsLoggedIn({ isLoggedIn: false }))
         localStorage.removeItem("sn-token")
