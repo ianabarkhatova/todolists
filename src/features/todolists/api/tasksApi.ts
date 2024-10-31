@@ -1,12 +1,13 @@
 import { instance } from "common/instance"
 import { GetTasksResponse, TaskType, UpdateTaskModel } from "./tasksApi.types"
 import { GeneralResponse } from "common/types"
+import { UpdateDomainTaskModelType } from "../model/tasksSlice"
 
 export const tasksApi = {
   getTasks(todolistId: string) {
     return instance.get<GetTasksResponse>(`/todo-lists/${todolistId}/tasks`)
   },
-  createTask(payload: { todolistId: string; title: string }) {
+  createTask(payload: AddTaskArgs) {
     const { todolistId, title } = payload
     return instance.post<GeneralResponse<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`, { title })
   },
@@ -18,4 +19,15 @@ export const tasksApi = {
     const { todolistId, taskId } = payload
     return instance.delete<GeneralResponse>(`/todo-lists/${todolistId}/tasks/${taskId}`)
   },
+}
+
+export type AddTaskArgs = {
+  todolistId: string
+  title: string
+}
+
+export type UpdateTaskArgs = {
+  taskId: string
+  todolistId: string
+  domainModel: UpdateDomainTaskModelType
 }
