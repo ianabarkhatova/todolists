@@ -1,7 +1,8 @@
-import { addTask, fetchTasks, removeTask, tasksReducer, updateTask } from "../tasksSlice"
-import { TasksObjType } from "../../../../app/App"
-import { TaskPriority, TaskStatus } from "../../../../common/enums"
-import { removeTodolist, setTodolists } from "../todolistsSlice"
+import { addTask, fetchTasks, removeTask, tasksReducer, updateTask } from "../../features/todolists/model/tasksSlice"
+import { TasksObjType } from "../App"
+import { TaskPriority, TaskStatus } from "../../common/enums"
+import { removeTodolist, setTodolists } from "../../features/todolists/model/todolistsSlice"
+import { TestAction } from "../../common/types"
 
 let startState: TasksObjType
 
@@ -226,21 +227,24 @@ test("correct task should be removed from correct todoList", () => {
 })
 
 test("correct task should be added to correct todoList", () => {
-  const action = addTask({
-    task: {
-      todoListId: "todolistId2",
-      title: "juice",
-      status: TaskStatus.New,
-      addedDate: "",
-      deadline: "",
-      description: "",
-      order: 0,
-      priority: 0,
-      startDate: "",
-      id: "id exists",
-      entityStatus: "idle",
+  const action: TestAction<typeof addTask.fulfilled> = {
+    type: addTask.fulfilled.type,
+    payload: {
+      task: {
+        todoListId: "todolistId2",
+        title: "juice",
+        status: TaskStatus.New,
+        addedDate: "",
+        deadline: "",
+        description: "",
+        order: 0,
+        priority: 0,
+        startDate: "",
+        id: "id exists",
+        entityStatus: "idle",
+      },
     },
-  })
+  }
 
   const endState = tasksReducer(startState, action)
 
@@ -252,7 +256,15 @@ test("correct task should be added to correct todoList", () => {
 })
 
 test("status of specified task should be changed", () => {
-  const action = updateTask({ taskId: "2", model: { status: TaskStatus.New }, todolistId: "todolistId2" })
+  const action: TestAction<typeof updateTask.fulfilled> = {
+    type: updateTask.fulfilled.type,
+    payload: {
+      taskId: "2",
+      domainModel: { status: TaskStatus.New },
+      todolistId: "todolistId2",
+    },
+  }
+
   const endState = tasksReducer(startState, action)
 
   expect(endState["todolistId2"][1].status).toBe(TaskStatus.New)
@@ -261,8 +273,16 @@ test("status of specified task should be changed", () => {
   expect(endState["todolistId1"].length).toBe(6)
 })
 
-test("status of specified task title should be changed", () => {
-  const action = updateTask({ taskId: "3", model: { title: "Coffee" }, todolistId: "todolistId1" })
+test("specified task title should be changed", () => {
+  const action: TestAction<typeof updateTask.fulfilled> = {
+    type: updateTask.fulfilled.type,
+    payload: {
+      taskId: "3",
+      domainModel: { title: "Coffee" },
+      todolistId: "todolistId1",
+    },
+  }
+
   const endState = tasksReducer(startState, action)
 
   expect(endState["todolistId1"][2].title).toBe("Coffee")
@@ -305,7 +325,6 @@ test("empty arrays should be added when we set todolists", () => {
   })
 
   const endState = tasksReducer({}, action)
-
   const keys = Object.keys(endState)
 
   expect(keys.length).toBe(2)
@@ -314,9 +333,7 @@ test("empty arrays should be added when we set todolists", () => {
 })
 
 test("tasks should be added for todolist", () => {
-  type Action = Omit<ReturnType<typeof fetchTasks.fulfilled>, "meta">
-
-  const action: Action = {
+  const action: TestAction<typeof fetchTasks.fulfilled> = {
     type: fetchTasks.fulfilled.type,
     payload: {
       tasks: startState["todolistId1"],

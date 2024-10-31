@@ -11,3 +11,5 @@ export type GeneralResponse<D = {}> = {
   resultCode: resultCode
   data: D
 }
+
+export type TestAction<T extends (...args: any) => any> = Omit<ReturnType<T>, "meta">

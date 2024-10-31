@@ -8,10 +8,10 @@ import {
   setTodolists,
   TodolistDomainType,
   todolistsReducer,
-} from "../todolistsSlice"
+} from "../../features/todolists/model/todolistsSlice"
 import { v1 } from "uuid"
-import { RequestStatusType } from "../../../../app/appSlice"
-import { TodolistType } from "../../api/todolistsApi.types"
+import { RequestStatusType } from "../appSlice"
+import { TodolistType } from "../../features/todolists/api/todolistsApi.types"
 
 let todolistId1: string
 let todolistId2: string
