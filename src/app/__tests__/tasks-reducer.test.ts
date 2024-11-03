@@ -120,7 +120,13 @@ beforeEach(() => {
 })
 
 test("correct task should be removed from correct todoList", () => {
-  const action = removeTask({ taskId: "2", todolistId: "todolistId2" })
+  const action: TestAction<typeof removeTask.fulfilled> = {
+    type: removeTask.fulfilled.type,
+    payload: {
+      taskId: "2",
+      todolistId: "todolistId2",
+    },
+  }
   const endState = tasksReducer(startState, action)
 
   expect(endState).toEqual({
