@@ -1,7 +1,7 @@
 import React, { ChangeEvent, memo, useCallback } from "react"
 import { Checkbox, IconButton, ListItem } from "@mui/material"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
-import { removeTaskTC, updateTask } from "../../../../../model/tasksSlice"
+import { removeTask, updateTask } from "../../../../../model/tasksSlice"
 import { getListItemSx } from "./Task.styles"
 import { useAppDispatch } from "common/hooks"
 import { TaskStatus } from "common/enums"
@@ -19,7 +19,7 @@ export const Task = memo(({ task, todolistId, todolist }: TaskProps) => {
   const dispatch = useAppDispatch()
 
   const removeTaskHandler = useCallback(() => {
-    dispatch(removeTaskTC(task.id, todolistId))
+    dispatch(removeTask({ taskId: task.id, todolistId }))
   }, [])
 
   const changeTaskStatusHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
