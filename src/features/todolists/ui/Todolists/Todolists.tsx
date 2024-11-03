@@ -17,7 +17,7 @@ export const Todolists = ({ demo = false }) => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const addTodoList = (title: string) => {
-    dispatch(addTodolist({ title }))
+    dispatch(addTodolist(title))
   }
 
   useEffect(() => {
@@ -26,13 +26,6 @@ export const Todolists = ({ demo = false }) => {
     }
     dispatch(fetchTodolists()) // Note the parentheses to invoke the thunk
   }, [])
-
-  // useEffect(() => {
-  //   // Fetch tasks for each todolist after todolists are loaded
-  //   todoLists.forEach((todolist) => {
-  //     dispatch(fetchTasks(todolist.id))
-  //   })
-  // }, [dispatch, todoLists])
 
   if (!isLoggedIn) {
     return <Navigate to={"/login"} />
