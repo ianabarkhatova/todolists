@@ -2,9 +2,9 @@ import { setIsLoggedIn } from "../features/auth/model/authSlice"
 import { authApi } from "../features/auth/api/authApi"
 import { ResultCode } from "common/enums"
 import { handleServerAppError } from "common/utils/handleServerAppError"
-import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 import { AppDispatch } from "./store"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { handleServerNetworkError } from "common/utils/error-utils"
 
 export const appSlice = createSlice({
   name: "app",

@@ -31,3 +31,8 @@ export type UpdateTaskArgs = {
   todolistId: string
   domainModel: UpdateDomainTaskModelType
 }
+
+export type RemoveTaskArgs = {
+  todolistId: string
+  taskId: string
+}

@@ -2,13 +2,14 @@ import { AddItemForm } from "common/components"
 import Paper from "@mui/material/Paper"
 import { TodoList } from "./Todolist/TodoList"
 import React, { useEffect } from "react"
-import { addTodolistTC, getTodolistsTC } from "../../model/todolistsSlice"
+import { addTodolist, fetchTodolists } from "../../model/todolistsSlice"
 import { Navigate } from "react-router-dom"
 import { Grid2 } from "@mui/material"
 import { useAppDispatch } from "common/hooks"
 import { useAppSelector } from "common/hooks"
 import { selectIsLoggedIn } from "../../../auth/model/authSelectors"
 import { selectTodolists } from "../../model/todolistsSelectors"
+import { fetchTasks } from "../../model/tasksSlice"
 
 export const Todolists = ({ demo = false }) => {
   let todoLists = useAppSelector(selectTodolists)
@@ -16,15 +17,22 @@ export const Todolists = ({ demo = false }) => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const addTodoList = (title: string) => {
-    dispatch(addTodolistTC(title))
+    dispatch(addTodolist({ title }))
   }
 
   useEffect(() => {
     if (demo || !isLoggedIn) {
       return
     }
-    dispatch(getTodolistsTC()) // Note the parentheses to invoke the thunk
+    dispatch(fetchTodolists()) // Note the parentheses to invoke the thunk
   }, [])
+
+  // useEffect(() => {
+  //   // Fetch tasks for each todolist after todolists are loaded
+  //   todoLists.forEach((todolist) => {
+  //     dispatch(fetchTasks(todolist.id))
+  //   })
+  // }, [dispatch, todoLists])
 
   if (!isLoggedIn) {
     return <Navigate to={"/login"} />

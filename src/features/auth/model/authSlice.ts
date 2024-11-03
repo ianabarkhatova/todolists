@@ -2,12 +2,12 @@ import { LoginArgs } from "../api/authApi.types"
 import { authApi } from "../api/authApi"
 import { ResultCode } from "common/enums"
 import { handleServerAppError } from "common/utils/handleServerAppError"
-import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { AppDispatch } from "../../../app/store"
 import { setAppStatus } from "../../../app/appSlice"
 import { clearTodolistsData } from "../../todolists/model/todolistsSlice"
 import { clearTasksData } from "../../todolists/model/tasksSlice"
+import { handleServerNetworkError } from "common/utils/error-utils"
 
 export const authSlice = createSlice({
   name: "auth",

@@ -18,3 +18,8 @@ export const todolistsApi = {
     return instance.delete<GeneralResponse>(`todo-lists/${todolistId}`)
   },
 }
+
+export type ChangeTodolistTitleArgs = {
+  todolistId: string
+  title: string
+}

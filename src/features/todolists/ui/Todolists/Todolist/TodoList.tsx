@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useEffect } from "react"
 import { AddItemForm } from "common/components"
-import { addTask } from "../../../model/tasksSlice"
+import { addTask, fetchTasks } from "../../../model/tasksSlice"
 import { TodolistDomainType } from "../../../model/todolistsSlice"
 import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
 import { Tasks } from "./Tasks/Tasks"
@@ -25,7 +25,7 @@ export const TodoList = memo(({ todolist, demo }: TodoListProps) => {
     if (demo) {
       return
     }
-    // dispatch(getTasksTC(id))
+    dispatch(fetchTasks(id))
   }, [])
 
   return (
