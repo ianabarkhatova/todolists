@@ -1,7 +1,7 @@
 import { addTask, fetchTasks, removeTask, tasksReducer, updateTask } from "../../features/todolists/model/tasksSlice"
 import { TasksObjType } from "../App"
 import { TaskPriority, TaskStatus } from "../../common/enums"
-import { removeTodolist, setTodolists } from "../../features/todolists/model/todolistsSlice"
+import { fetchTodolists, removeTodolist } from "../../features/todolists/model/todolistsSlice"
 import { TestAction } from "../../common/types"
 
 let startState: TasksObjType
@@ -313,7 +313,7 @@ test("specified task title should be changed", () => {
 // })
 
 test("property with todolistId should be deleted", () => {
-  const action = removeTodolist({ todolistId: "todolistId2" })
+  const action = removeTodolist.fulfilled({ todolistId: "todolistId2" }, "requestId", "todolistId2")
   const endState = tasksReducer(startState, action)
 
   const keys = Object.keys(endState)
@@ -323,12 +323,15 @@ test("property with todolistId should be deleted", () => {
 })
 
 test("empty arrays should be added when we set todolists", () => {
-  const action = setTodolists({
-    todolists: [
-      { id: "1", title: "title 1", order: 0, addedDate: "" },
-      { id: "2", title: "title 2", order: 1, addedDate: "" },
-    ],
-  })
+  const action = fetchTodolists.fulfilled(
+    {
+      todolists: [
+        { id: "1", title: "title 1", order: 0, addedDate: "" },
+        { id: "2", title: "title 2", order: 1, addedDate: "" },
+      ],
+    },
+    "requestId",
+  )
 
   const endState = tasksReducer({}, action)
   const keys = Object.keys(endState)

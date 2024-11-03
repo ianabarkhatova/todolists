@@ -5,15 +5,20 @@ import { TasksObjType } from "../App"
 test("ids should be equal", () => {
   const startTasksState: TasksObjType = {}
   const startTodolistsState: Array<TodolistDomainType> = []
+  let todolist = {
+    id: "todolistId1",
+    title: "What to learn",
+    addedDate: "",
+    order: 0,
+  }
 
-  const action = addTodolist({
-    todolist: {
-      id: "todolistId1",
-      title: "What to learn",
-      addedDate: "",
-      order: 0,
+  const action = addTodolist.fulfilled(
+    {
+      todolist: todolist,
     },
-  })
+    "requestId",
+    todolist.title,
+  )
 
   const endTasksState = tasksReducer(startTasksState, action)
   const endTodolistsState = todolistsReducer(startTodolistsState, action)

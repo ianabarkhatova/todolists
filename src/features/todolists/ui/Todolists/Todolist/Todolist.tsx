@@ -12,7 +12,7 @@ export type TodoListProps = {
   demo?: boolean
 }
 
-export const TodoList = memo(({ todolist, demo }: TodoListProps) => {
+export const Todolist = memo(({ todolist, demo }: TodoListProps) => {
   const { id } = todolist
 
   const addTaskCallback = useCallback((title: string) => {

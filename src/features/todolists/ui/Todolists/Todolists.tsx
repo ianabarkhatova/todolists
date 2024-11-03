@@ -1,15 +1,13 @@
 import { AddItemForm } from "common/components"
 import Paper from "@mui/material/Paper"
-import { TodoList } from "./Todolist/TodoList"
+import { Todolist } from "./Todolist/Todolist"
 import React, { useEffect } from "react"
 import { addTodolist, fetchTodolists } from "../../model/todolistsSlice"
 import { Navigate } from "react-router-dom"
 import { Grid2 } from "@mui/material"
-import { useAppDispatch } from "common/hooks"
-import { useAppSelector } from "common/hooks"
+import { useAppDispatch, useAppSelector } from "common/hooks"
 import { selectIsLoggedIn } from "../../../auth/model/authSelectors"
 import { selectTodolists } from "../../model/todolistsSelectors"
-import { fetchTasks } from "../../model/tasksSlice"
 
 export const Todolists = ({ demo = false }) => {
   let todoLists = useAppSelector(selectTodolists)
@@ -41,7 +39,7 @@ export const Todolists = ({ demo = false }) => {
           return (
             <Grid2 key={tl.id}>
               <Paper elevation={4} sx={{ p: "0 20px 20px 20px" }}>
-                <TodoList todolist={tl} demo={demo} />
+                <Todolist todolist={tl} demo={demo} />
               </Paper>
             </Grid2>
           )
