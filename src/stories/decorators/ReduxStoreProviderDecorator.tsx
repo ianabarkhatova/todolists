@@ -99,7 +99,7 @@ const initialGlobalState: AppRootStateType = {
     themeMode: "light",
   },
   auth: {
-    isLoggedIin: false,
+    isLoggedIn: false,
   },
 }
 

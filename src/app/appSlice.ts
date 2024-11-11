@@ -14,20 +14,20 @@ export const appSlice = createSlice({
     isInitialized: false,
     themeMode: "light" as ThemeModeType,
   },
-  reducers: {
-    setAppStatus: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
+  reducers: (create) => ({
+    setAppStatus: create.reducer<{ status: RequestStatusType }>((state, action) => {
       state.status = action.payload.status
-    },
-    setAppError: (state, action: PayloadAction<{ error: string | null }>) => {
+    }),
+    setAppError: create.reducer<{ error: string }>((state, action) => {
       state.error = action.payload.error
-    },
-    setAppInitialized: (state, action: PayloadAction<{ isInitialized: boolean }>) => {
+    }),
+    setAppInitialized: create.reducer<{ isInitialized: boolean }>((state, action) => {
       state.isInitialized = action.payload.isInitialized
-    },
-    changeTheme: (state, action: PayloadAction<{ themeMode: ThemeModeType }>) => {
+    }),
+    changeTheme: create.reducer<{ themeMode: ThemeModeType }>((state, action) => {
       state.themeMode = action.payload.themeMode
-    },
-  },
+    }),
+  }),
 })
 
 export const appReducer = appSlice.reducer

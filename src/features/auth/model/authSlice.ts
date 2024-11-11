@@ -12,13 +12,14 @@ import { handleServerNetworkError } from "common/utils/error-utils"
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
-    isLoggedIin: false,
+    isLoggedIn: false,
   },
-  reducers: {
-    setIsLoggedIn: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
-      state.isLoggedIin = action.payload.isLoggedIn
-    },
-  },
+  // accepts state and action and is dispatched
+  reducers: (create) => ({
+    setIsLoggedIn: create.reducer<{ isLoggedIn: boolean }>((state, action) => {
+      state.isLoggedIn = action.payload.isLoggedIn
+    }),
+  }),
 })
 
 export const authReducer = authSlice.reducer
