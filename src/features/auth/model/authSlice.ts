@@ -3,7 +3,7 @@ import { authApi } from "../api/authApi"
 import { ResultCode } from "common/enums"
 import { handleServerAppError } from "common/utils/handleServerAppError"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { AppDispatch } from "../../../app/store"
+import { AppDispatch, AppRootStateType } from "../../../app/store"
 import { setAppStatus } from "../../../app/appSlice"
 import { clearTodolistsData } from "../../todolists/model/todolistsSlice"
 import { clearTasksData } from "../../todolists/model/tasksSlice"
@@ -20,10 +20,14 @@ export const authSlice = createSlice({
       state.isLoggedIn = action.payload.isLoggedIn
     }),
   }),
+  selectors: {
+    selectIsLoggedIn: (state) => state.isLoggedIn,
+  },
 })
 
 export const authReducer = authSlice.reducer
 export const { setIsLoggedIn } = authSlice.actions
+export const { selectIsLoggedIn } = authSlice.selectors
 
 //thunk creators
 export const loginTC = (data: LoginArgs) => (dispatch: AppDispatch) => {

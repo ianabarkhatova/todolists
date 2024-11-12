@@ -6,8 +6,8 @@ import { addTodolist, fetchTodolists } from "../../model/todolistsSlice"
 import { Navigate } from "react-router-dom"
 import { Grid2 } from "@mui/material"
 import { useAppDispatch, useAppSelector } from "common/hooks"
-import { selectIsLoggedIn } from "../../../auth/model/authSelectors"
 import { selectTodolists } from "../../model/todolistsSelectors"
+import { selectIsLoggedIn } from "../../../auth/model/authSlice"
 
 export const Todolists = ({ demo = false }) => {
   let todoLists = useAppSelector(selectTodolists)

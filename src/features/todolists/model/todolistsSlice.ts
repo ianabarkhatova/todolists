@@ -4,7 +4,7 @@ import { RequestStatusType, setAppStatus } from "../../../app/appSlice"
 import { TodolistType } from "../api/todolistsApi.types"
 import { ResultCode } from "common/enums"
 import { handleServerNetworkError } from "common/utils/error-utils"
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 import { createAppAsyncThunk } from "common/utils/createAppAsyncThunk"
 import { handleServerAppError } from "common/utils/handleServerAppError"
 
@@ -48,10 +48,14 @@ export const todolistsSlice = createSlice({
       return []
     }),
   }),
+  selectors: {
+    selectTodolists: (state) => state,
+  },
 })
 
 export const todolistsReducer = todolistsSlice.reducer
 export const { changeTodolistEntityStatus, changeTodolistFilter, clearTodolistsData } = todolistsSlice.actions
+export const { selectTodolists } = todolistsSlice.selectors
 
 //thunk creators
 export const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>(

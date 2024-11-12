@@ -65,10 +65,14 @@ export const tasksSlice = createSlice({
         })
       })
   },
+  // selectors: {
+  //   selectTasks: (state) => state.tasks,
+  // },
 })
 
 export const tasksReducer = tasksSlice.reducer
 export const { changeTaskEntityStatus, clearTasksData } = tasksSlice.actions
+// export const { selectTasks } = tasksSlice.selectors
 
 //thunk creators
 export const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[]; todolistId: string }, string>(

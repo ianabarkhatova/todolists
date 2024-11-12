@@ -7,12 +7,11 @@ import FormLabel from "@mui/material/FormLabel"
 import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import { useFormik } from "formik"
-import { loginTC } from "../../model/authSlice"
+import { loginTC, selectIsLoggedIn } from "../../model/authSlice"
 import { Navigate } from "react-router-dom"
 import { Grid2 } from "@mui/material"
 import { useAppDispatch } from "common/hooks"
 import { useAppSelector } from "common/hooks"
-import { selectIsLoggedIn } from "../../model/authSelectors"
 
 // Custom validation function
 const validate = (values: initialValuesType) => {

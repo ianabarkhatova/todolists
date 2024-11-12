@@ -2,7 +2,7 @@ import { setIsLoggedIn } from "../features/auth/model/authSlice"
 import { authApi } from "../features/auth/api/authApi"
 import { ResultCode } from "common/enums"
 import { handleServerAppError } from "common/utils/handleServerAppError"
-import { AppDispatch } from "./store"
+import { AppDispatch, AppRootStateType } from "./store"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { handleServerNetworkError } from "common/utils/error-utils"
 
@@ -28,10 +28,19 @@ export const appSlice = createSlice({
       state.themeMode = action.payload.themeMode
     }),
   }),
+  selectors: {
+    selectThemeMode: (state) => state.themeMode,
+    selectError: (state) => state.error,
+    selectIsInitialized: (state) => state.isInitialized,
+    selectStatus: (state) => state.status,
+  },
 })
 
 export const appReducer = appSlice.reducer
+// actions
 export const { setAppStatus, setAppError, setAppInitialized, changeTheme } = appSlice.actions
+// selectors
+export const { selectIsInitialized, selectStatus, selectError, selectThemeMode } = appSlice.selectors
 
 // thunk creators
 export const initializeAppTC = () => (dispatch: AppDispatch) => {
