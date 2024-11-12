@@ -11,46 +11,43 @@ import { handleServerAppError } from "common/utils/handleServerAppError"
 export let todoListId1 = v1()
 export let todoListId2 = v1()
 
+// check state:
+// const state = current(state)
+
 export const todolistsSlice = createSlice({
   name: "todolists",
   initialState: [] as TodolistDomainType[],
-  reducers: {
-    changeTodolistFilter: (state, action: PayloadAction<{ todolistId: string; filter: FilterValuesType }>) => {
+  reducers: (create) => ({
+    fetchTodolists: create.reducer<{ todolists: TodolistType[] }>((state, action) => {
+      return action.payload.todolists.map((tl) => ({ ...tl, filter: "all", entityStatus: "idle" }))
+    }),
+    removeTodolist: create.reducer<{ todolistId: string }>((state, action) => {
+      state.filter((tl) => tl.id !== action.payload.todolistId)
+      const index = state.findIndex((todolist) => todolist.id === action.payload.todolistId)
+      if (index !== -1) state.splice(index, 1)
+    }),
+    addTodolist: create.reducer<{ todolist: TodolistType }>((state, action) => {
+      state.unshift({ ...action.payload.todolist, filter: "all", entityStatus: "idle" })
+    }),
+    changeTodolistTitle: create.reducer<{ todolistId: string; title: string }>((state, action) => {
+      const index = state.findIndex((todolist) => todolist.id === action.payload.todolistId)
+      if (index !== -1) state[index].title = action.payload.title
+    }),
+    changeTodolistFilter: create.reducer<{ todolistId: string; filter: FilterValuesType }>((state, action) => {
       const index = state.findIndex((todolist) => todolist.id === action.payload.todolistId)
       if (index !== -1) state[index].filter = action.payload.filter
-    },
-    changeTodolistEntityStatus: (
-      state,
-      action: PayloadAction<{
-        todolistId: string
-        status: RequestStatusType
-      }>,
-    ) => {
+    }),
+    changeTodolistEntityStatus: create.reducer<{
+      todolistId: string
+      status: RequestStatusType
+    }>((state, action) => {
       const index = state.findIndex((todolist) => todolist.id === action.payload.todolistId)
       if (index !== -1) state[index].entityStatus = action.payload.status
-    },
-    clearTodolistsData: () => {
+    }),
+    clearTodolistsData: create.reducer((state, action) => {
       return []
-    },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchTodolists.fulfilled, (state, action) => {
-        return action.payload.todolists.map((tl) => ({ ...tl, filter: "all", entityStatus: "idle" }))
-      })
-      .addCase(removeTodolist.fulfilled, (state, action) => {
-        state.filter((tl) => tl.id !== action.payload.todolistId)
-        const index = state.findIndex((todolist) => todolist.id === action.payload.todolistId)
-        if (index !== -1) state.splice(index, 1)
-      })
-      .addCase(addTodolist.fulfilled, (state, action) => {
-        state.unshift({ ...action.payload.todolist, filter: "all", entityStatus: "idle" })
-      })
-      .addCase(changeTodolistTitle.fulfilled, (state, action) => {
-        const index = state.findIndex((todolist) => todolist.id === action.payload.todolistId)
-        if (index !== -1) state[index].title = action.payload.title
-      })
-  },
+    }),
+  }),
 })
 
 export const todolistsReducer = todolistsSlice.reducer

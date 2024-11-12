@@ -15,38 +15,44 @@ import { handleServerNetworkError } from "common/utils/error-utils"
 export const tasksSlice = createSlice({
   name: "tasks",
   initialState: {} as TasksObjType,
-  reducers: {
-    changeTaskEntityStatus: (
-      state,
-      action: PayloadAction<{ taskId: string; todolistId: string; status: RequestStatusType }>,
-    ) => {
+  reducers: (create) => ({
+    fetchTasks: create.reducer<{ todolistId: string; tasks: TaskType[] }>((state, action) => {
+      state[action.payload.todolistId] = action.payload.tasks
+    }),
+    removeTask: create.reducer<{ taskId: string; todolistId: string }>((state, action) => {
+      const tasks = state[action.payload.todolistId]
+      const index = tasks.findIndex((task) => task.id === action.payload.taskId)
+      if (index !== -1) tasks.splice(index, 1)
+    }),
+    addTask: create.reducer<{ task: TaskType }>((state, action) => {
+      const tasks = state[action.payload.task.todoListId]
+      tasks.unshift(action.payload.task)
+    }),
+    updateTask: create.reducer<{
+      taskId: string
+      todolistId: string
+      domainModel: UpdateDomainTaskModelType
+    }>((state, action) => {
+      const tasks = state[action.payload.todolistId]
+      const index = tasks.findIndex((task) => task.id === action.payload.taskId)
+      if (index !== -1) tasks[index] = { ...tasks[index], ...action.payload.domainModel }
+    }),
+    changeTaskEntityStatus: create.reducer<{
+      taskId: string
+      todolistId: string
+      status: RequestStatusType
+    }>((state, action) => {
       const tasks = state[action.payload.todolistId]
       const index = tasks.findIndex((task) => task.id === action.payload.taskId)
       if (index !== -1) tasks[index].entityStatus = action.payload.status
-    },
-    clearTasksData: () => {
+    }),
+    clearTasksData: create.reducer(() => {
       return {}
-    },
-  },
+    }),
+  }),
+
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTasks.fulfilled, (state, action) => {
-        state[action.payload.todolistId] = action.payload.tasks
-      })
-      .addCase(addTask.fulfilled, (state, action) => {
-        const tasks = state[action.payload.task.todoListId]
-        tasks.unshift(action.payload.task)
-      })
-      .addCase(updateTask.fulfilled, (state, action) => {
-        const tasks = state[action.payload.todolistId]
-        const index = tasks.findIndex((task) => task.id === action.payload.taskId)
-        if (index !== -1) tasks[index] = { ...tasks[index], ...action.payload.domainModel }
-      })
-      .addCase(removeTask.fulfilled, (state, action) => {
-        const tasks = state[action.payload.todolistId]
-        const index = tasks.findIndex((task) => task.id === action.payload.taskId)
-        if (index !== -1) tasks.splice(index, 1)
-      })
       .addCase(addTodolist.fulfilled, (state, action) => {
         state[action.payload.todolist.id] = []
       })

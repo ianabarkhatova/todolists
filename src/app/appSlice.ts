@@ -18,7 +18,7 @@ export const appSlice = createSlice({
     setAppStatus: create.reducer<{ status: RequestStatusType }>((state, action) => {
       state.status = action.payload.status
     }),
-    setAppError: create.reducer<{ error: string }>((state, action) => {
+    setAppError: create.reducer<{ error: string | null }>((state, action) => {
       state.error = action.payload.error
     }),
     setAppInitialized: create.reducer<{ isInitialized: boolean }>((state, action) => {
