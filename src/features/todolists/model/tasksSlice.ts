@@ -4,7 +4,7 @@ import { AddTaskArgs, RemoveTaskArgs, tasksApi, UpdateTaskArgs } from "../api/ta
 import { TaskType, UpdateTaskModel } from "../api/tasksApi.types"
 import { ResultCode } from "common/enums"
 import { handleServerAppError } from "common/utils/handleServerAppError"
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 import { addTodolist, fetchTodolists, removeTodolist } from "./todolistsSlice"
 import { createAppAsyncThunk } from "common/utils/createAppAsyncThunk"
 import { handleServerNetworkError } from "common/utils/error-utils"
@@ -65,14 +65,14 @@ export const tasksSlice = createSlice({
         })
       })
   },
-  // selectors: {
-  //   selectTasks: (state) => state.tasks,
-  // },
+  selectors: {
+    selectTasks: (state) => state,
+  },
 })
 
 export const tasksReducer = tasksSlice.reducer
 export const { changeTaskEntityStatus, clearTasksData } = tasksSlice.actions
-// export const { selectTasks } = tasksSlice.selectors
+export const { selectTasks } = tasksSlice.selectors
 
 //thunk creators
 export const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[]; todolistId: string }, string>(

@@ -3,8 +3,8 @@ import { List } from "@mui/material"
 import React from "react"
 import { TodolistDomainType } from "../../../../model/todolistsSlice"
 import { useAppSelector } from "common/hooks"
-import { selectTasks } from "../../../../model/tasksSelectors"
 import { TaskStatus } from "common/enums/enums"
+import { selectTasks } from "../../../../model/tasksSlice"
 
 type Props = {
   todolist: TodolistDomainType

@@ -2,11 +2,10 @@ import { AddItemForm } from "common/components"
 import Paper from "@mui/material/Paper"
 import { Todolist } from "./Todolist/Todolist"
 import React, { useEffect } from "react"
-import { addTodolist, fetchTodolists } from "../../model/todolistsSlice"
+import { addTodolist, fetchTodolists, selectTodolists } from "../../model/todolistsSlice"
 import { Navigate } from "react-router-dom"
 import { Grid2 } from "@mui/material"
 import { useAppDispatch, useAppSelector } from "common/hooks"
-import { selectTodolists } from "../../model/todolistsSelectors"
 import { selectIsLoggedIn } from "../../../auth/model/authSlice"
 
 export const Todolists = ({ demo = false }) => {
