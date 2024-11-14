@@ -1,4 +1,4 @@
-import React, { ChangeEvent, memo, useCallback } from "react"
+import React, { ChangeEvent, KeyboardEvent, memo, useCallback } from "react"
 import { Checkbox, IconButton, ListItem } from "@mui/material"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 import { getListItemSx } from "./Task.styles"

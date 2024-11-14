@@ -4,9 +4,6 @@ import { TaskType } from "../api/tasksApi.types"
 import { createSlice } from "@reduxjs/toolkit"
 import { todolistsApi } from "../api/todolistsApi"
 
-// todo:
-// add task name update on enter
-
 export const tasksSlice = createSlice({
   name: "tasks",
   initialState: {} as TasksObjType,

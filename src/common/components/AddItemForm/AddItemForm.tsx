@@ -10,20 +10,20 @@ export type AddItemFormProps = {
 
 export const AddItemForm = memo(({ addItem, disabled }: AddItemFormProps) => {
   console.log("AddItemForm was called")
-  const [taskTitle, setTaskTitle] = useState("")
+  const [title, setTitle] = useState("")
   const [error, setError] = useState<string | null>(null)
 
-  const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const changeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setError(null)
-    setTaskTitle(e.currentTarget.value)
+    setTitle(e.currentTarget.value)
   }
 
-  const keyDownAddTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && addTaskHandler()
+  const keyDownAddItemHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && addItemHandler()
 
-  const addTaskHandler = () => {
-    if (taskTitle.trim() !== "") {
-      addItem(taskTitle.trim())
-      setTaskTitle("")
+  const addItemHandler = () => {
+    if (title.trim() !== "") {
+      addItem(title.trim())
+      setTitle("")
     } else {
       setError("Title is required")
     }
@@ -35,15 +35,15 @@ export const AddItemForm = memo(({ addItem, disabled }: AddItemFormProps) => {
         label="Enter a title"
         variant={"outlined"}
         className={error ? "error" : ""}
-        value={taskTitle}
+        value={title}
         size={"small"}
-        onChange={changeTaskTitleHandler}
-        onKeyDown={keyDownAddTaskHandler}
+        onChange={changeTitleHandler}
+        onKeyDown={keyDownAddItemHandler}
         error={!!error}
         helperText={error}
         disabled={disabled}
       />
-      <IconButton onClick={addTaskHandler} color={"primary"} disabled={disabled}>
+      <IconButton onClick={addItemHandler} color={"primary"} disabled={disabled}>
         <AddBoxIcon />
       </IconButton>
     </div>
