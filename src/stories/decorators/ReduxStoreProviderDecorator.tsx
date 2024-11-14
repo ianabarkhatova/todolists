@@ -1,13 +1,17 @@
 import { tasksReducer } from "../../features/todolists/model/tasksSlice"
-import { todoListId1, todoListId2, todolistsReducer } from "../../features/todolists/model/todolistsSlice"
+import { todolistsReducer } from "../../features/todolists/model/todolistsSlice"
 import { applyMiddleware, combineReducers, legacy_createStore } from "redux"
 import { v1 } from "uuid"
 import React from "react"
 import { Provider } from "react-redux"
-import { AppRootStateType, store } from "../../app/store"
+import { AppRootStateType } from "../../app/store"
 import thunk from "redux-thunk"
 import { appReducer } from "../../app/appSlice"
 import { TaskPriority, TaskStatus } from "common/enums/enums"
+import { CombinedState } from "@reduxjs/toolkit/query"
+
+const todoListId1 = v1()
+const todoListId2 = v1()
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,
@@ -101,6 +105,7 @@ const initialGlobalState: AppRootStateType = {
   auth: {
     isLoggedIn: false,
   },
+  todolistsApi: {} as CombinedState<{}, "Todolist" | "Task", "todolistsApi">,
 }
 
 export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState as any, applyMiddleware(thunk))

@@ -1,11 +1,10 @@
 import React, { memo, useCallback, useEffect } from "react"
 import { AddItemForm } from "common/components"
-import { addTask, fetchTasks } from "../../../model/tasksSlice"
 import { TodolistDomainType } from "../../../model/todolistsSlice"
 import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
 import { Tasks } from "./Tasks/Tasks"
 import { TodolistTitle } from "./TodolistTitle/TodolistTitle"
-import { useAppDispatch } from "common/hooks"
+import { useAddTaskMutation, useGetTasksQuery } from "../../../api/tasksApi"
 
 export type TodoListProps = {
   todolist: TodolistDomainType
@@ -14,18 +13,17 @@ export type TodoListProps = {
 
 export const Todolist = memo(({ todolist, demo }: TodoListProps) => {
   const { id } = todolist
+  const [addTask] = useAddTaskMutation()
 
   const addTaskCallback = useCallback((title: string) => {
-    dispatch(addTask({ todolistId: id, title }))
+    addTask({ todolistId: id, title })
   }, [])
-  const dispatch = useAppDispatch()
 
   // if demo mode (for Storybook), the function will break
   useEffect(() => {
     if (demo) {
       return
     }
-    dispatch(fetchTasks(id))
   }, [])
 
   return (

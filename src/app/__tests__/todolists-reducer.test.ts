@@ -1,17 +1,14 @@
 import {
-  addTodolist,
   changeTodolistEntityStatus,
   changeTodolistFilter,
-  changeTodolistTitle,
-  fetchTodolists,
   FilterValuesType,
-  removeTodolist,
   TodolistDomainType,
   todolistsReducer,
 } from "../../features/todolists/model/todolistsSlice"
 import { v1 } from "uuid"
 import { RequestStatusType } from "../appSlice"
 import { TodolistType } from "../../features/todolists/api/todolistsApi.types"
+import { todolistsApi } from "../../features/todolists/api/todolistsApi"
 
 let todolistId1: string
 let todolistId2: string
@@ -42,7 +39,7 @@ beforeEach(() => {
 })
 
 test("correct todoList should be removed", () => {
-  const action = removeTodolist.fulfilled({ todolistId: todolistId1 }, "requestId", todolistId1)
+  const action = todolistsApi.endpoints.removeTodolist.matchFulfilled({ id: todolistId1 })
   const endState = todolistsReducer(startState, action)
 
   expect(endState.length).toBe(1)

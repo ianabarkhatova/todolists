@@ -1,13 +1,13 @@
 import React, { ChangeEvent, memo, useCallback } from "react"
 import { Checkbox, IconButton, ListItem } from "@mui/material"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
-import { removeTask, updateTask } from "../../../../../model/tasksSlice"
 import { getListItemSx } from "./Task.styles"
 import { useAppDispatch } from "common/hooks"
 import { TaskStatus } from "common/enums"
 import { EditableSpan } from "common/components"
-import { TaskType } from "../../../../../api/tasksApi.types"
+import { TaskType, UpdateTaskModel } from "../../../../../api/tasksApi.types"
 import { TodolistDomainType } from "../../../../../model/todolistsSlice"
+import { useRemoveTaskMutation, useUpdateTaskMutation } from "../../../../../api/tasksApi"
 
 export type TaskProps = {
   task: TaskType
@@ -17,19 +17,37 @@ export type TaskProps = {
 
 export const Task = memo(({ task, todolistId, todolist }: TaskProps) => {
   const dispatch = useAppDispatch()
+  const [removeTask] = useRemoveTaskMutation()
+  const [updateTask] = useUpdateTaskMutation()
 
   const removeTaskHandler = useCallback(() => {
-    dispatch(removeTask({ taskId: task.id, todolistId }))
+    removeTask({ taskId: task.id, todolistId })
   }, [])
 
   const changeTaskStatusHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const newStatus = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
-    dispatch(updateTask({ taskId: task.id, todolistId, domainModel: { status: newStatus } }))
+    const apiModel: UpdateTaskModel = {
+      status: newStatus,
+      title: task.title,
+      deadline: task.deadline,
+      description: task.description,
+      priority: task.priority,
+      startDate: task.startDate,
+    }
+    updateTask({ taskId: task.id, todolistId, apiModel })
   }, [])
 
   const changeTaskTitleHandler = useCallback(
-    (newValue: string) => {
-      dispatch(updateTask({ taskId: task.id, todolistId, domainModel: { title: newValue } }))
+    (newTitle: string) => {
+      const apiModel: UpdateTaskModel = {
+        status: task.status,
+        title: newTitle,
+        deadline: task.deadline,
+        description: task.description,
+        priority: task.priority,
+        startDate: task.startDate,
+      }
+      updateTask({ taskId: task.id, todolistId, apiModel })
     },
     [dispatch, task.id, todolistId],
   )

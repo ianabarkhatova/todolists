@@ -2,9 +2,8 @@ import { Task } from "./Task/Task"
 import { List } from "@mui/material"
 import React from "react"
 import { TodolistDomainType } from "../../../../model/todolistsSlice"
-import { useAppSelector } from "common/hooks"
 import { TaskStatus } from "common/enums/enums"
-import { selectTasks } from "../../../../model/tasksSlice"
+import { useGetTasksQuery } from "../../../../api/tasksApi"
 
 type Props = {
   todolist: TodolistDomainType
@@ -12,24 +11,23 @@ type Props = {
 
 export const Tasks = ({ todolist }: Props) => {
   const { id } = todolist
-  let tasks = useAppSelector(selectTasks)[id] || []
+  const { data } = useGetTasksQuery(id)
+  let tasks = data?.items
 
   if (todolist.filter === "completed") {
-    tasks = tasks.filter((t) => t.status === TaskStatus.Completed)
+    tasks = tasks?.filter((t) => t.status === TaskStatus.Completed)
   }
   if (todolist.filter === "active") {
-    tasks = tasks.filter((t) => t.status === TaskStatus.New)
+    tasks = tasks?.filter((t) => t.status === TaskStatus.New)
   }
 
   return (
     <>
-      {tasks.length === 0 ? (
+      {tasks?.length === 0 ? (
         <p style={{ padding: "8px 0" }}>No tasks</p>
       ) : (
         <List>
-          {tasks.map((task) => (
-            <Task key={task.id} task={task} todolistId={todolist.id} todolist={todolist} />
-          ))}
+          {tasks?.map((task) => <Task key={task.id} task={task} todolistId={todolist.id} todolist={todolist} />)}
         </List>
       )}
     </>
