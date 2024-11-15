@@ -4,21 +4,33 @@ import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
 import { MenuButton } from "common/components"
 import { LinearProgress, Switch } from "@mui/material"
-import React, { useCallback } from "react"
-import { logOutTC, selectIsLoggedIn } from "../../../features/auth/model/authSlice"
+import React from "react"
 import { getTheme } from "../../theme"
 import { useAppSelector } from "common/hooks"
-import { changeTheme, selectStatus, selectThemeMode } from "../../../app/appSlice"
+import { changeTheme, selectIsLoggedIn, selectStatus, selectThemeMode, setIsLoggedIn } from "../../../app/appSlice"
 import { useDispatch } from "react-redux"
+import { useLogoutMutation } from "../../../features/auth/api/authApi"
+import { ResultCode } from "common/enums"
+import { clearTasksData } from "../../../features/todolists/model/tasksSlice"
+import { clearTodolistsData } from "../../../features/todolists/model/todolistsSlice"
 
 export const Header = () => {
   const dispatch = useDispatch()
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const status = useAppSelector(selectStatus)
+  const [logout] = useLogoutMutation()
 
-  const logOutHandler = useCallback(() => {
-    dispatch(logOutTC())
-  }, [])
+  const logOutHandler = () => {
+    logout().then((res) => {
+      if (res.data?.resultCode === ResultCode.Success) {
+        dispatch(setIsLoggedIn({ isLoggedIn: false }))
+        localStorage.removeItem("sn-token")
+        dispatch(clearTasksData())
+        dispatch(clearTodolistsData())
+      }
+    })
+  }
+
   const changeModeHandler = () => {
     dispatch(changeTheme({ themeMode: "light" ? "dark" : "light" }))
   }

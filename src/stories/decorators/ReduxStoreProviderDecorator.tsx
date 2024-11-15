@@ -101,8 +101,6 @@ const initialGlobalState: AppRootStateType = {
     status: "idle",
     isInitialized: false,
     themeMode: "light",
-  },
-  auth: {
     isLoggedIn: false,
   },
   todolistsApi: {} as CombinedState<{}, "Todolist" | "Task", "todolistsApi">,

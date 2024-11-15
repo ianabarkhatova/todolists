@@ -7,11 +7,13 @@ import FormLabel from "@mui/material/FormLabel"
 import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import { useFormik } from "formik"
-import { loginTC, selectIsLoggedIn } from "../../model/authSlice"
 import { Navigate } from "react-router-dom"
 import { Grid2 } from "@mui/material"
 import { useAppDispatch } from "common/hooks"
 import { useAppSelector } from "common/hooks"
+import { useLoginMutation } from "../../api/authApi"
+import { ResultCode } from "common/enums"
+import { selectIsLoggedIn, setIsLoggedIn } from "../../../../app/appSlice"
 
 // Custom validation function
 const validate = (values: initialValuesType) => {
@@ -36,6 +38,7 @@ const validate = (values: initialValuesType) => {
 export const Login = () => {
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
+  const [login] = useLoginMutation()
 
   const formik = useFormik({
     initialValues: {
@@ -44,10 +47,20 @@ export const Login = () => {
       rememberMe: false,
     },
     validate,
-    onSubmit: (values) => {
-      dispatch(loginTC(values))
-      // alert(JSON.stringify(values, null, 2))
-      formik.resetForm()
+    onSubmit: async (values) => {
+      try {
+        const response = await login(values).unwrap()
+        if (response.resultCode === ResultCode.Success) {
+          dispatch(setIsLoggedIn({ isLoggedIn: true }))
+          localStorage.setItem("sn-token", response.data.token)
+        } else {
+          console.error("Login failed:", response.messages[0])
+        }
+      } catch (error) {
+        console.error("Login error:", error)
+      } finally {
+        formik.resetForm()
+      }
     },
   })
 

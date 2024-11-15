@@ -1,26 +1,30 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import "../features/todolists/ui/Todolists/Todolist/TodolistTitle/TodolistTitle.module.css"
 import { CircularProgress, CssBaseline, ThemeProvider } from "@mui/material"
-import { ErrorSnackbar } from "common/components"
-import { initializeAppTC, selectIsInitialized, selectThemeMode } from "./appSlice"
+import { ErrorSnackbar, Header } from "common/components"
+import { selectThemeMode, setIsLoggedIn } from "./appSlice"
 import { getTheme } from "common/theme"
-import { Header } from "common/components"
 import { Main } from "./Main"
-import { useAppSelector } from "common/hooks"
+import { useAppDispatch, useAppSelector } from "common/hooks"
 import { TaskType } from "../features/todolists/api/tasksApi.types"
 import s from "./App.module.css"
-import { useAppDispatch } from "common/hooks"
+import { useMeQuery } from "../features/auth/api/authApi"
+import { ResultCode } from "common/enums"
 
 export const App = ({ demo = false }: Props) => {
-  // BLL
-  const isInitialized = useAppSelector(selectIsInitialized)
   const dispatch = useAppDispatch()
   const themeMode = useAppSelector(selectThemeMode)
+  const [isInitialized, setIsInitialized] = useState(false)
+  const { data, isLoading } = useMeQuery()
 
-  // check if is user logged in
   useEffect(() => {
-    dispatch(initializeAppTC())
-  }, [])
+    if (!isLoading) {
+      setIsInitialized(true)
+      if (data?.resultCode === ResultCode.Success) {
+        dispatch(setIsLoggedIn({ isLoggedIn: true }))
+      }
+    }
+  }, [isLoading, data])
 
   return (
     <div>

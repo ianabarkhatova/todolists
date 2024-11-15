@@ -5,8 +5,8 @@ import React, { useEffect } from "react"
 import { Navigate } from "react-router-dom"
 import { Grid2 } from "@mui/material"
 import { useAppSelector } from "common/hooks"
-import { selectIsLoggedIn } from "../../../auth/model/authSlice"
 import { useAddTodolistMutation, useGetTodolistsQuery } from "../../api/todolistsApi"
+import { selectIsLoggedIn } from "../../../../app/appSlice"
 
 export const Todolists = ({ demo = false }) => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)

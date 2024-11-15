@@ -1,10 +1,4 @@
-import { setIsLoggedIn } from "../features/auth/model/authSlice"
-import { authApi } from "../features/auth/api/authApi"
-import { ResultCode } from "common/enums"
-import { handleServerAppError } from "common/utils/handleServerAppError"
-import { AppDispatch, AppRootStateType } from "./store"
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { handleServerNetworkError } from "common/utils/error-utils"
+import { createSlice } from "@reduxjs/toolkit"
 
 export const appSlice = createSlice({
   name: "app",
@@ -13,6 +7,7 @@ export const appSlice = createSlice({
     error: null as null | string,
     isInitialized: false,
     themeMode: "light" as ThemeModeType,
+    isLoggedIn: false,
   },
   reducers: (create) => ({
     setAppStatus: create.reducer<{ status: RequestStatusType }>((state, action) => {
@@ -24,6 +19,9 @@ export const appSlice = createSlice({
     setAppInitialized: create.reducer<{ isInitialized: boolean }>((state, action) => {
       state.isInitialized = action.payload.isInitialized
     }),
+    setIsLoggedIn: create.reducer<{ isLoggedIn: boolean }>((state, action) => {
+      state.isLoggedIn = action.payload.isLoggedIn
+    }),
     changeTheme: create.reducer<{ themeMode: ThemeModeType }>((state, action) => {
       state.themeMode = action.payload.themeMode
     }),
@@ -33,37 +31,15 @@ export const appSlice = createSlice({
     selectError: (state) => state.error,
     selectIsInitialized: (state) => state.isInitialized,
     selectStatus: (state) => state.status,
+    selectIsLoggedIn: (state) => state.isLoggedIn,
   },
 })
 
 export const appReducer = appSlice.reducer
 // actions
-export const { setAppStatus, setAppError, setAppInitialized, changeTheme } = appSlice.actions
+export const { setAppStatus, setAppError, setAppInitialized, changeTheme, setIsLoggedIn } = appSlice.actions
 // selectors
-export const { selectIsInitialized, selectStatus, selectError, selectThemeMode } = appSlice.selectors
-
-// thunk creators
-export const initializeAppTC = () => (dispatch: AppDispatch) => {
-  dispatch(
-    setAppStatus({ status: "loading" }),
-    authApi
-      .me()
-      .then((res) => {
-        if (res.data.resultCode === ResultCode.Success) {
-          dispatch(setAppStatus({ status: "succeeded" }))
-          dispatch(setIsLoggedIn({ isLoggedIn: true }))
-        } else {
-          handleServerAppError(res.data, dispatch)
-        }
-      })
-      .catch((error) => {
-        handleServerNetworkError(dispatch, error)
-      })
-      .finally(() => {
-        dispatch(setAppInitialized({ isInitialized: true }))
-      }),
-  )
-}
+export const { selectStatus, selectError, selectThemeMode, selectIsLoggedIn } = appSlice.selectors
 
 // types
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
