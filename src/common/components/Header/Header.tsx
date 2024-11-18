@@ -32,7 +32,7 @@ export const Header = () => {
   }
 
   const changeModeHandler = () => {
-    dispatch(changeTheme({ themeMode: "light" ? "dark" : "light" }))
+    dispatch(changeTheme({ themeMode: themeMode === "light" ? "dark" : "light" }))
   }
   const themeMode = useAppSelector(selectThemeMode)
   const theme = getTheme(themeMode)

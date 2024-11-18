@@ -3,16 +3,18 @@ import { TodolistType } from "./todolistsApi.types"
 import { GeneralResponse } from "common/types"
 import { baseApi } from "../../../app/baseApi"
 
-// api
 export const todolistsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getTodolists: build.query<any[], void>({
       query: () => "todo-lists",
+      // как аргументы - то, что приходит из query
+      // трансформируем TodolistType[] в TodolistDomainType[]
       transformResponse(todolists: TodolistType[]): TodolistDomainType[] {
         return todolists.map((tl) => ({ ...tl, filter: "all", entityStatus: "idle" }))
       },
       providesTags: ["Todolist"],
     }),
+
     addTodolist: build.mutation<GeneralResponse<{ item: TodolistType }>, string>({
       query: (title) => {
         return {
@@ -21,7 +23,7 @@ export const todolistsApi = baseApi.injectEndpoints({
           body: { title },
         }
       },
-      invalidatesTags: ["Todolist"],
+      invalidatesTags: ["Todolist"], // make todolists query again (providesTags: ["Todolist"])
     }),
 
     removeTodolist: build.mutation<GeneralResponse, string>({
@@ -33,7 +35,8 @@ export const todolistsApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["Todolist"],
     }),
-    changeTodolistTitle: build.mutation<GeneralResponse, { id: string; title: string }>({
+
+    changeTodolistTitle: build.mutation<GeneralResponse, ChangeTodolistTitleArgs>({
       query: ({ id, title }) => {
         return {
           url: `/todo-lists/${id}`,
@@ -54,6 +57,6 @@ export const {
 } = todolistsApi
 
 export type ChangeTodolistTitleArgs = {
-  todolistId: string
+  id: string
   title: string
 }

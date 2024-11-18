@@ -16,9 +16,6 @@ export const appSlice = createSlice({
     setAppError: create.reducer<{ error: string | null }>((state, action) => {
       state.error = action.payload.error
     }),
-    setAppInitialized: create.reducer<{ isInitialized: boolean }>((state, action) => {
-      state.isInitialized = action.payload.isInitialized
-    }),
     setIsLoggedIn: create.reducer<{ isLoggedIn: boolean }>((state, action) => {
       state.isLoggedIn = action.payload.isLoggedIn
     }),
@@ -37,7 +34,7 @@ export const appSlice = createSlice({
 
 export const appReducer = appSlice.reducer
 // actions
-export const { setAppStatus, setAppError, setAppInitialized, changeTheme, setIsLoggedIn } = appSlice.actions
+export const { setAppStatus, setAppError, changeTheme, setIsLoggedIn } = appSlice.actions
 // selectors
 export const { selectStatus, selectError, selectThemeMode, selectIsLoggedIn } = appSlice.selectors
 

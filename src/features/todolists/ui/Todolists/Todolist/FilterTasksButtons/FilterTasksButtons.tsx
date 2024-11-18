@@ -3,15 +3,19 @@ import { Box, Button, ButtonProps } from "@mui/material"
 import React, { memo } from "react"
 import { changeTodolistFilter, FilterValuesType } from "../../../../model/todolistsSlice"
 import { TodoListProps } from "../Todolist"
-import { useAppDispatch } from "common/hooks"
+import { useAppDispatch, useAppSelector } from "common/hooks"
 
 export const FilterTasksButtons = ({ todolist }: TodoListProps) => {
   const dispatch = useAppDispatch()
   const { id, filter } = todolist
 
   const changeFilterTasksHandler = (filter: FilterValuesType) => {
+    console.log("Dispatching change filter for filter:", filter)
     dispatch(changeTodolistFilter({ todolistId: id, filter: filter }))
   }
+
+  // const filter1 = useAppSelector((state) => state.todolists.find((todolist) => todolist.id === id)?.filter)
+  // console.log("Current filter value:", filter1)
 
   const ButtonWithMemo = memo(({ variant, onClick, color, children, ...rest }: Props) => {
     return (

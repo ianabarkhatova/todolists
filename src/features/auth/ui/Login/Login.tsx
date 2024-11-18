@@ -38,7 +38,7 @@ const validate = (values: initialValuesType) => {
 export const Login = () => {
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
-  const [login] = useLoginMutation()
+  const [login, { error, isError }] = useLoginMutation()
 
   const formik = useFormik({
     initialValues: {
@@ -53,13 +53,14 @@ export const Login = () => {
         if (response.resultCode === ResultCode.Success) {
           dispatch(setIsLoggedIn({ isLoggedIn: true }))
           localStorage.setItem("sn-token", response.data.token)
+          formik.resetForm()
         } else {
           console.error("Login failed:", response.messages[0])
         }
       } catch (error) {
         console.error("Login error:", error)
       } finally {
-        formik.resetForm()
+        //......
       }
     },
   })
