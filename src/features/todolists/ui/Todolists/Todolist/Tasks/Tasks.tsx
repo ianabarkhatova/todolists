@@ -1,56 +1,21 @@
 import { Task } from "./Task/Task"
 import { List } from "@mui/material"
-import React, { useState } from "react"
-import { TaskStatus } from "common/enums/enums"
-import { useGetTasksQuery } from "../../../../api/tasksApi"
+import React from "react"
 import { TasksSkeleton } from "../../../skeletons/TasksSkeleton/TasksSkeleton"
-import { useAppDispatch } from "common/hooks"
 import { TasksPagination } from "../TasksPagination/TasksPagination"
 import { TodolistDomain } from "../../../../lib/types/types"
+import { useTasks } from "../../../../lib/hooks/useTasks"
 
 type Props = {
   todolist: TodolistDomain
 }
 
-// type ErrorData = {
-//   status: number
-//   data: {
-//     message: string
-//   }
-// }
-
 export const Tasks = ({ todolist }: Props) => {
-  const { id } = todolist
-  const [page, setPage] = useState(1)
-
-  const { data, isLoading } = useGetTasksQuery({
-    todolistId: id,
-    args: { page },
-  })
-  const dispatch = useAppDispatch()
-  let tasks = data?.items
-
-  if (todolist.filter === "completed") {
-    tasks = tasks?.filter((t) => t.status === TaskStatus.Completed)
-  }
-  if (todolist.filter === "active") {
-    tasks = tasks?.filter((t) => t.status === TaskStatus.New)
-  }
+  const { isLoading, tasks, totalCount, setPage, page } = useTasks(todolist)
 
   if (isLoading) {
     return <TasksSkeleton />
   }
-
-  // if (error) {
-  //   let errMsg = "Some error occurred"
-  //   if ("data" in error) {
-  //     const errData = error.data as ErrorData
-  //     if ("message" in errData) {
-  //       errMsg = errData.message as string
-  //     }
-  //   }
-  //   dispatch(setAppError({ error: errMsg }))
-  // }
 
   return (
     <>
@@ -61,7 +26,7 @@ export const Tasks = ({ todolist }: Props) => {
           <List>
             {tasks?.map((task) => <Task key={task.id} task={task} todolistId={todolist.id} todolist={todolist} />)}
           </List>
-          <TasksPagination totalCount={data?.totalCount || 0} page={page} setPage={setPage} />
+          <TasksPagination totalCount={totalCount || 0} page={page} setPage={setPage} />
         </>
       )}
     </>
