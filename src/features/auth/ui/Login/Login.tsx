@@ -6,64 +6,12 @@ import FormGroup from "@mui/material/FormGroup"
 import FormLabel from "@mui/material/FormLabel"
 import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
-import { useFormik } from "formik"
 import { Navigate } from "react-router-dom"
 import { Grid2 } from "@mui/material"
-import { useAppDispatch } from "common/hooks"
-import { useAppSelector } from "common/hooks"
-import { useLoginMutation } from "../../api/authApi"
-import { ResultCode } from "common/enums"
-import { selectIsLoggedIn, setIsLoggedIn } from "../../../../app/appSlice"
-
-// Custom validation function
-const validate = (values: initialValuesType) => {
-  const errors: FormikErrorType = {}
-
-  if (!values.email) {
-    errors.email = "Required"
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email address"
-  }
-
-  if (!values.password) {
-    errors.password = "Required"
-  } else if (values.password.length < 3) {
-    errors.password = "Password must contain at least 3 characters"
-  }
-
-  console.log(errors)
-  return errors
-}
+import { useLogin } from "../../lib/hooks/useLogin"
 
 export const Login = () => {
-  const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector(selectIsLoggedIn)
-  const [login, { error, isError }] = useLoginMutation()
-
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      rememberMe: false,
-    },
-    validate,
-    onSubmit: async (values) => {
-      try {
-        const response = await login(values).unwrap()
-        if (response.resultCode === ResultCode.Success) {
-          dispatch(setIsLoggedIn({ isLoggedIn: true }))
-          localStorage.setItem("sn-token", response.data.token)
-          formik.resetForm()
-        } else {
-          console.error("Login failed:", response.messages[0])
-        }
-      } catch (error) {
-        console.error("Login error:", error)
-      } finally {
-        //......
-      }
-    },
-  })
+  const { isLoggedIn, formik } = useLogin()
 
   if (isLoggedIn) {
     return <Navigate to={"/"} />
@@ -110,16 +58,4 @@ export const Login = () => {
       </Grid2>
     </Grid2>
   )
-}
-
-// types
-type FormikErrorType = {
-  email?: string
-  password?: string
-  rememberMe?: boolean
-}
-type initialValuesType = {
-  email: string
-  password: string
-  rememberMe: boolean
 }
