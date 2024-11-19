@@ -11,8 +11,7 @@ import { changeTheme, selectIsLoggedIn, selectStatus, selectThemeMode, setIsLogg
 import { useDispatch } from "react-redux"
 import { useLogoutMutation } from "../../../features/auth/api/authApi"
 import { ResultCode } from "common/enums"
-import { clearTasksData } from "../../../features/todolists/model/tasksSlice"
-import { clearTodolistsData } from "../../../features/todolists/model/todolistsSlice"
+import { baseApi } from "../../../app/baseApi"
 
 export const Header = () => {
   const dispatch = useDispatch()
@@ -21,14 +20,16 @@ export const Header = () => {
   const [logout] = useLogoutMutation()
 
   const logOutHandler = () => {
-    logout().then((res) => {
-      if (res.data?.resultCode === ResultCode.Success) {
-        dispatch(setIsLoggedIn({ isLoggedIn: false }))
-        localStorage.removeItem("sn-token")
-        dispatch(clearTasksData())
-        dispatch(clearTodolistsData())
-      }
-    })
+    logout()
+      .then((res) => {
+        if (res.data?.resultCode === ResultCode.Success) {
+          dispatch(setIsLoggedIn({ isLoggedIn: false }))
+          localStorage.removeItem("sn-token")
+        }
+      })
+      .then(() => {
+        dispatch(baseApi.util.invalidateTags(["Task", "Todolist"]))
+      })
   }
 
   const changeModeHandler = () => {

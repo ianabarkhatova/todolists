@@ -6,11 +6,23 @@ import { baseApi } from "../../../app/baseApi"
 //1 арг. - возвращаемый тип
 // 2 арг. - тип query аргументов (QueryArg)
 
+export const PAGE_SIZE = 4
+
 export const tasksApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getTasks: build.query<GetTasksResponse, string>({
-      query: (todolistId) => `todo-lists/${todolistId}/tasks`,
-      providesTags: (result, error, todolistId) => [{ type: "Task", id: todolistId }],
+    getTasks: build.query<GetTasksResponse, { todolistId: string; args: { page: number } }>({
+      query: ({ todolistId, args }) => {
+        const params = { ...args, count: PAGE_SIZE }
+        return {
+          method: "GET",
+          url: `todo-lists/${todolistId}/tasks`,
+          params,
+        }
+      },
+      providesTags: (res, err, { todolistId }) =>
+        res
+          ? [...res.items.map(({ id }) => ({ type: "Task", id }) as const), { type: "Task", id: todolistId }]
+          : ["Task"],
     }),
     addTask: build.mutation<GeneralResponse<{ item: TaskType }>, { todolistId: string; title: string }>({
       query: ({ todolistId, title }) => {

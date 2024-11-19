@@ -2,7 +2,9 @@ import { EditableSpan } from "common/components"
 import IconButton from "@mui/material/IconButton"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 import { TodolistDomainType } from "../../../../model/todolistsSlice"
-import { useChangeTodolistTitleMutation, useRemoveTodolistMutation } from "../../../../api/todolistsApi"
+import { todolistsApi, useChangeTodolistTitleMutation, useRemoveTodolistMutation } from "../../../../api/todolistsApi"
+import { RequestStatusType } from "../../../../../../app/appSlice"
+import { useDispatch } from "react-redux"
 
 type Props = {
   todolist: TodolistDomainType
@@ -12,9 +14,24 @@ export const TodolistTitle = ({ todolist }: Props) => {
   const { title, id, entityStatus } = todolist
   const [removeTodolist] = useRemoveTodolistMutation()
   const [changeTodolistTitle] = useChangeTodolistTitleMutation()
+  const dispatch = useDispatch()
+
+  const updateQueryData = (status: RequestStatusType) => {
+    dispatch(
+      todolistsApi.util.updateQueryData("getTodolists", undefined, (state) => {
+        const index = state.findIndex((todolist) => todolist.id === id)
+        if (index !== -1) state[index].entityStatus = status
+      }),
+    )
+  }
 
   const removeTodoListHandler = () => {
+    updateQueryData("loading")
     removeTodolist(id)
+      .unwrap()
+      .catch(() => {
+        updateQueryData("idle")
+      })
   }
 
   const changeTodoListTitleHandler = (title: string) => {

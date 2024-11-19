@@ -1,21 +1,23 @@
 import { filterButtonsContainerSx } from "../Tasks/Task/Task.styles"
 import { Box, Button, ButtonProps } from "@mui/material"
 import React, { memo } from "react"
-import { changeTodolistFilter, FilterValuesType } from "../../../../model/todolistsSlice"
+import { FilterValuesType } from "../../../../model/todolistsSlice"
 import { TodoListProps } from "../Todolist"
-import { useAppDispatch, useAppSelector } from "common/hooks"
+import { useAppDispatch } from "common/hooks"
+import { todolistsApi } from "../../../../api/todolistsApi"
 
 export const FilterTasksButtons = ({ todolist }: TodoListProps) => {
   const dispatch = useAppDispatch()
   const { id, filter } = todolist
 
   const changeFilterTasksHandler = (filter: FilterValuesType) => {
-    console.log("Dispatching change filter for filter:", filter)
-    dispatch(changeTodolistFilter({ todolistId: id, filter: filter }))
+    dispatch(
+      todolistsApi.util.updateQueryData("getTodolists", undefined, (state) => {
+        const index = state.findIndex((todolist) => todolist.id === id)
+        if (index !== -1) state[index].filter = filter
+      }),
+    )
   }
-
-  // const filter1 = useAppSelector((state) => state.todolists.find((todolist) => todolist.id === id)?.filter)
-  // console.log("Current filter value:", filter1)
 
   const ButtonWithMemo = memo(({ variant, onClick, color, children, ...rest }: Props) => {
     return (
