@@ -9,6 +9,8 @@ import Button from "@mui/material/Button"
 import { Navigate } from "react-router-dom"
 import { Grid2 } from "@mui/material"
 import { useLogin } from "../../lib/hooks/useLogin"
+import { LoginFormLabel } from "./LoginFormLabel/LoginFormLabel"
+import { LoginForm } from "./LoginForm/LoginForm"
 
 export const Login = () => {
   const { isLoggedIn, formik } = useLogin()
@@ -20,41 +22,12 @@ export const Login = () => {
   return (
     <Grid2 container justifyContent={"center"}>
       <Grid2 justifyContent={"center"}>
-        <form onSubmit={formik.handleSubmit}>
-          <FormControl>
-            <FormLabel>
-              <p>To log in, use test account credentials:</p>
-              <p>Email: free@samuraijs.com</p>
-              <p>Password: free</p>
-            </FormLabel>
-            <FormGroup>
-              <TextField label="Email" margin="normal" {...formik.getFieldProps("email")} onBlur={formik.handleBlur} />
-              {formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}
-              <TextField
-                type="password"
-                label="Password"
-                margin="normal"
-                {...formik.getFieldProps("password")}
-                onBlur={formik.handleBlur}
-              />
-              {formik.touched.password && formik.errors.password ? <div>{formik.errors.password}</div> : null}
-              <FormControlLabel
-                label={"Remember me"}
-                control={
-                  <Checkbox
-                    name={"rememberMe"}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    checked={formik.values.rememberMe}
-                  />
-                }
-              />
-              <Button type={"submit"} variant={"contained"} color={"primary"}>
-                Login
-              </Button>
-            </FormGroup>
-          </FormControl>
-        </form>
+        <FormControl>
+          <FormLabel>
+            <LoginFormLabel />
+            <LoginForm />
+          </FormLabel>
+        </FormControl>
       </Grid2>
     </Grid2>
   )
