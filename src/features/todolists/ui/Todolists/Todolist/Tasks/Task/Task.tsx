@@ -6,13 +6,13 @@ import { useAppDispatch } from "common/hooks"
 import { TaskStatus } from "common/enums"
 import { EditableSpan } from "common/components"
 import { TaskType, UpdateTaskModel } from "../../../../../api/tasksApi.types"
-import { TodolistDomainType } from "../../../../../model/todolistsSlice"
 import { useRemoveTaskMutation, useUpdateTaskMutation } from "../../../../../api/tasksApi"
+import { TodolistDomain } from "../../../../../lib/types/types"
 
 export type TaskProps = {
   task: TaskType
   todolistId: string
-  todolist: TodolistDomainType
+  todolist: TodolistDomain
 }
 
 export const Task = memo(({ task, todolistId, todolist }: TaskProps) => {

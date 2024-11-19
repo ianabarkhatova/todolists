@@ -1,16 +1,16 @@
 import { filterButtonsContainerSx } from "../Tasks/Task/Task.styles"
 import { Box, Button, ButtonProps } from "@mui/material"
 import React, { memo } from "react"
-import { FilterValuesType } from "../../../../model/todolistsSlice"
 import { TodoListProps } from "../Todolist"
 import { useAppDispatch } from "common/hooks"
 import { todolistsApi } from "../../../../api/todolistsApi"
+import { FilterValues } from "../../../../lib/types/types"
 
 export const FilterTasksButtons = ({ todolist }: TodoListProps) => {
   const dispatch = useAppDispatch()
   const { id, filter } = todolist
 
-  const changeFilterTasksHandler = (filter: FilterValuesType) => {
+  const changeFilterTasksHandler = (filter: FilterValues) => {
     dispatch(
       todolistsApi.util.updateQueryData("getTodolists", undefined, (state) => {
         const index = state.findIndex((todolist) => todolist.id === id)

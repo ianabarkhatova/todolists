@@ -1,6 +1,5 @@
-import { GetTasksResponse, TaskType, UpdateTaskModel } from "./tasksApi.types"
+import { GetTasksResponse, TaskType, UpdateDomainTaskModelType, UpdateTaskModel } from "./tasksApi.types"
 import { GeneralResponse } from "common/types"
-import { UpdateDomainTaskModelType } from "../model/tasksSlice"
 import { baseApi } from "../../../app/baseApi"
 
 //1 арг. - возвращаемый тип

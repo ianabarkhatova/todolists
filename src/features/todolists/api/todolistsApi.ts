@@ -1,21 +1,21 @@
-import { TodolistDomainType } from "../model/todolistsSlice"
-import { TodolistType } from "./todolistsApi.types"
 import { GeneralResponse } from "common/types"
 import { baseApi } from "../../../app/baseApi"
+import { TodolistDomain } from "../lib/types/types"
+import { Todolist } from "./todolistsApi.types"
 
 export const todolistsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getTodolists: build.query<any[], void>({
       query: () => "todo-lists",
       // как аргументы - то, что приходит из query
-      // трансформируем TodolistType[] в TodolistDomainType[]
-      transformResponse(todolists: TodolistType[]): TodolistDomainType[] {
+      // трансформируем TodolistType[] в TodolistDomain[]
+      transformResponse(todolists: Todolist[]): TodolistDomain[] {
         return todolists.map((tl) => ({ ...tl, filter: "all", entityStatus: "idle" }))
       },
       providesTags: ["Todolist"],
     }),
 
-    addTodolist: build.mutation<GeneralResponse<{ item: TodolistType }>, string>({
+    addTodolist: build.mutation<GeneralResponse<{ item: Todolist }>, string>({
       query: (title) => {
         return {
           url: "todo-lists",

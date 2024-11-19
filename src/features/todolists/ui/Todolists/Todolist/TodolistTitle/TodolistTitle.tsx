@@ -1,13 +1,13 @@
 import { EditableSpan } from "common/components"
 import IconButton from "@mui/material/IconButton"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
-import { TodolistDomainType } from "../../../../model/todolistsSlice"
 import { todolistsApi, useChangeTodolistTitleMutation, useRemoveTodolistMutation } from "../../../../api/todolistsApi"
 import { RequestStatusType } from "../../../../../../app/appSlice"
 import { useDispatch } from "react-redux"
+import { TodolistDomain } from "../../../../lib/types/types"
 
 type Props = {
-  todolist: TodolistDomainType
+  todolist: TodolistDomain
 }
 
 export const TodolistTitle = ({ todolist }: Props) => {

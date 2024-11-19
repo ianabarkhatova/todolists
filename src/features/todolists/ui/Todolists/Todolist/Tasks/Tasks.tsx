@@ -1,23 +1,23 @@
 import { Task } from "./Task/Task"
 import { List } from "@mui/material"
 import React, { useState } from "react"
-import { TodolistDomainType } from "../../../../model/todolistsSlice"
 import { TaskStatus } from "common/enums/enums"
 import { useGetTasksQuery } from "../../../../api/tasksApi"
 import { TasksSkeleton } from "../../../skeletons/TasksSkeleton/TasksSkeleton"
 import { useAppDispatch } from "common/hooks"
 import { TasksPagination } from "../TasksPagination/TasksPagination"
+import { TodolistDomain } from "../../../../lib/types/types"
 
 type Props = {
-  todolist: TodolistDomainType
+  todolist: TodolistDomain
 }
 
-type ErrorData = {
-  status: number
-  data: {
-    message: string
-  }
-}
+// type ErrorData = {
+//   status: number
+//   data: {
+//     message: string
+//   }
+// }
 
 export const Tasks = ({ todolist }: Props) => {
   const { id } = todolist

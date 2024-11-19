@@ -27,3 +27,12 @@ export type TaskType = {
   addedDate: string
   entityStatus: RequestStatusType
 }
+
+export type UpdateDomainTaskModelType = {
+  title?: string
+  description?: string
+  status?: number
+  priority?: number
+  startDate?: string
+  deadline?: string
+}

@@ -1,13 +1,13 @@
 import React, { memo, useCallback, useEffect } from "react"
 import { AddItemForm } from "common/components"
-import { TodolistDomainType } from "../../../model/todolistsSlice"
 import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
 import { Tasks } from "./Tasks/Tasks"
 import { TodolistTitle } from "./TodolistTitle/TodolistTitle"
 import { useAddTaskMutation, useGetTasksQuery } from "../../../api/tasksApi"
+import { TodolistDomain } from "../../../lib/types/types"
 
 export type TodoListProps = {
-  todolist: TodolistDomainType
+  todolist: TodolistDomain
   demo?: boolean
 }
 
