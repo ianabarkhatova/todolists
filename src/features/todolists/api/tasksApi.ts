@@ -40,7 +40,7 @@ export const tasksApi = baseApi.injectEndpoints({
           method: "DELETE",
         }
       },
-      invalidatesTags: (result, error, { todolistId }) => [{ type: "Task", id: todolistId }],
+      invalidatesTags: (res, err, { taskId }) => [{ type: "Task", id: taskId }],
     }),
     updateTask: build.mutation<
       GeneralResponse<{ item: TaskType }>,
@@ -57,7 +57,7 @@ export const tasksApi = baseApi.injectEndpoints({
           body: { ...apiModel },
         }
       },
-      invalidatesTags: (result, error, { todolistId }) => [{ type: "Task", id: todolistId }],
+      invalidatesTags: (res, err, { taskId }) => [{ type: "Task", id: taskId }],
     }),
   }),
 })

@@ -12,7 +12,7 @@ import { TodolistSkeleton } from "../skeletons/TodolistSkeleton/TodolistSkeleton
 export const Todolists = ({ demo = false }) => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const { data: todolists, isLoading } = useGetTodolistsQuery(undefined, {
-    pollingInterval: 3000,
+    pollingInterval: 1000000,
     skipPollingIfUnfocused: true,
   })
   const [addTodolist] = useAddTodolistMutation()

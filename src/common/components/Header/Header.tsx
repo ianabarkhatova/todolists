@@ -19,6 +19,8 @@ export const Header = () => {
   const status = useAppSelector(selectStatus)
   const [logout] = useLogoutMutation()
 
+  // todo: remove todolists request after logout
+
   const logOutHandler = () => {
     logout()
       .then((res) => {

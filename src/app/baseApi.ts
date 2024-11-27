@@ -12,7 +12,7 @@ export const baseApi = createApi({
       },
     })(args, api, extraOptions)
 
-    // handleError(api, result)
+    handleError(api, result)
     return result
   },
   endpoints: () => ({}),

@@ -28,7 +28,7 @@ export const TodolistTitle = ({ todolist }: Props) => {
   const removeTodoListHandler = () => {
     updateQueryData("loading")
     removeTodolist(id)
-      .unwrap()
+      .unwrap() // нужен, чтобы попасть в catch
       .catch(() => {
         updateQueryData("idle")
       })

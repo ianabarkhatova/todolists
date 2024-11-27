@@ -26,8 +26,10 @@ export const appSlice = createSlice({
     }),
   }),
   extraReducers: (builder) => {
+    // отрабатывают для всех экшенов
     builder
       .addMatcher(isPending, (state, action) => {
+        // loader will not be shown when todolists or tasks are loaded (getTodolists, getTasks)
         if (
           todolistsApi.endpoints.getTodolists.matchPending(action) ||
           tasksApi.endpoints.getTasks.matchPending(action)
